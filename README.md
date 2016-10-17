@@ -1,1 +1,1 @@
-# ZhihuDaliyNews
+# ZhihuDailyNews
