@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -17,9 +18,14 @@ import com.yininghuang.zhihudailynews.utils.DisplayUtils;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Yining Huang on 2016/10/17.
@@ -30,6 +36,9 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     private int mSelectIndex = 0;
     private List<ZhihuLatestNews.ZhihuTopStory> mData;
     private PosterAdapter posterAdapter;
+    private Subscription timer;
+
+    private long AUTO_SELECT_INTERVAL = 4000;
 
     @BindView(R.id.indicatorLayout)
     LinearLayout mIndicatorLayout;
@@ -51,7 +60,54 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         ButterKnife.bind(this);
     }
 
-    public void initViews(List<ZhihuLatestNews.ZhihuTopStory> data) {
+    private Subscription startTimer() {
+        return Observable.interval(AUTO_SELECT_INTERVAL, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        if (mData == null)
+                            return;
+                        if (mSelectIndex < mData.size() - 1)
+                            mSelectIndex++;
+                        else
+                            mSelectIndex = 0;
+                        viewPager.setCurrentItem(mSelectIndex, true);
+                    }
+                });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                if (timer != null)
+                    timer.unsubscribe();
+                break;
+            }
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL: {
+                timer = startTimer();
+                break;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        timer = startTimer();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (timer != null)
+            timer.unsubscribe();
+    }
+
+    public void initPosters(List<ZhihuLatestNews.ZhihuTopStory> data) {
         mData = data;
         posterAdapter = new PosterAdapter(mData);
         viewPager.setAdapter(posterAdapter);
@@ -60,7 +116,8 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         for (int i = 0; i < mData.size(); i++) {
             ImageView point = new ImageView(getContext());
             point.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DisplayUtils.dp2px(getContext(), 8), DisplayUtils.dp2px(getContext(), 8));
+            LinearLayout.LayoutParams lp = new LinearLayout
+                    .LayoutParams(DisplayUtils.dp2px(getContext(), 8), DisplayUtils.dp2px(getContext(), 8));
             lp.leftMargin = DisplayUtils.dp2px(getContext(), 4);
             point.setLayoutParams(lp);
             if (i == mSelectIndex)
@@ -71,13 +128,14 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         }
     }
 
-    public void setSelectIndex(int index) {
-        if (mData == null || index > mData.size() - 1)
-            return;
-        ImageView imageView = (ImageView) mIndicatorLayout.getChildAt(mSelectIndex);
-        imageView.setImageResource(R.drawable.poster_un_selected_point);
-        imageView = (ImageView) mIndicatorLayout.getChildAt(index);
-        imageView.setImageResource(R.drawable.poster_selected_point);
+    private void setSelectIndex(int index) {
+        for (int i = 0; i < mIndicatorLayout.getChildCount(); i++) {
+            ImageView imageView = (ImageView) mIndicatorLayout.getChildAt(i);
+            if (i == index)
+                imageView.setImageResource(R.drawable.poster_selected_point);
+            else
+                imageView.setImageResource(R.drawable.poster_un_selected_point);
+        }
         mSelectIndex = index;
     }
 
@@ -100,7 +158,7 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
 
     }
 
-    interface OnPosterClickListener {
+    public interface OnPosterClickListener {
         void onPosterClick(ZhihuLatestNews.ZhihuTopStory story);
     }
 

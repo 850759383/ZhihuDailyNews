@@ -1,9 +1,12 @@
-package com.yininghuang.zhihudailynews;
+package com.yininghuang.zhihudailynews.home;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.home.ZhihuDailyFragment;
+import com.yininghuang.zhihudailynews.home.ZhihuDailyPresenter;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 
 import butterknife.BindView;

@@ -1,13 +1,18 @@
-package com.yininghuang.zhihudailynews;
+package com.yininghuang.zhihudailynews.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yininghuang.zhihudailynews.BaseFragment;
+import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
-import com.yininghuang.zhihudailynews.widget.PosterView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,12 +21,13 @@ import butterknife.ButterKnife;
  * Created by Yining Huang on 2016/10/17.
  */
 
-public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContract.View {
+public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContract.View, ZhihuLatestAdapter.OnItemClickListener {
 
     private ZhihuDailyContract.Presenter mPresenter;
+    private ZhihuLatestAdapter mAdapter;
 
-    @BindView(R.id.posterView)
-    PosterView posterView;
+    @BindView(R.id.contentRec)
+    RecyclerView contentRec;
 
     @Nullable
     @Override
@@ -33,6 +39,10 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
+        contentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new ZhihuLatestAdapter(getActivity());
+        mAdapter.setOnItemClickListener(this);
+        contentRec.setAdapter(mAdapter);
         mPresenter.init();
     }
 
@@ -42,7 +52,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void showStories(ZhihuLatestNews stories) {
-        posterView.initViews(stories.getTopStories());
+        mAdapter.addNews(stories);
     }
 
     @Override
@@ -59,5 +69,15 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.onStop();
+    }
+
+    @Override
+    public void onPosterClick(ZhihuLatestNews.ZhihuTopStory topStory) {
+        Log.d("zhihu", topStory.getTitle());
+    }
+
+    @Override
+    public void onNewsClick(ZhihuLatestNews.ZhihuStory story) {
+        Log.d("zhihu", story.getTitle());
     }
 }

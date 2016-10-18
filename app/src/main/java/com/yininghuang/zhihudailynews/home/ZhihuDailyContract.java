@@ -1,5 +1,7 @@
-package com.yininghuang.zhihudailynews;
+package com.yininghuang.zhihudailynews.home;
 
+import com.yininghuang.zhihudailynews.BasePresenter;
+import com.yininghuang.zhihudailynews.BaseView;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 
 /**
@@ -17,7 +19,7 @@ public class ZhihuDailyContract {
         void queryHistoryStory(String date);
     }
 
-    public interface View extends BaseView<Presenter>{
+    public interface View extends BaseView<Presenter> {
 
         void showStories(ZhihuLatestNews stories);
 

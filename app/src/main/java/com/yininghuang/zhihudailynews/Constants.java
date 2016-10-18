@@ -4,7 +4,7 @@ package com.yininghuang.zhihudailynews;
  * Created by Yining Huang on 2016/10/17.
  */
 
-public class Constans {
+public class Constants {
 
     private static final int ZHIHU_API_VERSION = 4;
 
