@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.utils.DisplayUtils;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -162,10 +165,11 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         void onPosterClick(ZhihuLatestNews.ZhihuTopStory story);
     }
 
-    public class PosterAdapter extends PagerAdapter {
+    public static class PosterAdapter extends PagerAdapter {
 
         private List<ZhihuLatestNews.ZhihuTopStory> mData;
         private OnPosterClickListener mListener;
+
 
         public PosterAdapter(List<ZhihuLatestNews.ZhihuTopStory> data) {
             mData = data;
@@ -174,17 +178,20 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             final ZhihuLatestNews.ZhihuTopStory story = mData.get(position);
-            ImageView imageView = new ImageView(container.getContext());
-            container.addView(imageView);
-            ImageLoader.load(container.getContext(), imageView, story.getImage());
-            imageView.setOnClickListener(new OnClickListener() {
+            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_view_pager_poster_content, null);
+            ImageView poster = ButterKnife.findById(view, R.id.pagerImage);
+            TextView title = ButterKnife.findById(view, R.id.title);
+            title.setText(story.getTitle());
+            container.addView(view);
+            ImageLoader.load(container.getContext(), poster, story.getImage());
+            poster.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListener != null)
                         mListener.onPosterClick(story);
                 }
             });
-            return imageView;
+            return view;
         }
 
         @Override

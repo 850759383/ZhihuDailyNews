@@ -27,7 +27,9 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private Context mContext;
     private List<ZhihuLatestNews> mLatestNewsList = new ArrayList<>();
+    private List<ZhihuLatestNews.ZhihuStory> mZhihuStoryList = new ArrayList<>();
 
+    private int TYPE_LOADING = -1;
     private int TYPE_POSTER = 0;
     private int TYPE_ITEM = 1;
 
@@ -40,8 +42,11 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_POSTER) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_poster, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_poster_layout, parent, false);
             return new PosterHolder(view);
+        } else if (viewType == TYPE_LOADING) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading_status, parent, false);
+            return new LoadingHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_zhihu_lastest, parent, false);
             return new NewsHolder(view);
@@ -52,7 +57,7 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PosterHolder) {
             PosterView posterView = ((PosterHolder) holder).getPosterView();
-            if (mLatestNewsList.size() > 0){
+            if (mLatestNewsList.size() > 0) {
                 posterView.initPosters(mLatestNewsList.get(0).getTopStories());
                 posterView.setOnPosterClickListener(new PosterView.OnPosterClickListener() {
                     @Override
@@ -63,13 +68,13 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 });
             }
         } else if (holder instanceof NewsHolder) {
-            ZhihuLatestNews.ZhihuStory itemData = getCurrentItem(position);
+            ZhihuLatestNews.ZhihuStory itemData = mZhihuStoryList.get(position - 1);
             ((NewsHolder) holder).getTitle().setText(itemData.getTitle());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mOnItemClickListener != null)
-                        mOnItemClickListener.onNewsClick(getCurrentItem(holder.getAdapterPosition()));
+                        mOnItemClickListener.onNewsClick(mZhihuStoryList.get(holder.getAdapterPosition() - 1));
                 }
             });
 
@@ -79,20 +84,17 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    private ZhihuLatestNews.ZhihuStory getCurrentItem(int position) {
-        int firstStorySize = mLatestNewsList.get(0).getStories().size();//11
-        if (position <= firstStorySize + 1) {
-            return mLatestNewsList.get(0).getStories().get(position -1);
-        }
-        int p2= position - firstStorySize + 1;
-        int index1 = 1 + p2 / 20;
-        int index2 = p2 % 20 - 1;
-        return mLatestNewsList.get(index1).getStories().get(index2);
-    }
-
     public void addNews(ZhihuLatestNews news) {
         mLatestNewsList.add(news);
-        notifyDataSetChanged();
+        mZhihuStoryList.addAll(news.getStories());
+    }
+
+    public List<ZhihuLatestNews> getLatestNewsList() {
+        return mLatestNewsList;
+    }
+
+    public List<ZhihuLatestNews.ZhihuStory> getZhihuStoryList() {
+        return mZhihuStoryList;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -101,18 +103,19 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        int size = 0;
-        for (ZhihuLatestNews news : mLatestNewsList) {
-            size += news.getStories().size();
-        }
-        return size + 1;
+        if (mZhihuStoryList.size() == 0)
+            return mZhihuStoryList.size() + 1;
+        return mZhihuStoryList.size() + 2;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0)
             return TYPE_POSTER;
-        return TYPE_ITEM;
+        else if (position == mZhihuStoryList.size() + 1)
+            return TYPE_LOADING;
+        else
+            return TYPE_ITEM;
     }
 
     public interface OnItemClickListener {
@@ -156,6 +159,13 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public ImageView getImageView() {
             return imageView;
+        }
+    }
+
+    public static class LoadingHolder extends RecyclerView.ViewHolder {
+
+        public LoadingHolder(View itemView) {
+            super(itemView);
         }
     }
 }

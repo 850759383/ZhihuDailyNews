@@ -34,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="5c04fdc61f0a01655dab43fde71b7d77935eabc8">
+        sha1="70376448d74c765ba02f5d817e92797108d57923">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_8a0c690a1e0c1bf91f3a4bfa081a79d78b1eec03\classes.dex" />
     </item>
     <item
@@ -124,7 +124,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="28a6200accaa007cbf8f60e6bf98df3b43fa52b4">
+        sha1="e66c1a9197f2b79253e19a55c7b3b75f46735982">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_6209214baab70bb3003890c8a00ddede315bc463\classes.dex" />
     </item>
     <item
