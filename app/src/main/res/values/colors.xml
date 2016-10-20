@@ -9,4 +9,5 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="colorWhite">#ffffff</color>
+    <color name="colorBlackTranslucent85">#26000000</color>
 </resources>

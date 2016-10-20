@@ -20,6 +20,8 @@ public class ZhihuNewsDetailContract {
         void showLoadError();
 
         void setTitle(String title);
+
+        void setImageSource(String source);
     }
 
     interface Presenter extends BasePresenter {

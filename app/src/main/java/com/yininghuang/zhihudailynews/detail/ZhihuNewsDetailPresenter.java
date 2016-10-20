@@ -50,6 +50,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                         if (content.getType() == 0) {
                             mView.showBody(convertResult(content.getBody()));
                             mView.showAppBarImage(content.getImage());
+                            mView.setImageSource(content.getImageSource());
                         } else {
                             mView.showEmptyBody(content.getShareUrl());
                         }

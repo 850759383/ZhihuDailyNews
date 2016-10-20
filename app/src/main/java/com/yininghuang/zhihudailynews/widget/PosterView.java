@@ -180,11 +180,12 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
             final ZhihuLatestNews.ZhihuTopStory story = mData.get(position);
             View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_view_pager_poster_content, null);
             ImageView poster = ButterKnife.findById(view, R.id.pagerImage);
+            FrameLayout posterLayout = ButterKnife.findById(view, R.id.imageLayout);
             TextView title = ButterKnife.findById(view, R.id.title);
             title.setText(story.getTitle());
             container.addView(view);
             ImageLoader.load(container.getContext(), poster, story.getImage());
-            poster.setOnClickListener(new OnClickListener() {
+            posterLayout.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListener != null)
