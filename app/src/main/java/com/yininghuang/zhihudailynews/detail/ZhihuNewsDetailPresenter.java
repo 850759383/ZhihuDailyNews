@@ -21,6 +21,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
     private RetrofitHelper mRetrofitHelper;
 
     private SubscriptionList mSubscriptions = new SubscriptionList();
+    private int mDetailId;
 
     public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper) {
         mView = view;
@@ -30,12 +31,13 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
 
     @Override
     public void init(int id) {
+        mDetailId = id;
         fetchNewsContent(id);
     }
 
     @Override
-    public void reload(int id) {
-        fetchNewsContent(id);
+    public void reload() {
+        fetchNewsContent(mDetailId);
     }
 
     private void fetchNewsContent(int id) {
@@ -65,6 +67,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         mSubscriptions.add(sb);
     }
 
+    @SuppressWarnings("StringBufferReplaceableByString")
     private String convertResult(String preReuslt) {
         preReuslt = preReuslt.replace("<div class=\"img-place-holder\">", "");
         preReuslt = preReuslt.replace("<div class=\"headline\">", "");

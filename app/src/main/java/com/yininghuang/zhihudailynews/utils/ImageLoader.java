@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestListener;
 
 /**
@@ -12,7 +13,7 @@ import com.bumptech.glide.request.RequestListener;
 
 public class ImageLoader {
 
-    public static void load(Context context, ImageView view, String url){
+    public static void load(Context context, ImageView view, String url) {
         Glide.with(context)
                 .load(url)
                 .crossFade()
@@ -20,7 +21,7 @@ public class ImageLoader {
                 .into(view);
     }
 
-    public static void load(Context context, ImageView view, String url, RequestListener listener){
+    public static void load(Context context, ImageView view, String url, RequestListener listener) {
         Glide.with(context)
                 .load(url)
                 .crossFade()
@@ -29,5 +30,12 @@ public class ImageLoader {
                 .into(view);
     }
 
+    public static void load(Context context, ImageView view, String url, BitmapTransformation transformation) {
+        Glide.with(context)
+                .load(url)
+                .bitmapTransform(transformation)
+                .crossFade()
+                .into(view);
+    }
 
 }

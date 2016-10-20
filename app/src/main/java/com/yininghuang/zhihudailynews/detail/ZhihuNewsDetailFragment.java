@@ -1,6 +1,7 @@
 package com.yininghuang.zhihudailynews.detail;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.comment.ZhihuCommentActivity;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import butterknife.BindView;
@@ -99,6 +101,9 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
                 break;
             }
             case R.id.comment: {
+                Intent intent = new Intent(getActivity(), ZhihuCommentActivity.class);
+                intent.putExtra("id", mDetailId);
+                startActivity(intent);
                 break;
             }
         }
@@ -144,7 +149,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
                 .setAction(R.string.refresh, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mPresenter.reload(mDetailId);
+                        mPresenter.reload();
                     }
                 }).show();
     }

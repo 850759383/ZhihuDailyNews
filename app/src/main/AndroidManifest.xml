@@ -23,6 +23,9 @@
 
         <activity android:name=".detail.ZhihuNewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"/>
+
+        <activity android:name=".comment.ZhihuCommentActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

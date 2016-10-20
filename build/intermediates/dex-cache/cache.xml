@@ -34,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="70376448d74c765ba02f5d817e92797108d57923">
+        sha1="290f2a33bb7e4cae34eeeaebe615790bc92fb19e">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_8a0c690a1e0c1bf91f3a4bfa081a79d78b1eec03\classes.dex" />
     </item>
     <item
@@ -66,21 +66,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_121302e6781e29142406fa6ff34713c8f9e264cd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5043650117b40a483fa00e143317cf461bdc1484\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_121302e6781e29142406fa6ff34713c8f9e264cd\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -124,7 +124,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
-        sha1="e66c1a9197f2b79253e19a55c7b3b75f46735982">
+        sha1="0d469242bcef78d6d187657ece6e2bcf8c34cac3">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_6209214baab70bb3003890c8a00ddede315bc463\classes.dex" />
     </item>
     <item
@@ -165,21 +165,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8a6ec1259371540d598f6a08b4d00b0671b576bb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.3"
         sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_6c2d7a454abdc935d8725c7a83138cff8b95fd68\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8a6ec1259371540d598f6a08b4d00b0671b576bb\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -201,6 +201,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_c905e408def7cd5d73b31908f21b1092f1e6ac97\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.1.0\2de7cd8b95b7021b1d597f049bcb422055119f2c\retrofit-2.1.0.jar"
         jumboMode="true"
         optimize="true"
@@ -216,15 +225,6 @@
         revision="24.0.3"
         sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
         <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_b8c109b0e2a3a7d5ee7dd4545419fac14aef6b38\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.3"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_c905e408def7cd5d73b31908f21b1092f1e6ac97\classes.dex" />
     </item>
     <item
         is-multidex="true"

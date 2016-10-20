@@ -28,6 +28,6 @@ public class ZhihuNewsDetailContract {
 
         void init(int id);
 
-        void reload(int id);
+        void reload();
     }
 }

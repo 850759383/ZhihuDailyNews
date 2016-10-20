@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/userName"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/userImage"
+            android:layout_toRightOf="@id/userImage"
+            android:maxLines="1"
+            android:text="沈公子" />
+
+        <TextView
+            android:id="@+id/content"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userImage"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/userImage"
+            android:text="咳嗽噢噢噢噢噢噢噢噢噢" />
+
+        <TextView
+            android:id="@+id/replyTo"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content"
+            android:layout_toRightOf="@+id/userImage"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/postTime"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/userName"
+            android:layout_below="@+id/replyTo"
+            android:layout_marginTop="16dp"
+            android:text="刚刚" />
+
+        <TextView
+            android:id="@+id/agreeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="0" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignTop="@+id/userImage"
+            android:layout_toLeftOf="@id/agreeCount" />
+    </RelativeLayout>
+</FrameLayout>
