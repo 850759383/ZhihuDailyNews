@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:background="@color/colorWhite"
-             android:clickable="true"
-             android:foreground="?attr/selectableItemBackground">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/userImage"
             android:layout_toRightOf="@id/userImage"
-            android:maxLines="1"
-            android:text="沈公子"/>
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/content"
@@ -34,10 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userName"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
-            android:layout_toRightOf="@+id/userImage"
-            android:text="咳嗽噢噢噢噢噢噢噢噢噢"/>
+            android:layout_toRightOf="@+id/userImage"/>
 
         <TextView
             android:id="@+id/replyTo"
@@ -45,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/content"
+            android:layout_marginTop="4dp"
             android:layout_toRightOf="@+id/userImage"
             android:textColor="@color/colorSecondText"
             android:visibility="gone"/>
@@ -56,8 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/userName"
             android:layout_below="@+id/replyTo"
-            android:layout_marginTop="16dp"
-            android:text="刚刚"/>
+            android:layout_marginTop="16dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -78,10 +76,7 @@
                 android:id="@+id/agreeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="0"/>
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
-
-
     </RelativeLayout>
 </FrameLayout>

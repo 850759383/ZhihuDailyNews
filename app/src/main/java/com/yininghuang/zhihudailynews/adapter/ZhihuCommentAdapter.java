@@ -10,12 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.R;
-import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.model.ZhihuComments;
 import com.yininghuang.zhihudailynews.utils.CircleTransform;
+import com.yininghuang.zhihudailynews.utils.DateUtils;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,13 +28,11 @@ import butterknife.ButterKnife;
 
 public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
-    List<ZhihuComments.ZhihuComment> mComments = new ArrayList<>();
-    private Context mContext;
-
-    private Boolean isLoadComplete = false;
-
     private static final int TYPE_LOADING = -1;
     private static final int TYPE_ITEM = 0;
+    List<ZhihuComments.ZhihuComment> mComments = new ArrayList<>();
+    private Context mContext;
+    private Boolean isLoadComplete = false;
 
     public ZhihuCommentAdapter(Context context) {
         mContext = context;
@@ -58,7 +57,7 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
             ImageLoader.load(mContext, viewHolder.userImage, comment.getAvatar(), new CircleTransform(mContext));
             viewHolder.userName.setText(comment.getAuthor());
             viewHolder.content.setText(comment.getContent());
-            viewHolder.postTime.setText(String.valueOf(comment.getTime()));
+            viewHolder.postTime.setText(DateUtils.format(new Date(comment.getTime() * 1000L)));
             viewHolder.agreeCount.setText(String.valueOf(comment.getLikes()));
             if (comment.getReplyTo() != null) {
                 viewHolder.replyTo.setVisibility(View.VISIBLE);
