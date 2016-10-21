@@ -14,7 +14,7 @@ public class ZhihuDailyContract {
 
         void init();
 
-        void update();
+        void reload();
 
         void queryHistoryStory(String date);
     }

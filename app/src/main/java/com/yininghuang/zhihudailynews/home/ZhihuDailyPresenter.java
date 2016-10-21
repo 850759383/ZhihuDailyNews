@@ -29,6 +29,15 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void init() {
+        fetchStory();
+    }
+
+    @Override
+    public void reload() {
+        fetchStory();
+    }
+
+    private void fetchStory() {
         mView.setLoadingStatus(true);
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
                 .getLatestNews()
@@ -50,13 +59,10 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     @Override
-    public void update() {
-        init();
-    }
-
-    @Override
     public void queryHistoryStory(String date) {
         mView.setLoadingStatus(true);
+        if (date == null)
+            return;
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
                 .getHistoryNews(date)
                 .subscribeOn(Schedulers.io())

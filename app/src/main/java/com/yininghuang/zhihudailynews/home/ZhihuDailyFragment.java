@@ -3,8 +3,8 @@ package com.yininghuang.zhihudailynews.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +18,6 @@ import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.utils.ItemDecoration;
 import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,14 +27,19 @@ import butterknife.ButterKnife;
 
 public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContract.View, ZhihuLatestAdapter.OnItemClickListener {
 
-    private ZhihuDailyContract.Presenter mPresenter;
-    private ZhihuLatestAdapter mAdapter;
-
-    private boolean isLoading = true;
-
-
     @BindView(R.id.contentRec)
     AutoLoadRecyclerView mContentRec;
+
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private ZhihuDailyContract.Presenter mPresenter;
+    private ZhihuLatestAdapter mAdapter;
+    private boolean isLoading = true;
+
+    public static ZhihuDailyFragment newInstance() {
+        return new ZhihuDailyFragment();
+    }
 
     @Nullable
     @Override
@@ -54,20 +57,26 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
         mContentRec.setAdapter(mAdapter);
         mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
         mPresenter.init();
-
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
             public void onLoad() {
-                if (isLoading)
-                    return;
-                List<ZhihuLatestNews> latestNewses = mAdapter.getLatestNewsList();
-                mPresenter.queryHistoryStory(latestNewses.get(latestNewses.size() - 1).getDate());
+                if (!isLoading)
+                    mPresenter.queryHistoryStory(mAdapter.getOldestNewsDate());
             }
         });
-    }
-
-    public static ZhihuDailyFragment newInstance() {
-        return new ZhihuDailyFragment();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!isLoading)
+                    mPresenter.reload();
+            }
+        });
     }
 
     @Override
@@ -85,6 +94,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     @Override
     public void setLoadingStatus(Boolean status) {
         isLoading = status;
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -106,7 +116,6 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void onPosterClick(ZhihuLatestNews.ZhihuTopStory topStory) {
-        Log.d("zhihu", topStory.getTitle());
         Intent intent = new Intent(getActivity(), ZhihuNewsDetailActivity.class);
         intent.putExtra("id", topStory.getId());
         startActivity(intent);
@@ -114,7 +123,6 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void onNewsClick(ZhihuLatestNews.ZhihuStory story) {
-        Log.d("zhihu", story.getTitle());
         Intent intent = new Intent(getActivity(), ZhihuNewsDetailActivity.class);
         intent.putExtra("id", story.getId());
         startActivity(intent);

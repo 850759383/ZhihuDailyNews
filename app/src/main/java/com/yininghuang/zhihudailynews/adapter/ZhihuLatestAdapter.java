@@ -91,7 +91,13 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mZhihuStoryList.addAll(news.getStories());
     }
 
-    public void setLoadComplete(){
+    public String getOldestNewsDate() {
+        if (mLatestNewsList.size() != 0)
+            return mLatestNewsList.get(mLatestNewsList.size() - 1).getDate();
+        return null;
+    }
+
+    public void setLoadComplete() {
         isLoadingComplete = true;
         notifyDataSetChanged();
     }
