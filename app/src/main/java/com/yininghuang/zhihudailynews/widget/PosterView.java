@@ -18,8 +18,6 @@ import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.utils.DisplayUtils;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,8 +36,8 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
 
     private int mSelectIndex = 0;
     private List<ZhihuLatestNews.ZhihuTopStory> mData;
-    private PosterAdapter posterAdapter;
-    private Subscription timer;
+    private PosterAdapter mPosterAdapter;
+    private Subscription mTimer;
 
     private long AUTO_SELECT_INTERVAL = 4000;
 
@@ -84,13 +82,13 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                if (timer != null)
-                    timer.unsubscribe();
+                if (mTimer != null)
+                    mTimer.unsubscribe();
                 break;
             }
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
-                timer = startTimer();
+                mTimer = startTimer();
                 break;
             }
         }
@@ -100,20 +98,24 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        timer = startTimer();
+        mTimer = startTimer();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (timer != null)
-            timer.unsubscribe();
+        if (mTimer != null)
+            mTimer.unsubscribe();
+    }
+
+    public PosterAdapter getAdapter() {
+        return mPosterAdapter;
     }
 
     public void initPosters(List<ZhihuLatestNews.ZhihuTopStory> data) {
         mData = data;
-        posterAdapter = new PosterAdapter(mData);
-        viewPager.setAdapter(posterAdapter);
+        mPosterAdapter = new PosterAdapter(mData);
+        viewPager.setAdapter(mPosterAdapter);
         viewPager.addOnPageChangeListener(this);
         mIndicatorLayout.removeAllViews();
         for (int i = 0; i < mData.size(); i++) {
@@ -143,7 +145,7 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     }
 
     public void setOnPosterClickListener(OnPosterClickListener listener) {
-        posterAdapter.setOnPosterClickListener(listener);
+        mPosterAdapter.setOnPosterClickListener(listener);
     }
 
     @Override

@@ -20,6 +20,8 @@ public class ZhihuCommentContract {
 
         void addHistoryComment(List<ZhihuComments.ZhihuComment> comments);
 
+        void setLoadingStatus(boolean status);
+
         void showLoadError();
 
         void showLoadComplete();
@@ -31,6 +33,6 @@ public class ZhihuCommentContract {
 
         void reload();
 
-        void queryHistory(int userId);
+        void queryHistoryComments(int userId);
     }
 }

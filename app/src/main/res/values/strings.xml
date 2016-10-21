@@ -6,4 +6,11 @@
     <string name="load_error">加载失败</string>
     <string name="refresh">刷新</string>
     <string name="comment">评论</string>
+
+    <string name="replyTo"><Data><![CDATA[<b>//%1$s：</b>]]> </Data>%2$s</string>
+    <string name="commentsWithCount">评论(%1$d)</string>
+
+    <string name="menuSettings">设置</string>
+    <string name="menuAbout">关于</string>
+    <string name="menuWatchComments">查看评论</string>
 </resources>

@@ -1,7 +1,8 @@
-package com.yininghuang.zhihudailynews.comment;
+package com.yininghuang.zhihudailynews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.model.ZhihuComments;
 import com.yininghuang.zhihudailynews.utils.CircleTransform;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,8 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
     List<ZhihuComments.ZhihuComment> mComments = new ArrayList<>();
     private Context mContext;
+
+    private Boolean isLoadComplete = false;
 
     private static final int TYPE_LOADING = -1;
     private static final int TYPE_ITEM = 0;
@@ -54,15 +55,18 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
         if (holder instanceof CommentViewHolder) {
             CommentViewHolder viewHolder = (CommentViewHolder) holder;
             ZhihuComments.ZhihuComment comment = mComments.get(position);
-            ImageLoader.load(mContext, viewHolder.getUserImage(), comment.getAvatar(), new CircleTransform(mContext));
-            viewHolder.getUserName().setText(comment.getAuthor());
-            viewHolder.getContent().setText(comment.getContent());
-            viewHolder.getPostTime().setText(comment.getTime() + "");
+            ImageLoader.load(mContext, viewHolder.userImage, comment.getAvatar(), new CircleTransform(mContext));
+            viewHolder.userName.setText(comment.getAuthor());
+            viewHolder.content.setText(comment.getContent());
+            viewHolder.postTime.setText(String.valueOf(comment.getTime()));
+            viewHolder.agreeCount.setText(String.valueOf(comment.getLikes()));
             if (comment.getReplyTo() != null) {
-                viewHolder.getReplyTo().setVisibility(View.VISIBLE);
-                viewHolder.getReplyTo().setText("回复 " + comment.getReplyTo().getAuthor() + "：" + comment.getReplyTo().getContent());
+                viewHolder.replyTo.setVisibility(View.VISIBLE);
+                viewHolder.replyTo.setText(
+                        Html.fromHtml(mContext.getString(R.string.replyTo, comment.getReplyTo().getAuthor(), comment.getReplyTo().getContent()))
+                );
             } else {
-                viewHolder.getReplyTo().setVisibility(View.GONE);
+                viewHolder.replyTo.setVisibility(View.GONE);
             }
         }
     }
@@ -76,8 +80,8 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (mComments.size() == 0) {
-            return 0;
+        if (mComments.size() == 0 || isLoadComplete) {
+            return mComments.size();
         }
         return mComments.size() + 1;
     }
@@ -88,6 +92,11 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
     public List<ZhihuComments.ZhihuComment> getComments() {
         return mComments;
+    }
+
+    public void setLoadComplete() {
+        isLoadComplete = true;
+        notifyItemRemoved(getItemCount() - 1);
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -113,30 +122,6 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
         public CommentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-        }
-
-        public ImageView getUserImage() {
-            return userImage;
-        }
-
-        public TextView getUserName() {
-            return userName;
-        }
-
-        public TextView getContent() {
-            return content;
-        }
-
-        public TextView getReplyTo() {
-            return replyTo;
-        }
-
-        public TextView getPostTime() {
-            return postTime;
-        }
-
-        public TextView getAgreeCount() {
-            return agreeCount;
         }
     }
 }

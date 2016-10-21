@@ -21,6 +21,10 @@ public class ZhihuDailyContract {
 
     public interface View extends BaseView<Presenter> {
 
+        void setLoadingStatus(Boolean status);
+
+        void setLoadingComplete();
+
         void showStories(ZhihuLatestNews stories);
 
         void addHistoryStories(ZhihuLatestNews stories);

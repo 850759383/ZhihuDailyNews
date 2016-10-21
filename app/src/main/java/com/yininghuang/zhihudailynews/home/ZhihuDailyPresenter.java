@@ -21,7 +21,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     private RetrofitHelper mRetrofitHelper;
     private ZhihuDailyContract.View mView;
 
-    public ZhihuDailyPresenter(ZhihuDailyContract.View view, RetrofitHelper retrofitHelper){
+    public ZhihuDailyPresenter(ZhihuDailyContract.View view, RetrofitHelper retrofitHelper) {
         mView = view;
         mRetrofitHelper = retrofitHelper;
         view.setPresenter(this);
@@ -29,6 +29,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void init() {
+        mView.setLoadingStatus(true);
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
                 .getLatestNews()
                 .subscribeOn(Schedulers.io())
@@ -37,6 +38,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     @Override
                     public void call(ZhihuLatestNews zhihuLatestNews) {
                         mView.showStories(zhihuLatestNews);
+                        mView.setLoadingStatus(false);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -54,6 +56,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void queryHistoryStory(String date) {
+        mView.setLoadingStatus(true);
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
                 .getHistoryNews(date)
                 .subscribeOn(Schedulers.io())
@@ -62,11 +65,15 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     @Override
                     public void call(ZhihuLatestNews zhihuLatestNews) {
                         mView.addHistoryStories(zhihuLatestNews);
+                        mView.setLoadingStatus(false);
+                        if (zhihuLatestNews.getStories().size() == 0)
+                            mView.setLoadingComplete();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
+                        mView.setLoadingStatus(false);
                     }
                 });
         subscriptions.add(sb);

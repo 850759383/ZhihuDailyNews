@@ -41,6 +41,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
     }
 
     private void fetchComments() {
+        mView.setLoadingStatus(true);
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Constants.ZHIHU_BASE_URL)
                 .getComments(newsId)
                 .subscribeOn(Schedulers.io())
@@ -50,27 +51,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
                     public void call(ZhihuComments zhihuComments) {
                         mView.showCommentsCount(zhihuComments.getCount());
                         mView.showComments(zhihuComments.getComments());
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        mView.showLoadError();
-                    }
-                });
-        mSubscriptionList.add(sb);
-    }
-
-    @Override
-    public void queryHistory(int userId) {
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Constants.ZHIHU_BASE_URL)
-                .getHistoryComments(newsId, userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuComments>() {
-                    @Override
-                    public void call(ZhihuComments zhihuComments) {
-                        mView.addHistoryComment(zhihuComments.getComments());
+                        mView.setLoadingStatus(false);
                         if (zhihuComments.getComments().size() < 20)
                             mView.showLoadComplete();
                     }
@@ -79,6 +60,32 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
                         mView.showLoadError();
+                        mView.setLoadingStatus(false);
+                    }
+                });
+        mSubscriptionList.add(sb);
+    }
+
+    @Override
+    public void queryHistoryComments(int userId) {
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Constants.ZHIHU_BASE_URL)
+                .getHistoryComments(newsId, userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ZhihuComments>() {
+                    @Override
+                    public void call(ZhihuComments zhihuComments) {
+                        mView.addHistoryComment(zhihuComments.getComments());
+                        mView.setLoadingStatus(false);
+                        if (zhihuComments.getComments().size() < 20)
+                            mView.showLoadComplete();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                        mView.showLoadError();
+                        mView.setLoadingStatus(false);
                     }
                 });
         mSubscriptionList.add(sb);

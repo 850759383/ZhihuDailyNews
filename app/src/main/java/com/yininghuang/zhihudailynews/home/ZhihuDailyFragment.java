@@ -15,6 +15,8 @@ import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
+import com.yininghuang.zhihudailynews.utils.ItemDecoration;
+import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
 import java.util.List;
 
@@ -30,11 +32,11 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     private ZhihuDailyContract.Presenter mPresenter;
     private ZhihuLatestAdapter mAdapter;
 
-    private int mLastVisiablePosition = 0;
-    private Boolean isLoading = false;
+    private boolean isLoading = true;
+
 
     @BindView(R.id.contentRec)
-    RecyclerView contentRec;
+    AutoLoadRecyclerView mContentRec;
 
     @Nullable
     @Override
@@ -46,24 +48,20 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
-        contentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuLatestAdapter(getActivity());
         mAdapter.setOnItemClickListener(this);
-        contentRec.setAdapter(mAdapter);
+        mContentRec.setAdapter(mAdapter);
+        mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
         mPresenter.init();
 
-        contentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
+        mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mLastVisiablePosition = ((LinearLayoutManager) contentRec.getLayoutManager()).findLastVisibleItemPosition();
-                Log.d("hyn", mLastVisiablePosition + "--" + mAdapter.getItemCount());
-                if (mLastVisiablePosition > mAdapter.getItemCount() - 2 && !isLoading && dy > 0) {
-                    isLoading = true;
-                    List<ZhihuLatestNews> latestNewses = mAdapter.getLatestNewsList();
-                    mPresenter.queryHistoryStory(latestNewses.get(latestNewses.size() - 1).getDate());
-                }
+            public void onLoad() {
+                if (isLoading)
+                    return;
+                List<ZhihuLatestNews> latestNewses = mAdapter.getLatestNewsList();
+                mPresenter.queryHistoryStory(latestNewses.get(latestNewses.size() - 1).getDate());
             }
         });
     }
@@ -80,9 +78,19 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void addHistoryStories(ZhihuLatestNews stories) {
-        isLoading = false;
         mAdapter.addNews(stories);
         mAdapter.notifyItemRangeInserted(mAdapter.getZhihuStoryList().size() - stories.getStories().size() + 1, stories.getStories().size());
+    }
+
+    @Override
+    public void setLoadingStatus(Boolean status) {
+        isLoading = status;
+    }
+
+    @Override
+    public void setLoadingComplete() {
+        mContentRec.setLoadComplete();
+        mAdapter.setLoadComplete();
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.yininghuang.zhihudailynews.home;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
@@ -35,5 +37,9 @@ public class MainActivity extends AppCompatActivity {
         new ZhihuDailyPresenter(dailyFragment, RetrofitHelper.getInstance());
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

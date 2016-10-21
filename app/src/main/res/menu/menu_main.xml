@@ -2,7 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/comment"
-        android:title="@string/menuWatchComments"
+        android:id="@+id/about"
+        android:title="@string/menuAbout"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/menuSettings"
         app:showAsAction="never"/>
 </menu>

@@ -2,15 +2,19 @@ package com.yininghuang.zhihudailynews.comment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.adapter.ZhihuCommentAdapter;
 import com.yininghuang.zhihudailynews.model.ZhihuComments;
+import com.yininghuang.zhihudailynews.utils.ItemDecoration;
+import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
 import java.util.List;
 
@@ -27,8 +31,13 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     private ZhihuCommentContract.Presenter mPresenter;
     private ZhihuCommentAdapter mAdapter;
 
+    private boolean isLoading = true;
+
     @BindView(R.id.contentRec)
-    RecyclerView mContentRec;
+    AutoLoadRecyclerView mContentRec;
+
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -43,7 +52,30 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuCommentAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);
+        mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
         mPresenter.init(getArguments().getInt("id"));
+        mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
+            @Override
+            public void onLoad() {
+                if (isLoading)
+                    return;
+                List<ZhihuComments.ZhihuComment> comments = mAdapter.getComments();
+                if (!comments.isEmpty())
+                    mPresenter.queryHistoryComments(comments.get(comments.size() - 1).getId());
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.reload();
+            }
+        });
+    }
+
+    @Override
+    public void setLoadingStatus(boolean status) {
+        isLoading = status;
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public static ZhihuCommentFragment newInstance(int id) {
@@ -62,7 +94,7 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
 
     @Override
     public void showCommentsCount(int count) {
-        getActivity().setTitle("评论(" + count + ")");
+        ((ZhihuCommentActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.commentsWithCount, count));
     }
 
     @Override
@@ -73,12 +105,19 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
 
     @Override
     public void showLoadError() {
-
+        Snackbar.make(mRootView, R.string.load_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.refresh, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mPresenter.reload();
+                    }
+                }).show();
     }
 
     @Override
     public void showLoadComplete() {
-
+        mAdapter.setLoadComplete();
+        mContentRec.setLoadComplete();
     }
 
     @Override
