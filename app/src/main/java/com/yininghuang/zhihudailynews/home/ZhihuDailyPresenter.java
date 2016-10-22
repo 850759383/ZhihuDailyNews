@@ -2,6 +2,7 @@ package com.yininghuang.zhihudailynews.home;
 
 import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
+import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 
@@ -39,7 +40,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     private void fetchStory() {
         mView.setLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
                 .getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +64,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         mView.setLoadingStatus(true);
         if (date == null)
             return;
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
                 .getHistoryNews(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

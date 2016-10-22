@@ -18,4 +18,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract void initViews(@Nullable Bundle savedInstanceState);
+
+    public Boolean onBackPressed() {
+        return false;
+    }
 }

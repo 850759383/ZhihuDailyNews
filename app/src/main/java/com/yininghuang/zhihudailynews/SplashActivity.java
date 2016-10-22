@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.yininghuang.zhihudailynews.home.MainActivity;
+import com.yininghuang.zhihudailynews.home.ZhihuDailyActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuImage;
+import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
@@ -46,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Subscription sb = RetrofitHelper.getInstance()
-                .createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
+                .createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
                 .getStartupImage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, ZhihuDailyActivity.class);
                         startActivity(intent);
                         finish();
                     }

@@ -2,6 +2,7 @@ package com.yininghuang.zhihudailynews.detail;
 
 import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.model.ZhihuNewsContent;
+import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 
@@ -41,7 +42,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
     }
 
     private void fetchNewsContent(int id) {
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Constants.ZHIHU_BASE_URL)
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
                 .getNewsContent(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,7 +53,12 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                         if (content.getType() == 0) {
                             mView.showBody(convertResult(content.getBody()));
                             mView.showAppBarImage(content.getImage());
-                            mView.setImageSource(content.getImageSource());
+                            if (!Constants.NO_IMAGE_MODE){
+                                mView.setImageSource(content.getImageSource());
+                                mView.setBlockImageDisplay(false);
+                            } else {
+                                mView.setBlockImageDisplay(true);
+                            }
                         } else {
                             mView.showEmptyBody(content.getShareUrl());
                         }

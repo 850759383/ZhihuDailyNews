@@ -54,7 +54,7 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
         if (holder instanceof CommentViewHolder) {
             CommentViewHolder viewHolder = (CommentViewHolder) holder;
             ZhihuComments.ZhihuComment comment = mComments.get(position);
-            ImageLoader.load(mContext, viewHolder.userImage, comment.getAvatar(), new CircleTransform(mContext));
+            ImageLoader.load(mContext, viewHolder.userImage, comment.getAvatar(), new CircleTransform(mContext), R.drawable.user_avatar);
             viewHolder.userName.setText(comment.getAuthor());
             viewHolder.content.setText(comment.getContent());
             viewHolder.postTime.setText(DateUtils.format(new Date(comment.getTime() * 1000L)));

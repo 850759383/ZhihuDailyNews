@@ -19,6 +19,8 @@ public class ZhihuNewsDetailContract {
 
         void showLoadError();
 
+        void setBlockImageDisplay(Boolean status);
+
         void setTitle(String title);
 
         void setImageSource(String source);

@@ -3,6 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/comment"
-        android:title="@string/menuWatchComments"
+        android:title="@string/watchComments"
         app:showAsAction="never"/>
 </menu>

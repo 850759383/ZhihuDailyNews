@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/about_me">
+        <Preference
+            android:key="repo_url"
+            android:summary="@string/repo_url"
+            android:title="@string/repo_url_title"/>
 
+        <Preference
+            android:key="zhihu_url"
+            android:summary="@string/zhihu_url"
+            android:title="@string/zhihu_user_home"/>
+
+        <Preference
+            android:key="mail"
+            android:summary="@string/mail_url"
+            android:title="@string/mail"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about">
+
+        <Preference
+            android:key="license"
+            android:title="@string/license"/>
+
+        <Preference
+            android:key="version"
+            android:title="@string/software_version"/>
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,25 +32,27 @@ import butterknife.ButterKnife;
 
 public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDetailContract.View {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.appbarImage)
+    ImageView mAppbarImage;
+    @BindView(R.id.webView)
+    WebView mWebView;
+    @BindView(R.id.title)
+    TextView mTitle;
+    @BindView(R.id.imageSource)
+    TextView mImageSource;
     private int mDetailId = -1;
-
     private ZhihuNewsDetailContract.Presenter mPresenter;
     private View mRootView;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.appbarImage)
-    ImageView mAppbarImage;
-
-    @BindView(R.id.webView)
-    WebView mWebView;
-
-    @BindView(R.id.title)
-    TextView mTitle;
-
-    @BindView(R.id.imageSource)
-    TextView mImageSource;
+    public static ZhihuNewsDetailFragment newInstance(int id) {
+        Bundle args = new Bundle();
+        args.putInt("id", id);
+        ZhihuNewsDetailFragment fragment = new ZhihuNewsDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,14 +110,6 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         return super.onOptionsItemSelected(item);
     }
 
-    public static ZhihuNewsDetailFragment newInstance(int id) {
-        Bundle args = new Bundle();
-        args.putInt("id", id);
-        ZhihuNewsDetailFragment fragment = new ZhihuNewsDetailFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void showBody(String body) {
         mWebView.loadDataWithBaseURL("file:///android_asset/", body, "text/html", "utf-8", null);
@@ -141,6 +133,11 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     @Override
     public void setImageSource(String source) {
         mImageSource.setText(source);
+    }
+
+    @Override
+    public void setBlockImageDisplay(Boolean status) {
+        mWebView.getSettings().setBlockNetworkImage(status);
     }
 
     @Override

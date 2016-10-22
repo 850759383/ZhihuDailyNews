@@ -2,6 +2,7 @@ package com.yininghuang.zhihudailynews.comment;
 
 import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.model.ZhihuComments;
+import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuCommentService;
 
@@ -42,7 +43,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
 
     private void fetchComments() {
         mView.setLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Constants.ZHIHU_BASE_URL)
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL)
                 .getComments(newsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -68,7 +69,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
 
     @Override
     public void queryHistoryComments(int userId) {
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Constants.ZHIHU_BASE_URL)
+        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL)
                 .getHistoryComments(newsId, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

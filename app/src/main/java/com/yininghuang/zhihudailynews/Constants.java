@@ -6,8 +6,13 @@ package com.yininghuang.zhihudailynews;
 
 public class Constants {
 
-    private static final int ZHIHU_API_VERSION = 4;
+    public static final String ZHIHU_USER_HOME_URL = "https://www.zhihu.com/people/undefeated";
 
-    public static final String ZHIHU_BASE_URL = "http://news-at.zhihu.com/api/" + ZHIHU_API_VERSION+ "/";
+    public static final String GITHUB_REPO_URL = "https://github.com/850759383/ZhihuDailyNews";
 
+    public static final String E_MAIL = "iamyining@yahoo.com";
+
+    public static boolean NO_IMAGE_MODE = false;
+
+    public static boolean USE_WEBVIEW = true;
 }
