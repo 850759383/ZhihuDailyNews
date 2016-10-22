@@ -1,10 +1,10 @@
 package com.yininghuang.zhihudailynews.settings;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
@@ -12,21 +12,11 @@ import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
 
-import java.io.File;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by Yining Huang on 2016/10/22.
  */
 
 public class AboutFragment extends PreferenceFragmentCompat {
-
 
 
     public static AboutFragment newInstance() {
@@ -54,7 +44,11 @@ public class AboutFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(Preference preference) {
                 Uri uri = Uri.parse(Constants.GITHUB_REPO_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         });
@@ -64,7 +58,11 @@ public class AboutFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(Preference preference) {
                 Uri uri = Uri.parse(Constants.ZHIHU_USER_HOME_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         });
@@ -75,7 +73,11 @@ public class AboutFragment extends PreferenceFragmentCompat {
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{Constants.E_MAIL});
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         });
