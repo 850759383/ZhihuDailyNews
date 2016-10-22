@@ -61,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
-                        toMainActivity(2);
+                        toMainActivity(0);
                     }
                 });
         subscriptions.add(sb);

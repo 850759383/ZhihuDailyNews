@@ -21,6 +21,7 @@
     <string name="use_webview">使用内置浏览器</string>
     <string name="view_html_in_app">应用内查看链接</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="clear_success">清除成功</string>
 
     <string name="about_me">关于我</string>
     <string name="repo_url_title">项目地址</string>

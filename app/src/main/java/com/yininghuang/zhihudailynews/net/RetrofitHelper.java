@@ -36,7 +36,7 @@ public class RetrofitHelper {
 
     public OkHttpClient createClient() {
         return new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(7, TimeUnit.SECONDS)
                 .build();
     }
 }

@@ -25,7 +25,8 @@ public class ZhihuDailyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_zhihu_daily);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.main_page);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.main_page);
 
         ZhihuDailyFragment dailyFragment = (ZhihuDailyFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);

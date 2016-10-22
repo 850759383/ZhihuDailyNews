@@ -76,7 +76,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         .subscribe(new Action1<Boolean>() {
                             @Override
                             public void call(Boolean aBoolean) {
-                                Snackbar.make(getView(), "清除成功", Snackbar.LENGTH_SHORT).show();
+                                if (getView() != null)
+                                    Snackbar.make(getView(), R.string.clear_success, Snackbar.LENGTH_SHORT)
+                                            .show();
                             }
                         }, new Action1<Throwable>() {
                             @Override
@@ -95,7 +97,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         if (dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i=0; i<children.length; i++) {
+            for (int i = 0; i < children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
                 if (!success) {
                     return false;

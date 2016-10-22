@@ -39,7 +39,7 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     private PosterAdapter mPosterAdapter;
     private Subscription mTimer;
 
-    private long AUTO_SELECT_INTERVAL = 4000;
+    private static final long AUTO_SELECT_INTERVAL = 4000;
 
     @BindView(R.id.indicatorLayout)
     LinearLayout mIndicatorLayout;

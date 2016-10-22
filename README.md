@@ -6,6 +6,11 @@
 ## API来源
     [知乎日报API分析](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)
 
+## 截屏
+ <img src="./Screenshot1.png" width="240" height="426" />
+ <img src="./Screenshot2.png" width="240" height="426" />
+ <img src="./Screenshot3.png" width="240" height="426" />
+
 ## 依赖
     Okhttp 3.4.1
     Retrofit2 2.1.0

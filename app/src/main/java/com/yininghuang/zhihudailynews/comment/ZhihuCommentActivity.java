@@ -27,8 +27,10 @@ public class ZhihuCommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_zhihu_comment);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.comment);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.comment);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         ZhihuCommentFragment fragment = (ZhihuCommentFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);

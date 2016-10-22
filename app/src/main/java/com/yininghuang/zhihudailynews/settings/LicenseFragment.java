@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 
 public class LicenseFragment extends BaseFragment {
 
+    private static final String LICENSE_URL = "file:///android_asset/license.html";
+
     @BindView(R.id.webView)
     WebView mWebView;
 
@@ -36,7 +38,7 @@ public class LicenseFragment extends BaseFragment {
 
     @Override
     public void initViews(@Nullable Bundle savedInstanceState) {
-        mWebView.loadUrl("file:///android_asset/license.html");
+        mWebView.loadUrl(LICENSE_URL);
     }
 
     @Override

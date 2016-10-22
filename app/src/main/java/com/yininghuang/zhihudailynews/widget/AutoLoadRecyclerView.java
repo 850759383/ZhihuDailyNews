@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 
 public class AutoLoadRecyclerView extends RecyclerView {
 
-    private int mLastVisiblePosition = 0;
     private OnLoadingListener mOnLoadingListener;
     private boolean isLoadingComplete = false;
 
@@ -38,8 +37,8 @@ public class AutoLoadRecyclerView extends RecyclerView {
         if (!(getLayoutManager() instanceof LinearLayoutManager))
             throw new IllegalArgumentException("LayoutManager must be subclass of LinearLayoutManager");
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
-        mLastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-        if (mLastVisiblePosition > layoutManager.getItemCount() - 2 && dy > 0 && !isLoadingComplete) {
+        int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+        if (lastVisiblePosition > layoutManager.getItemCount() - 2 && dy > 0 && !isLoadingComplete) {
             if (mOnLoadingListener != null)
                 mOnLoadingListener.onLoad();
         }
