@@ -4,12 +4,14 @@
     <PreferenceCategory android:title="@string/common">
         <CheckBoxPreference
             android:checked="false"
+            android:defaultValue="false"
             android:key="no_image"
             android:summary="@string/no_image_in_2g_3g_4g"
             android:title="@string/no_image_mode"/>
 
         <CheckBoxPreference
             android:checked="true"
+            android:defaultValue="true"
             android:key="use_webview"
             android:summary="@string/view_html_in_app"
             android:title="@string/use_webview"/>

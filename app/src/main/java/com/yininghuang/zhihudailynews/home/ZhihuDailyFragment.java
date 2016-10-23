@@ -81,6 +81,8 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void showStories(ZhihuLatestNews stories) {
+        mAdapter.getLatestNewsList().clear();
+        mAdapter.getZhihuStoryList().clear();
         mAdapter.addNews(stories);
         mAdapter.notifyDataSetChanged();
     }

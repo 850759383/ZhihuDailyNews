@@ -1,6 +1,5 @@
 package com.yininghuang.zhihudailynews.home;
 
-import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;

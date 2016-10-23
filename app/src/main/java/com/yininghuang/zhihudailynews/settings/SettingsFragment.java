@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
 
@@ -32,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        getPreferenceManager().setSharedPreferencesName(SettingsActivity.PREFERENCE__USER_SETTINGS);
+        getPreferenceManager().setSharedPreferencesName(UserSettingConstants.PREFERENCE__USER_SETTINGS);
         addPreferencesFromResource(R.xml.fragment_settings);
 
         findPreference("about").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -50,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference("no_image").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Constants.NO_IMAGE_MODE = (boolean) newValue;
+                UserSettingConstants.NO_IMAGE_MODE = (boolean) newValue;
                 return true;
             }
         });
@@ -58,7 +57,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference("use_webview").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Constants.USE_WEBVIEW = (boolean) newValue;
+                UserSettingConstants.USE_WEBVIEW = (boolean) newValue;
                 return true;
             }
         });

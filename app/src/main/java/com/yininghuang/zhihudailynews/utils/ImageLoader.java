@@ -10,7 +10,7 @@ import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestListener;
-import com.yininghuang.zhihudailynews.Constants;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,7 +70,7 @@ public class ImageLoader {
     }
 
     private static DrawableTypeRequest<String> getDrawableTypeRequest(Context context, String url) {
-        if (Constants.NO_IMAGE_MODE)
+        if (UserSettingConstants.NO_IMAGE_MODE)
             return Glide.with(context)
                     .using(cacheOnlyStreamLoader)
                     .load(url);

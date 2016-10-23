@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.yininghuang.zhihudailynews.Constants;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
 
@@ -17,6 +16,12 @@ import com.yininghuang.zhihudailynews.utils.ActivityUtils;
  */
 
 public class AboutFragment extends PreferenceFragmentCompat {
+
+    public static final String ZHIHU_USER_HOME_URL = "https://www.zhihu.com/people/undefeated";
+
+    public static final String GIT_HUB_REPO_URL = "https://github.com/850759383/ZhihuDailyNews";
+
+    public static final String E_MAIL = "iamyining@yahoo.com";
 
 
     public static AboutFragment newInstance() {
@@ -42,7 +47,7 @@ public class AboutFragment extends PreferenceFragmentCompat {
         findPreference("repo_url").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Uri uri = Uri.parse(Constants.GITHUB_REPO_URL);
+                Uri uri = Uri.parse(GIT_HUB_REPO_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 try {
                     startActivity(intent);
@@ -56,7 +61,7 @@ public class AboutFragment extends PreferenceFragmentCompat {
         findPreference("zhihu_url").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Uri uri = Uri.parse(Constants.ZHIHU_USER_HOME_URL);
+                Uri uri = Uri.parse(ZHIHU_USER_HOME_URL);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 try {
                     startActivity(intent);
@@ -72,7 +77,7 @@ public class AboutFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{Constants.E_MAIL});
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{E_MAIL});
                 try {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {

@@ -1,6 +1,6 @@
 package com.yininghuang.zhihudailynews.detail;
 
-import com.yininghuang.zhihudailynews.Constants;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.model.ZhihuNewsContent;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
@@ -53,7 +53,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                         if (content.getType() == 0) {
                             mView.showBody(convertResult(content.getBody()));
                             mView.showAppBarImage(content.getImage());
-                            if (!Constants.NO_IMAGE_MODE){
+                            if (!UserSettingConstants.NO_IMAGE_MODE){
                                 mView.setImageSource(content.getImageSource());
                                 mView.setBlockImageDisplay(false);
                             } else {

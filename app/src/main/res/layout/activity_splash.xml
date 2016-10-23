@@ -5,7 +5,8 @@
     <ImageView
         android:id="@+id/startupImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:foreground="@color/colorBlackTranslucent85"/>
 
     <TextView
         android:id="@+id/describe"

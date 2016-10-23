@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.yininghuang.zhihudailynews.settings.SettingsActivity;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 /**
  * Created by Yining Huang on 2016/10/22.
@@ -18,8 +19,8 @@ public class App extends Application {
     }
 
     private void loadUserSettings() {
-        SharedPreferences preferences = getSharedPreferences(SettingsActivity.PREFERENCE__USER_SETTINGS, MODE_PRIVATE);
-        Constants.NO_IMAGE_MODE = preferences.getBoolean("no_image", Constants.NO_IMAGE_MODE);
-        Constants.USE_WEBVIEW = preferences.getBoolean("use_webview", Constants.USE_WEBVIEW);
+        SharedPreferences preferences = getSharedPreferences(UserSettingConstants.PREFERENCE__USER_SETTINGS, MODE_PRIVATE);
+        UserSettingConstants.NO_IMAGE_MODE = preferences.getBoolean("no_image", UserSettingConstants.NO_IMAGE_MODE);
+        UserSettingConstants.USE_WEBVIEW = preferences.getBoolean("use_webview", UserSettingConstants.USE_WEBVIEW);
     }
 }

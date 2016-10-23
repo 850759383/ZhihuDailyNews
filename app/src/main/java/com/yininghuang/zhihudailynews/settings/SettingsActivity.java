@@ -14,19 +14,21 @@ import com.yininghuang.zhihudailynews.utils.ActivityUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String PREFERENCE__USER_SETTINGS = "user_settings";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ActivityUtils.replaceFragment(
-                getSupportFragmentManager(),
-                SettingsFragment.newInstance(),
-                R.id.mainFrameLayout,
-                "SettingsFragment");
+        if (getSupportFragmentManager().findFragmentById(R.id.mainFrameLayout) == null) {
+
+            ActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    SettingsFragment.newInstance(),
+                    R.id.mainFrameLayout,
+                    "SettingsFragment");
+        }
     }
 
     @Override
