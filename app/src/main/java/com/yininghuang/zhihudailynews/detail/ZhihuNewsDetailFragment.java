@@ -1,7 +1,9 @@
 package com.yininghuang.zhihudailynews.detail;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -15,12 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.browser.WebViewActivity;
 import com.yininghuang.zhihudailynews.comment.ZhihuCommentActivity;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import butterknife.BindView;
@@ -84,6 +89,26 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setAppCacheEnabled(false);
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (UserSettingConstants.USE_WEBVIEW) {
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                    return true;
+                }
+                try {
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            }
+        });
         mPresenter.init(mDetailId);
     }
 

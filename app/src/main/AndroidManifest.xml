@@ -34,7 +34,11 @@
 
         <activity
             android:name=".settings.SettingsActivity"
+            android:theme="@style/AppTheme"
             android:label="@string/license"/>
+
+        <activity android:name=".browser.WebViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

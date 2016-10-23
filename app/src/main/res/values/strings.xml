@@ -32,4 +32,6 @@
     <string name="software_version">软件版本</string>
     <string name="zhihu_user_home">知乎主页</string>
     <string name="zhihu_url">\u0040Undefeated</string>
+
+    <string name="open_in_browser">在浏览器中打开</string>
 </resources>

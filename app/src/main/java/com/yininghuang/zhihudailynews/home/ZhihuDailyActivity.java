@@ -52,6 +52,7 @@ public class ZhihuDailyActivity extends AppCompatActivity {
             case R.id.settings: {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
