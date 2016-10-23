@@ -45,8 +45,10 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+        }
         String url = getIntent().getStringExtra("url");
 
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -100,10 +102,7 @@ public class WebViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                if (mWebView.canGoBack())
-                    mWebView.goBack();
-                else
-                    onBackPressed();
+                finish();
                 return true;
             }
             case R.id.openInBrowser: {

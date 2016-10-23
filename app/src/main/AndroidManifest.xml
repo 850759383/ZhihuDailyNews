@@ -3,10 +3,13 @@
           package="com.yininghuang.zhihudailynews">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="${appName}"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -34,10 +37,11 @@
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/license"/>
+            android:label="@string/license"
+            android:theme="@style/AppTheme"/>
 
-        <activity android:name=".browser.WebViewActivity"
+        <activity
+            android:name=".browser.WebViewActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

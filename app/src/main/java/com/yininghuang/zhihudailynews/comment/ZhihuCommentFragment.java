@@ -27,17 +27,22 @@ import butterknife.ButterKnife;
 
 public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentContract.View {
 
+    @BindView(R.id.contentRec)
+    AutoLoadRecyclerView mContentRec;
+    @BindView(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private View mRootView;
     private ZhihuCommentContract.Presenter mPresenter;
     private ZhihuCommentAdapter mAdapter;
-
     private boolean isLoading = true;
 
-    @BindView(R.id.contentRec)
-    AutoLoadRecyclerView mContentRec;
-
-    @BindView(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    public static ZhihuCommentFragment newInstance(int id) {
+        Bundle args = new Bundle();
+        args.putInt("id", id);
+        ZhihuCommentFragment fragment = new ZhihuCommentFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -54,6 +59,7 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
         mContentRec.setAdapter(mAdapter);
         mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
         mPresenter.init(getArguments().getInt("id"));
+
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
             public void onLoad() {
@@ -76,14 +82,6 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     public void setLoadingStatus(boolean status) {
         isLoading = status;
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    public static ZhihuCommentFragment newInstance(int id) {
-        Bundle args = new Bundle();
-        args.putInt("id", id);
-        ZhihuCommentFragment fragment = new ZhihuCommentFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

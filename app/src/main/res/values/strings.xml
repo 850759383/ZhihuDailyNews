@@ -6,6 +6,7 @@
     <string name="loading">正在加载</string>
     <string name="refresh">刷新</string>
     <string name="comment">评论</string>
+    <string name="confirm">确认</string>
 
     <string name="replyTo"><Data><![CDATA[<b>//%1$s：</b>]]> </Data>%2$s</string>
     <string name="commentsWithCount">评论(%1$d)</string>
@@ -17,11 +18,16 @@
     <string name="common">常规</string>
     <string name="others">其他</string>
     <string name="no_image_mode">无图模式</string>
-    <string name="no_image_in_2g_3g_4g">2G/3G/4G网络不加载图片</string>
+    <string name="only_load_image_wifi">仅在Wifi下加载图片</string>
     <string name="use_webview">使用内置浏览器</string>
     <string name="view_html_in_app">应用内查看链接</string>
     <string name="clear_cache">清除缓存</string>
     <string name="clear_success">清除成功</string>
+    <string name="disclaimer">免责条款</string>
+    <string name="disclaimer_content">
+        API由 知乎(Zhihu.Inc)提供，获取与共享之行为或有侵犯知乎权益的嫌疑。若被告知需停止共享与使用，本人会及时删除整个项目。\n
+        请您暸解相关情况，并遵守知乎协议。
+    </string>
 
     <string name="about_me">关于我</string>
     <string name="repo_url_title">项目地址</string>

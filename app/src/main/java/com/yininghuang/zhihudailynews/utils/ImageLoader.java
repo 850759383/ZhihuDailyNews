@@ -70,7 +70,7 @@ public class ImageLoader {
     }
 
     private static DrawableTypeRequest<String> getDrawableTypeRequest(Context context, String url) {
-        if (UserSettingConstants.NO_IMAGE_MODE)
+        if (UserSettingConstants.NO_IMAGE_MODE && !NetworkChecker.isWifiConnected(context))
             return Glide.with(context)
                     .using(cacheOnlyStreamLoader)
                     .load(url);

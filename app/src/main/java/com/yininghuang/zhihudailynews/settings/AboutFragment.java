@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
@@ -94,6 +95,19 @@ public class AboutFragment extends PreferenceFragmentCompat {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        findPreference("disclaimer").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.disclaimer)
+                        .setMessage(R.string.disclaimer_content)
+                        .setPositiveButton(R.string.confirm, null)
+                        .create()
+                        .show();
+                return false;
+            }
+        });
     }
 
     @Override

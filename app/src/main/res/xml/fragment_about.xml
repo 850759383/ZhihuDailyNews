@@ -18,6 +18,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about">
+        <Preference
+            android:key="disclaimer"
+            android:title="@string/disclaimer"/>
 
         <Preference
             android:key="license"
