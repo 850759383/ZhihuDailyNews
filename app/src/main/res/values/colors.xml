@@ -4,10 +4,21 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#CDDC39</color>
 
+    <color name="darkColorPrimary">#37474f</color>
+    <color name="darkColorPrimaryDark">#263238</color>
+    <color name="darkColorAccent">#607D8B</color>
+
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondText">#757575</color>
+    <color name="colorPrimaryTextDark">#ffffff</color>
+    <color name="colorSecondTextDark">#b2ffffff</color>
     <color name="colorDivider">#BDBDBD</color>
 
+    <color name="viewBackground">#f7f7f7</color>
+    <color name="viewBackgroundDark">#455A64</color>
+
     <color name="colorWhite">#ffffff</color>
+    <color name="colorTranslucent">#00000000</color>
     <color name="colorBlackTranslucent85">#26000000</color>
+    <color name="colorBlackTranslucent70">#4b000000</color>
 </resources>

@@ -7,22 +7,70 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+        <item name="themeName">light</item>
+        <item name="textColor">@color/colorPrimaryText</item>
+        <item name="textSecondaryColor">@color/colorSecondText</item>
+        <item name="viewBackground">@color/viewBackground</item>
+        <item name="posterImageForegroundColor">@color/colorBlackTranslucent85</item>
+        <item name="imageForegroundColor">@color/colorTranslucent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+        <item name="themeName">dark</item>
+        <item name="textColor">@color/colorPrimaryTextDark</item>
+        <item name="textSecondaryColor">@color/colorSecondTextDark</item>
+        <item name="viewBackground">#455A64</item>
+        <item name="posterImageForegroundColor">@color/colorBlackTranslucent70</item>
+        <item name="imageForegroundColor">@color/colorBlackTranslucent85</item>
+    </style>
+
+    <style name="AppThemeDark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.TranslucentStatusBar" parent="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <string name="AppThemeDark.NoActionBar.TranslucentStatusBar">
+         <item name="android:windowTranslucentStatus">true</item>
+    </string>
+
+    <style name="AppTheme.NoActionBar.TranslucentStatusBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Translucent" parent="AppTheme.NoActionBar">
+    <style name="AppThemeDark.NoActionBar.Translucent">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Translucent">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="PreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="themeName">light</item>
+    </style>
+
+    <style name="PreferenceThemeDark" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="themeName">dark</item>
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="android:background">@color/viewBackgroundDark</item>
+        <item name="android:textColorSecondary">@color/colorSecondTextDark</item>
+        <item name="android:textColor">@color/colorPrimaryTextDark</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </resources>

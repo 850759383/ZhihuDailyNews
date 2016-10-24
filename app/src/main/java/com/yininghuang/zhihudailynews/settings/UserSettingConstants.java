@@ -11,4 +11,6 @@ public class UserSettingConstants {
     public static boolean NO_IMAGE_MODE = false;
 
     public static boolean USE_WEBVIEW = true;
+
+    public static boolean DARK_MODE = false;
 }

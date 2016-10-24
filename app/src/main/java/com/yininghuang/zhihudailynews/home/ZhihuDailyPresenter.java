@@ -53,6 +53,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
+                        mView.setLoadingStatus(false);
                     }
                 });
         subscriptions.add(sb);

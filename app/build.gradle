@@ -15,13 +15,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            manifestPlaceholders = [appName: "ZhihuDaily"]
+            manifestPlaceholders = [appName: "知阅"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles file('/proguard').listFiles()
             debuggable false
         }
         debug {
-            manifestPlaceholders = [appName: "ZhihuDaily Debug"]
+            manifestPlaceholders = [appName: "知阅 Debug"]
             minifyEnabled false;
             debuggable true
         }

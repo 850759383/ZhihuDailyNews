@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
 
@@ -42,6 +43,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         AboutFragment.newInstance(),
                         R.id.mainFrameLayout,
                         "AboutFragment");
+                return true;
+            }
+        });
+
+        findPreference("dark_mode").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                UserSettingConstants.DARK_MODE = (boolean) newValue;
+                ((BaseActivity) getActivity()).onThemeChange(UserSettingConstants.DARK_MODE);
                 return true;
             }
         });

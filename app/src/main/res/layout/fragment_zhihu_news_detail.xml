@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/viewBackground"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -33,7 +34,7 @@
                     android:id="@+id/appbarImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:foreground="@color/colorBlackTranslucent85"/>
+                    android:foreground="?attr/posterImageForegroundColor"/>
 
                 <TextView
                     android:id="@+id/title"

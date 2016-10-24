@@ -22,5 +22,6 @@ public class App extends Application {
         SharedPreferences preferences = getSharedPreferences(UserSettingConstants.PREFERENCE__USER_SETTINGS, MODE_PRIVATE);
         UserSettingConstants.NO_IMAGE_MODE = preferences.getBoolean("no_image", UserSettingConstants.NO_IMAGE_MODE);
         UserSettingConstants.USE_WEBVIEW = preferences.getBoolean("use_webview", UserSettingConstants.USE_WEBVIEW);
+        UserSettingConstants.DARK_MODE = preferences.getBoolean("dark_mode", UserSettingConstants.DARK_MODE);
     }
 }

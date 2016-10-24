@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZhihuDailyNews</string>
+    <string name="app_name">知阅</string>
     <string name="main_page">首页</string>
 
     <string name="load_error">加载失败</string>

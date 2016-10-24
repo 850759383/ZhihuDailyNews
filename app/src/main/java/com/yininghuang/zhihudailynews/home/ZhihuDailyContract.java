@@ -25,6 +25,8 @@ public class ZhihuDailyContract {
 
         void setLoadingComplete();
 
+        void showLoadError();
+
         void showStories(ZhihuLatestNews stories);
 
         void addHistoryStories(ZhihuLatestNews stories);

@@ -1,10 +1,10 @@
 package com.yininghuang.zhihudailynews.detail;
 
-import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.model.ZhihuNewsContent;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -53,7 +53,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                         if (content.getType() == 0) {
                             mView.showBody(convertResult(content.getBody()));
                             mView.showAppBarImage(content.getImage());
-                            if (!UserSettingConstants.NO_IMAGE_MODE){
+                            if (!UserSettingConstants.NO_IMAGE_MODE) {
                                 mView.setImageSource(content.getImageSource());
                                 mView.setBlockImageDisplay(false);
                             } else {
@@ -79,6 +79,8 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         preReuslt = preReuslt.replace("<div class=\"headline\">", "");
         String css = "<link rel=\"stylesheet\" href=\"zhihu_daily.css\" type=\"text/css\">";
         String theme = "<body className=\"\" onload=\"onLoaded()\">";
+        if (UserSettingConstants.DARK_MODE)
+            theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
         return new StringBuilder()
                 .append("<!DOCTYPE html>\n")
                 .append("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n")

@@ -2,19 +2,23 @@ package com.yininghuang.zhihudailynews.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.yininghuang.zhihudailynews.settings.SettingsActivity;
+import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
+import com.yininghuang.zhihudailynews.settings.SettingsActivity;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ZhihuDailyActivity extends AppCompatActivity {
+public class ZhihuDailyActivity extends BaseActivity {
+
+    private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar;
+    private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -22,6 +26,9 @@ public class ZhihuDailyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (UserSettingConstants.DARK_MODE)
+            setTheme(DARK_THEME);
+        else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_zhihu_daily);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -44,6 +51,17 @@ public class ZhihuDailyActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public void onThemeChange(Boolean isDarkTheme) {
+        if (isDarkTheme) {
+            setTheme(DARK_THEME);
+        } else {
+            setTheme(LIGHT_THEME);
+        }
+        recreate();
     }
 
     @Override

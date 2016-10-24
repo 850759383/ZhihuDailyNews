@@ -13,6 +13,10 @@ local.properties
 # Signing files
 .signing/
 
+# built application files
+*.apk
+*.ap_
+
 # User-specific configurations
 .idea/libraries/
 .idea/workspace.xml

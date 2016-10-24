@@ -3,13 +3,16 @@ package com.yininghuang.zhihudailynews.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
@@ -17,6 +20,9 @@ import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.utils.ItemDecoration;
 import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +41,9 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     private ZhihuDailyContract.Presenter mPresenter;
     private ZhihuLatestAdapter mAdapter;
-    private boolean isLoading = true;
+    private boolean isLoading = false;
+
+    private int mCurrentDy = 0;
 
     public static ZhihuDailyFragment newInstance() {
         return new ZhihuDailyFragment();
@@ -56,13 +64,33 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
         mAdapter.setOnItemClickListener(this);
         mContentRec.setAdapter(mAdapter);
         mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
-        mPresenter.init();
-        mSwipeRefreshLayout.post(new Runnable() {
+
+        if (savedInstanceState != null) {
+            Type type = new TypeToken<List<ZhihuLatestNews>>() {
+            }.getType();
+            List<ZhihuLatestNews> data = new Gson().fromJson(savedInstanceState.getString("data"), type);
+            mAdapter.addNewsList(data);
+            mAdapter.notifyDataSetChanged();
+            mCurrentDy = savedInstanceState.getInt("dy");
+            mContentRec.scrollTo(0, mCurrentDy);
+        } else {
+            mPresenter.init();
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                }
+            });
+        }
+
+        mContentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mCurrentDy = +dy;
             }
         });
+
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
             public void onLoad() {
@@ -106,6 +134,18 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     }
 
     @Override
+    public void showLoadError() {
+        if (getView() != null)
+            Snackbar.make(getView(), R.string.load_error, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.refresh, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mPresenter.reload();
+                        }
+                    }).show();
+    }
+
+    @Override
     public void setPresenter(ZhihuDailyContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -114,6 +154,15 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mAdapter.getLatestNewsList().size() != 0) {
+            outState.putString("data", new Gson().toJson(mAdapter.getLatestNewsList()));
+            outState.putInt("dy", mCurrentDy);
+        }
     }
 
     @Override
