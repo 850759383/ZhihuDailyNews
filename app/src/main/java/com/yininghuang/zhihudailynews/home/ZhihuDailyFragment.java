@@ -75,12 +75,6 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
             mContentRec.scrollTo(0, mCurrentDy);
         } else {
             mPresenter.init();
-            mSwipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    mSwipeRefreshLayout.setRefreshing(true);
-                }
-            });
         }
 
         mContentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
