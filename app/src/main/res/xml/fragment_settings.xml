@@ -2,20 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/common">
-        <CheckBoxPreference
+        <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
             android:key="dark_mode"
             android:title="夜间模式"
             />
-        <CheckBoxPreference
+        <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
             android:key="no_image"
             android:summary="@string/only_load_image_wifi"
             android:title="@string/no_image_mode"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:checked="true"
             android:defaultValue="true"
             android:key="use_webview"
@@ -26,7 +26,8 @@
     <PreferenceCategory android:title="@string/others">
         <Preference
             android:title="@string/clear_cache"
-            app:key="clear_cache"/>
+            app:key="clear_cache"
+            android:summary="0kb"/>
 
         <Preference
             android:key="about"

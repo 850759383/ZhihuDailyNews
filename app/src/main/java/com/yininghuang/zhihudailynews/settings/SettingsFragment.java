@@ -16,6 +16,8 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.internal.util.SubscriptionList;
 import rx.schedulers.Schedulers;
 
 /**
@@ -24,7 +26,7 @@ import rx.schedulers.Schedulers;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private Subscription mSubscription;
+    private SubscriptionList mSubscriptions = new SubscriptionList();
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -72,13 +74,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
-        findPreference("clear_cache").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        final Preference clearCache = findPreference("clear_cache");
+        clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                mSubscription = Observable.create(new Observable.OnSubscribe<Boolean>() {
+                Subscription sb = Observable.create(new Observable.OnSubscribe<Boolean>() {
                     @Override
                     public void call(Subscriber<? super Boolean> subscriber) {
-                        subscriber.onNext(deleteDir(getContext().getCacheDir()));
+                        subscriber.onNext(deleteDir(getActivity().getCacheDir()));
                     }
                 }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +91,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                                 if (getView() != null)
                                     Snackbar.make(getView(), R.string.clear_success, Snackbar.LENGTH_SHORT)
                                             .show();
+                                clearCache.setSummary("0kb");
                             }
                         }, new Action1<Throwable>() {
                             @Override
@@ -95,9 +99,52 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                                 throwable.printStackTrace();
                             }
                         });
+                mSubscriptions.add(sb);
                 return true;
             }
         });
+
+        Subscription sb = Observable.just(folderSize(getActivity().getCacheDir()))
+                .map(new Func1<Long, Float>() {
+                    @Override
+                    public Float call(Long bt) {
+                        return bt / 1024f;
+                    }
+                })
+                .map(new Func1<Float, String>() {
+                    @Override
+                    public String call(Float kb) {
+                        if (kb < 1024) {
+                            return Math.round(kb * 100) / 100.0 + "KB";
+                        }
+                        return Math.round(kb / 1024 * 100) / 100.0 + "MB";
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        clearCache.setSummary(s);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                });
+        mSubscriptions.add(sb);
+    }
+
+    private long folderSize(File directory) {
+        long length = 0;
+        if (!directory.exists())
+            return length;
+        for (File file : directory.listFiles()) {
+            if (file.isFile())
+                length += file.length();
+            else
+                length += folderSize(file);
+        }
+        return length;
     }
 
     private boolean deleteDir(File dir) {
@@ -124,8 +171,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onDestroyView() {
-        if (mSubscription != null)
-            mSubscription.unsubscribe();
+        mSubscriptions.unsubscribe();
         super.onDestroyView();
     }
 }
