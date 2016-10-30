@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuCommentAdapter;
@@ -57,7 +59,11 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuCommentAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);
-        mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
+        RecyclerView.ItemDecoration itemDecoration;
+        if (((BaseActivity) getActivity()).getThemeId() == BaseActivity.DARK_THEME)
+            itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
+        else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
+        mContentRec.addItemDecoration(itemDecoration);
         mPresenter.init(getArguments().getInt("id"));
 
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {

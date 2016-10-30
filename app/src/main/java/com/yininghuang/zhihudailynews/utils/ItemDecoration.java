@@ -1,9 +1,12 @@
 package com.yininghuang.zhihudailynews.utils;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.yininghuang.zhihudailynews.R;
 
 /**
  * Created by Yining Huang on 2016/10/21.
@@ -11,10 +14,11 @@ import android.view.View;
 
 public class ItemDecoration extends RecyclerView.ItemDecoration {
 
-    private Drawable mDivider;
+    private GradientDrawable mDivider;
 
-    public ItemDecoration(Drawable divider) {
-        mDivider = divider;
+    public ItemDecoration(Context context, int color) {
+        mDivider = (GradientDrawable) context.getResources().getDrawable(R.drawable.divider);
+        mDivider.setColor(color);
     }
 
     @Override

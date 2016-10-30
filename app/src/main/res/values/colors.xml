@@ -10,9 +10,10 @@
 
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
     <color name="colorPrimaryTextDark">#ffffff</color>
     <color name="colorSecondTextDark">#b2ffffff</color>
-    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorDividerDark">#212121</color>
 
     <color name="viewBackground">#f7f7f7</color>
     <color name="viewBackgroundDark">#455A64</color>

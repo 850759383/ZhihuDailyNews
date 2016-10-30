@@ -11,18 +11,26 @@ import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 abstract public class BaseActivity extends AppCompatActivity {
 
+    public static final int DARK_THEME = 0;
+    public static final int LIGHT_THEME = 1;
+
     @Override
     protected void onResume() {
         super.onResume();
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(R.attr.themeName, typedValue, true);
-        if (("dark".equals(typedValue.string) && !UserSettingConstants.DARK_MODE)
-                || ("light".equals(typedValue.string) && UserSettingConstants.DARK_MODE)) {
+        if ((getThemeId() == DARK_THEME && !UserSettingConstants.DARK_MODE) || (getThemeId() == LIGHT_THEME && UserSettingConstants.DARK_MODE)) {
             onThemeChange(UserSettingConstants.DARK_MODE);
         }
     }
 
     public void onThemeChange(Boolean isDarkTheme) {
 
+    }
+
+    public int getThemeId() {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.themeName, typedValue, true);
+        if ("dark".equals(typedValue.string))
+            return DARK_THEME;
+        return LIGHT_THEME;
     }
 }

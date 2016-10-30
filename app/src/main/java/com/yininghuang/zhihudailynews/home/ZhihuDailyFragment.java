@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
@@ -63,7 +64,11 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
         mAdapter = new ZhihuLatestAdapter(getActivity());
         mAdapter.setOnItemClickListener(this);
         mContentRec.setAdapter(mAdapter);
-        mContentRec.addItemDecoration(new ItemDecoration(getResources().getDrawable(R.drawable.divider)));
+        RecyclerView.ItemDecoration itemDecoration;
+        if (((BaseActivity) getActivity()).getThemeId() == BaseActivity.DARK_THEME)
+            itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
+        else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
+        mContentRec.addItemDecoration(itemDecoration);
 
         if (savedInstanceState != null) {
             Type type = new TypeToken<List<ZhihuLatestNews>>() {
