@@ -1,6 +1,6 @@
 package com.yininghuang.zhihudailynews.home;
 
-import com.yininghuang.zhihudailynews.comment.ZhihuTheme;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuThemeService;

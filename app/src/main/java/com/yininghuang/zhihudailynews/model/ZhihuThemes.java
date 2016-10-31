@@ -1,4 +1,4 @@
-package com.yininghuang.zhihudailynews.comment;
+package com.yininghuang.zhihudailynews.model;
 
 import java.util.List;
 

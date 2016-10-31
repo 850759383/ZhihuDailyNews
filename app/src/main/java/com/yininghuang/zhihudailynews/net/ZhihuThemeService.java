@@ -1,7 +1,7 @@
 package com.yininghuang.zhihudailynews.net;
 
-import com.yininghuang.zhihudailynews.comment.ZhihuTheme;
-import com.yininghuang.zhihudailynews.comment.ZhihuThemes;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
+import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

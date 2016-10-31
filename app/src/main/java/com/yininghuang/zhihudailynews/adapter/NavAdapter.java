@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.R;
-import com.yininghuang.zhihudailynews.comment.ZhihuThemes;
+import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 
 import java.util.ArrayList;
 import java.util.List;

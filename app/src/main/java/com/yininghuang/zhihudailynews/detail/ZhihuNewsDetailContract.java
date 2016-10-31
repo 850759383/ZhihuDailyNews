@@ -1,5 +1,7 @@
 package com.yininghuang.zhihudailynews.detail;
 
+import android.content.Intent;
+
 import com.yininghuang.zhihudailynews.BasePresenter;
 import com.yininghuang.zhihudailynews.BaseView;
 
@@ -24,6 +26,8 @@ public class ZhihuNewsDetailContract {
         void setTitle(String title);
 
         void setImageSource(String source);
+
+        void startShareChooser(Intent intent);
     }
 
     interface Presenter extends BasePresenter {
@@ -31,5 +35,7 @@ public class ZhihuNewsDetailContract {
         void init(int id);
 
         void reload();
+
+        void share();
     }
 }

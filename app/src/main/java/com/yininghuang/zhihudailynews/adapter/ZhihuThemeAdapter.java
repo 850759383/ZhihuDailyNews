@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.R;
-import com.yininghuang.zhihudailynews.comment.ZhihuTheme;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 

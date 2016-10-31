@@ -2,7 +2,7 @@ package com.yininghuang.zhihudailynews.home;
 
 import com.yininghuang.zhihudailynews.BasePresenter;
 import com.yininghuang.zhihudailynews.BaseView;
-import com.yininghuang.zhihudailynews.comment.ZhihuTheme;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 
 /**
  * Created by Yining Huang on 2016/10/31.

@@ -127,13 +127,17 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         switch (item.getItemId()) {
             case android.R.id.home: {
                 getActivity().onBackPressed();
-                break;
+                return true;
+            }
+            case R.id.share: {
+                mPresenter.share();
+                return true;
             }
             case R.id.comment: {
                 Intent intent = new Intent(getActivity(), ZhihuCommentActivity.class);
                 intent.putExtra("id", mDetailId);
                 startActivity(intent);
-                break;
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
@@ -150,6 +154,11 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         intent.putExtra("url", url);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void startShareChooser(Intent intent) {
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
     @Override

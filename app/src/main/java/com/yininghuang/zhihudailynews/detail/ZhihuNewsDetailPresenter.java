@@ -1,5 +1,7 @@
 package com.yininghuang.zhihudailynews.detail;
 
+import android.content.Intent;
+
 import com.yininghuang.zhihudailynews.model.ZhihuNewsContent;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
@@ -23,6 +25,8 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
 
     private SubscriptionList mSubscriptions = new SubscriptionList();
     private int mDetailId;
+
+    private ZhihuNewsContent mContent;
 
     public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper) {
         mView = view;
@@ -49,6 +53,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                 .subscribe(new Action1<ZhihuNewsContent>() {
                     @Override
                     public void call(ZhihuNewsContent content) {
+                        mContent = content;
                         if (!UserSettingConstants.NO_IMAGE_MODE)
                             mView.setBlockImageDisplay(false);
                         else
@@ -75,6 +80,19 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                     }
                 });
         mSubscriptions.add(sb);
+    }
+
+    @Override
+    public void share() {
+        if (mContent == null)
+            return;
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, mContent.getTitle());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mContent.getShareUrl());
+        shareIntent.setType("text/plain");
+        mView.startShareChooser(shareIntent);
     }
 
     @SuppressWarnings("StringBufferReplaceableByString")

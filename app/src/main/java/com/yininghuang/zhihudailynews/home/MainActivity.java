@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.NavAdapter;
-import com.yininghuang.zhihudailynews.comment.ZhihuThemes;
+import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuThemeService;
@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         switch (item.getItemId()) {
             case android.R.id.home: {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
-                break;
+                return true;
             }
             case R.id.settings: {
                 Intent intent = new Intent(this, SettingsActivity.class);

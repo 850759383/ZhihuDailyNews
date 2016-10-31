@@ -16,7 +16,7 @@ import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.BaseFragment;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuThemeAdapter;
-import com.yininghuang.zhihudailynews.comment.ZhihuTheme;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.utils.ItemDecoration;
 import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
