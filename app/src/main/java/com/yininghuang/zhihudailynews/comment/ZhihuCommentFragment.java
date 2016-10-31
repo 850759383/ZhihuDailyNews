@@ -96,6 +96,7 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
 
     @Override
     public void showComments(List<ZhihuComments.ZhihuComment> comments) {
+        mAdapter.getComments().clear();
         mAdapter.addComments(comments);
         mAdapter.notifyDataSetChanged();
     }
