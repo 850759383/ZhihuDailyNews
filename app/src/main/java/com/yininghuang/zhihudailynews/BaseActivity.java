@@ -18,11 +18,11 @@ abstract public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if ((getThemeId() == DARK_THEME && !UserSettingConstants.DARK_MODE) || (getThemeId() == LIGHT_THEME && UserSettingConstants.DARK_MODE)) {
-            onThemeChange(UserSettingConstants.DARK_MODE);
+            onThemeChange();
         }
     }
 
-    public void onThemeChange(Boolean isDarkTheme) {
+    public void onThemeChange() {
 
     }
 

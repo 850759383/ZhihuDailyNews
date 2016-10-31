@@ -54,6 +54,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
                         mView.setLoadingStatus(false);
+                        mView.showLoadError();
                     }
                 });
         subscriptions.add(sb);
@@ -61,7 +62,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void queryHistoryStory(String date) {
-        mView.setLoadingStatus(true);
+        mView.setHistoryLoadingStatus(true);
         if (date == null)
             return;
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
@@ -72,7 +73,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     @Override
                     public void call(ZhihuLatestNews zhihuLatestNews) {
                         mView.addHistoryStories(zhihuLatestNews);
-                        mView.setLoadingStatus(false);
+                        mView.setHistoryLoadingStatus(false);
                         if (zhihuLatestNews.getStories().size() == 0)
                             mView.setLoadingComplete();
                     }
@@ -80,7 +81,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
-                        mView.setLoadingStatus(false);
+                        mView.setHistoryLoadingStatus(false);
                     }
                 });
         subscriptions.add(sb);

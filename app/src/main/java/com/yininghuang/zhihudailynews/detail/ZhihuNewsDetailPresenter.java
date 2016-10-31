@@ -49,18 +49,22 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                 .subscribe(new Action1<ZhihuNewsContent>() {
                     @Override
                     public void call(ZhihuNewsContent content) {
-                        mView.setTitle(content.getTitle());
+                        if (!UserSettingConstants.NO_IMAGE_MODE)
+                            mView.setBlockImageDisplay(false);
+                        else
+                            mView.setBlockImageDisplay(true);
+
                         if (content.getType() == 0) {
                             mView.showBody(convertResult(content.getBody()));
                             mView.showAppBarImage(content.getImage());
-                            if (!UserSettingConstants.NO_IMAGE_MODE) {
-                                mView.setImageSource(content.getImageSource());
-                                mView.setBlockImageDisplay(false);
-                            } else {
-                                mView.setBlockImageDisplay(true);
-                            }
-                        } else {
+                            mView.setImageSource(content.getImageSource());
+                            mView.setTitle(content.getTitle());
+                        } else if (content.getType() == 1) {
                             mView.showEmptyBody(content.getShareUrl());
+                        } else {
+                            mView.showBody(convertResult(content.getBody()));
+                            if (content.getImages().size() > 0)
+                                mView.showAppBarImage(content.getImages().get(0));
                         }
                     }
                 }, new Action1<Throwable>() {

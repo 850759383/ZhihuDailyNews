@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.yininghuang.zhihudailynews.home.ZhihuDailyActivity;
+import com.yininghuang.zhihudailynews.home.MainActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuImage;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
@@ -73,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        Intent intent = new Intent(SplashActivity.this, ZhihuDailyActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }

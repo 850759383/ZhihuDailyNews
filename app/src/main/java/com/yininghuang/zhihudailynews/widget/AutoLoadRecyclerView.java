@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 
 public class AutoLoadRecyclerView extends RecyclerView {
 
+    public boolean mIsRefreshing = false;
+
     private OnLoadingListener mOnLoadingListener;
     private boolean isLoadingComplete = false;
 
@@ -38,10 +40,18 @@ public class AutoLoadRecyclerView extends RecyclerView {
             throw new IllegalArgumentException("LayoutManager must be subclass of LinearLayoutManager");
         LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
         int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-        if (lastVisiblePosition > layoutManager.getItemCount() - 2 && dy > 0 && !isLoadingComplete) {
+        if (lastVisiblePosition > layoutManager.getItemCount() - 2 && dy > 0 && !isLoadingComplete && !isRefreshing()) {
             if (mOnLoadingListener != null)
                 mOnLoadingListener.onLoad();
         }
+    }
+
+    public void setRefresh(boolean status) {
+        mIsRefreshing = status;
+    }
+
+    public boolean isRefreshing() {
+        return mIsRefreshing;
     }
 
     public void setLoadComplete() {

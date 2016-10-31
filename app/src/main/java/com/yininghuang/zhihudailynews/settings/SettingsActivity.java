@@ -34,7 +34,8 @@ public class SettingsActivity extends BaseActivity {
                     getSupportFragmentManager(),
                     SettingsFragment.newInstance(),
                     R.id.mainFrameLayout,
-                    "SettingsFragment");
+                    "SettingsFragment",
+                    false);
         }
     }
 
@@ -56,8 +57,8 @@ public class SettingsActivity extends BaseActivity {
     }
 
     @Override
-    public void onThemeChange(Boolean isDarkTheme) {
-        if (isDarkTheme) {
+    public void onThemeChange() {
+        if (UserSettingConstants.DARK_MODE) {
             setTheme(DARK_THEME);
         } else {
             setTheme(LIGHT_THEME);

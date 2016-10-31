@@ -1,6 +1,7 @@
 package com.yininghuang.zhihudailynews.home;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,6 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     private ZhihuDailyContract.Presenter mPresenter;
     private ZhihuLatestAdapter mAdapter;
-    private boolean isLoading = false;
 
     private int mCurrentDy = 0;
 
@@ -93,15 +93,14 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
             public void onLoad() {
-                if (!isLoading)
+                if (!mContentRec.isRefreshing())
                     mPresenter.queryHistoryStory(mAdapter.getOldestNewsDate());
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!isLoading)
-                    mPresenter.reload();
+                mPresenter.reload();
             }
         });
     }
@@ -121,9 +120,13 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     }
 
     @Override
-    public void setLoadingStatus(Boolean status) {
-        isLoading = status;
-        mSwipeRefreshLayout.setRefreshing(false);
+    public void setHistoryLoadingStatus(boolean status) {
+        mContentRec.setRefresh(status);
+    }
+
+    @Override
+    public void setLoadingStatus(boolean status) {
+        mSwipeRefreshLayout.setRefreshing(status);
     }
 
     @Override

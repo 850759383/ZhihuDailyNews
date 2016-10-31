@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">知阅</string>
     <string name="main_page">首页</string>
+    <string name="theme_news">主题日报</string>
 
     <string name="load_error">加载失败</string>
     <string name="loading">正在加载</string>

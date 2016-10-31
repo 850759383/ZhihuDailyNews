@@ -20,6 +20,7 @@
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorTranslucent">#00000000</color>
+    <color name="colorBlackTranslucent95">#0d000000</color>
     <color name="colorBlackTranslucent85">#26000000</color>
     <color name="colorBlackTranslucent70">#4b000000</color>
 </resources>

@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yininghuang.zhihudailynews.home.ZhihuDailyActivity">
+    tools:context="com.yininghuang.zhihudailynews.home.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:navigationIcon="@drawable/ic_menu_white_24dp"/>
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
@@ -36,11 +37,16 @@
         android:layout_width="256dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/viewBackground">
+        android:background="?attr/viewBackground"
+        android:orientation="vertical">
+
+        <include layout="@layout/nav_header"/>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/navRec"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

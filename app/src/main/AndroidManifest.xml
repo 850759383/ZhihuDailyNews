@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".home.ZhihuDailyActivity"
+            android:name=".home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity

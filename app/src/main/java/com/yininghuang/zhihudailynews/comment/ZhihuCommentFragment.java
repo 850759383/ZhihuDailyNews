@@ -1,5 +1,6 @@
 package com.yininghuang.zhihudailynews.comment;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -36,7 +37,6 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     private View mRootView;
     private ZhihuCommentContract.Presenter mPresenter;
     private ZhihuCommentAdapter mAdapter;
-    private boolean isLoading = true;
 
     public static ZhihuCommentFragment newInstance(int id) {
         Bundle args = new Bundle();
@@ -69,7 +69,7 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
         mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
             @Override
             public void onLoad() {
-                if (isLoading)
+                if (mContentRec.isRefreshing())
                     return;
                 List<ZhihuComments.ZhihuComment> comments = mAdapter.getComments();
                 if (!comments.isEmpty())
@@ -86,8 +86,12 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
 
     @Override
     public void setLoadingStatus(boolean status) {
-        isLoading = status;
-        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(status);
+    }
+
+    @Override
+    public void setHistoryLoadingStatus(boolean status) {
+        mContentRec.setRefresh(status);
     }
 
     @Override

@@ -21,7 +21,9 @@ public class ZhihuDailyContract {
 
     public interface View extends BaseView<Presenter> {
 
-        void setLoadingStatus(Boolean status);
+        void setHistoryLoadingStatus(boolean status);
+
+        void setLoadingStatus(boolean status);
 
         void setLoadingComplete();
 

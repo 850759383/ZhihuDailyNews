@@ -50,6 +50,7 @@
 
     <style name="AppThemeDark.NoActionBar.Translucent">
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Translucent">

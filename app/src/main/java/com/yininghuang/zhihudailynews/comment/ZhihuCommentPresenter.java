@@ -68,6 +68,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
 
     @Override
     public void queryHistoryComments(int userId) {
+        mView.setHistoryLoadingStatus(true);
         Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL)
                 .getHistoryComments(newsId, userId)
                 .subscribeOn(Schedulers.io())
@@ -76,7 +77,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
                     @Override
                     public void call(ZhihuComments zhihuComments) {
                         mView.addHistoryComment(zhihuComments.getComments());
-                        mView.setLoadingStatus(false);
+                        mView.setHistoryLoadingStatus(false);
                         if (zhihuComments.getComments().size() < 20)
                             mView.showLoadComplete();
                     }
@@ -84,8 +85,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
-                        mView.showLoadError();
-                        mView.setLoadingStatus(false);
+                        mView.setHistoryLoadingStatus(false);
                     }
                 });
         mSubscriptionList.add(sb);

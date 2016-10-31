@@ -53,7 +53,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 UserSettingConstants.DARK_MODE = (boolean) newValue;
-                ((BaseActivity) getActivity()).onThemeChange(UserSettingConstants.DARK_MODE);
+                ((BaseActivity) getActivity()).onThemeChange();
                 return true;
             }
         });

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +48,9 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     TextView mTitle;
     @BindView(R.id.imageSource)
     TextView mImageSource;
+    @BindView(R.id.appbar)
+    AppBarLayout mAppBarLayout;
+
     private int mDetailId = -1;
     private ZhihuNewsDetailContract.Presenter mPresenter;
     private View mRootView;
@@ -142,7 +146,10 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
 
     @Override
     public void showEmptyBody(String url) {
-        mWebView.loadUrl(url);
+        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+        intent.putExtra("url", url);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
