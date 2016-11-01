@@ -28,6 +28,8 @@ public class ZhihuNewsDetailContract {
         void setImageSource(String source);
 
         void startShareChooser(Intent intent);
+
+        void setStarStatus(boolean status);
     }
 
     interface Presenter extends BasePresenter {
@@ -37,5 +39,7 @@ public class ZhihuNewsDetailContract {
         void reload();
 
         void share();
+
+        void star();
     }
 }

@@ -7,6 +7,7 @@ import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
+import com.yininghuang.zhihudailynews.utils.DBManager;
 
 /**
  * Created by Yining Huang on 2016/10/18.
@@ -14,8 +15,8 @@ import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 public class ZhihuNewsDetailActivity extends BaseActivity {
 
-    private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar_Translucent;
-    private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar_Translucent;
+    private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar_TranslucentStatusBar;
+    private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar_TranslucentStatusBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ZhihuNewsDetailActivity extends BaseActivity {
                     .commit();
         }
 
-        new ZhihuNewsDetailPresenter(fragment, RetrofitHelper.getInstance());
+        new ZhihuNewsDetailPresenter(fragment, RetrofitHelper.getInstance(), new DBManager(this));
     }
 
 }

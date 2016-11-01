@@ -55,6 +55,8 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     private ZhihuNewsDetailContract.Presenter mPresenter;
     private View mRootView;
 
+    private boolean isStared = false;
+
     public static ZhihuNewsDetailFragment newInstance(int id) {
         Bundle args = new Bundle();
         args.putInt("id", id);
@@ -117,6 +119,16 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.star);
+        if (isStared)
+            item.setIcon(R.drawable.ic_star_red_400_24dp);
+        else
+            item.setIcon(R.drawable.ic_star_white_24dp);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_zhihu_daily_content, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -127,6 +139,10 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         switch (item.getItemId()) {
             case android.R.id.home: {
                 getActivity().onBackPressed();
+                return true;
+            }
+            case R.id.star: {
+                mPresenter.star();
                 return true;
             }
             case R.id.share: {
@@ -146,6 +162,12 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     @Override
     public void showBody(String body) {
         mWebView.loadDataWithBaseURL("file:///android_asset/", body, "text/html", "utf-8", null);
+    }
+
+    @Override
+    public void setStarStatus(boolean status) {
+        isStared = status;
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override

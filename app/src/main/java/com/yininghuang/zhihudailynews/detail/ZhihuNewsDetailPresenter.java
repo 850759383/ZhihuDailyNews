@@ -2,11 +2,14 @@ package com.yininghuang.zhihudailynews.detail;
 
 import android.content.Intent;
 
+import com.google.gson.Gson;
 import com.yininghuang.zhihudailynews.model.ZhihuNewsContent;
+import com.yininghuang.zhihudailynews.model.db.Favorite;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
+import com.yininghuang.zhihudailynews.utils.DBManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,15 +25,17 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
 
     private ZhihuNewsDetailContract.View mView;
     private RetrofitHelper mRetrofitHelper;
+    private DBManager mDBManager;
 
     private SubscriptionList mSubscriptions = new SubscriptionList();
     private int mDetailId;
 
     private ZhihuNewsContent mContent;
 
-    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper) {
+    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper, DBManager dbManager) {
         mView = view;
         mRetrofitHelper = retrofitHelper;
+        mDBManager = dbManager;
         mView.setPresenter(this);
     }
 
@@ -38,6 +43,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
     public void init(int id) {
         mDetailId = id;
         fetchNewsContent(id);
+        checkStar();
     }
 
     @Override
@@ -82,6 +88,30 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         mSubscriptions.add(sb);
     }
 
+    private void checkStar() {
+        if (mDBManager.queryFavorite(mDetailId) == null)
+            mView.setStarStatus(false);
+        else
+            mView.setStarStatus(true);
+    }
+
+    @Override
+    public void star() {
+        if (mContent == null)
+            return;
+
+        if (mDBManager.queryFavorite(mContent.getId()) != null) {
+            mDBManager.removeFavorite(mContent.getId());
+            mView.setStarStatus(false);
+        } else {
+            mDBManager.addFavorite(new Favorite(
+                    mContent.getId(),
+                    (int) (System.currentTimeMillis() / 1000),
+                    new Gson().toJson(mContent)));
+            mView.setStarStatus(true);
+        }
+    }
+
     @Override
     public void share() {
         if (mContent == null)
@@ -95,24 +125,22 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         mView.startShareChooser(shareIntent);
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
-    private String convertResult(String preReuslt) {
-        preReuslt = preReuslt.replace("<div class=\"img-place-holder\">", "");
-        preReuslt = preReuslt.replace("<div class=\"headline\">", "");
+    private String convertResult(String body) {
+        body = body.replace("<div class=\"img-place-holder\">", "");
         String css = "<link rel=\"stylesheet\" href=\"zhihu_daily.css\" type=\"text/css\">";
         String theme = "<body className=\"\" onload=\"onLoaded()\">";
         if (UserSettingConstants.DARK_MODE)
             theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
-        return new StringBuilder()
-                .append("<!DOCTYPE html>\n")
-                .append("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n")
-                .append("<head>\n")
-                .append("\t<meta charset=\"utf-8\" />")
-                .append(css)
-                .append("\n</head>\n")
-                .append(theme)
-                .append(preReuslt)
-                .append("</body></html>").toString();
+        return "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "\t<meta charset=\"utf-8\" />" +
+                css +
+                "\n</head>\n" +
+                theme +
+                body +
+                "</body>" +
+                "</html>";
     }
 
     @Override
