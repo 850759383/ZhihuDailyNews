@@ -255,6 +255,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.3"
+        sha1="c5e6490573cd2cc8018417f60ddd251138b6ed61">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-24.2.1_b75e91952b040d6170e073250fb507c4151b7fc2.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.4.1\c7c4f9e35c2fd5900da24f9872e3971801f08ce0\okhttp-3.4.1.jar"
         jumboMode="false"
         optimize="true"

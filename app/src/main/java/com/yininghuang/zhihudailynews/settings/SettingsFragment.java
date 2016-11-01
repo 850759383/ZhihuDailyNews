@@ -58,6 +58,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
+        findPreference("skip_splash").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                UserSettingConstants.SKIP_SPLASH = (boolean) newValue;
+                return true;
+            }
+        });
+
         findPreference("no_image").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {

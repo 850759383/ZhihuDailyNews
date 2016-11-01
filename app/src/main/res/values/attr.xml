@@ -7,4 +7,5 @@
     <attr name="viewBackground" format="color"/>
     <attr name="posterImageForegroundColor" format="color"/>
     <attr name="imageForegroundColor" format="color"/>
+    <attr name="cardBackground" format="color"/>
 </resources>

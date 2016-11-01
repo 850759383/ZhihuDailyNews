@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
-    <color name="colorAccent">#CDDC39</color>
+    <color name="colorAccent">#FF5722</color>
 
     <color name="darkColorPrimary">#37474f</color>
     <color name="darkColorPrimaryDark">#263238</color>
@@ -17,6 +17,8 @@
 
     <color name="viewBackground">#f7f7f7</color>
     <color name="viewBackgroundDark">#455A64</color>
+    <color name="cardBackground">#ffffff</color>
+    <color name="cardBackgroundDark">#607d8B</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorTranslucent">#00000000</color>

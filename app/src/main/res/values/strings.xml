@@ -21,6 +21,8 @@
     <string name="common">常规</string>
     <string name="others">其他</string>
     <string name="no_image_mode">无图模式</string>
+    <string name="dark_mode">夜间模式</string>
+    <string name="skip_splash">跳过启动页</string>
     <string name="only_load_image_wifi">仅在Wifi下加载图片</string>
     <string name="use_webview">使用内置浏览器</string>
     <string name="view_html_in_app">应用内查看链接</string>
@@ -43,4 +45,11 @@
     <string name="zhihu_url">\u0040Undefeated</string>
 
     <string name="open_in_browser">在浏览器中打开</string>
+
+    <string name="my_star">我的收藏</string>
+    <string name="restore">恢复</string>
+    <string name="delete_all">清空</string>
+    <string name="cancel">取消</string>
+    <string name="delete_all_confirm">是否清空收藏夹</string>
+    <string name="notice">注意</string>
 </resources>

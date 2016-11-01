@@ -14,6 +14,7 @@
         <item name="viewBackground">@color/viewBackground</item>
         <item name="posterImageForegroundColor">@color/colorBlackTranslucent85</item>
         <item name="imageForegroundColor">@color/colorTranslucent</item>
+        <item name="cardBackground">@color/cardBackground</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -28,6 +29,7 @@
         <item name="viewBackground">#455A64</item>
         <item name="posterImageForegroundColor">@color/colorBlackTranslucent70</item>
         <item name="imageForegroundColor">@color/colorBlackTranslucent85</item>
+        <item name="cardBackground">@color/cardBackgroundDark</item>
     </style>
 
     <style name="AppThemeDark.NoActionBar">

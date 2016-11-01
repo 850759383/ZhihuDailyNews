@@ -122,7 +122,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.star);
         if (isStared)
-            item.setIcon(R.drawable.ic_star_red_400_24dp);
+            item.setIcon(R.drawable.ic_star_red_300_24dp);
         else
             item.setIcon(R.drawable.ic_star_white_24dp);
         super.onPrepareOptionsMenu(menu);

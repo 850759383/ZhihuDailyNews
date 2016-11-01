@@ -13,6 +13,7 @@ import com.yininghuang.zhihudailynews.model.ZhihuImage;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import java.util.concurrent.TimeUnit;
@@ -43,6 +44,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (UserSettingConstants.SKIP_SPLASH)
+            toMainActivity(0);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
@@ -67,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
         subscriptions.add(sb);
     }
 
-    private void toMainActivity(int time){
+    private void toMainActivity(int time) {
         Subscription sb = Observable.timer(time, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
@@ -77,11 +80,11 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-        });
+                });
         subscriptions.add(sb);
     }
 
-    private void loadSplashImage(String url){
+    private void loadSplashImage(String url) {
         ImageLoader.load(SplashActivity.this, mStartupImage, url, new RequestListener() {
             @Override
             public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
