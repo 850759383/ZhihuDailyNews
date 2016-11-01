@@ -10,6 +10,9 @@
  <img src="./Screenshot1.png" width="240" height="426" />
  <img src="./Screenshot2.png" width="240" height="426" />
  <img src="./Screenshot3.png" width="240" height="426" />
+ </br>
+ <img src="./Screenshot4.png" width="240" height="426" />
+ <img src="./Screenshot5.png" width="240" height="426" />
 
 ## 依赖
     Okhttp 3.4.1
@@ -18,6 +21,7 @@
     RxAndroid 1.2.1
     ButterKnife 8.4.0
     Glide 3.7.0
+    Gson 2.7.0
 
 ## 关于我
     邮箱：iamyining@yahoo.com </br>
