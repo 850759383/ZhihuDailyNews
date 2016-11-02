@@ -7,6 +7,7 @@ import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
 import com.yininghuang.zhihudailynews.utils.DBManager;
 
 /**
@@ -36,7 +37,7 @@ public class ZhihuNewsDetailActivity extends BaseActivity {
                     .commit();
         }
 
-        new ZhihuNewsDetailPresenter(fragment, RetrofitHelper.getInstance(), new DBManager(this));
+        new ZhihuNewsDetailPresenter(fragment, RetrofitHelper.getInstance(), new DBManager(this), CacheManager.getInstance(this));
     }
 
 }

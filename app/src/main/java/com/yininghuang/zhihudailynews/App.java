@@ -3,7 +3,6 @@ package com.yininghuang.zhihudailynews;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import com.yininghuang.zhihudailynews.settings.SettingsActivity;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 /**

@@ -9,6 +9,7 @@ import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
 import com.yininghuang.zhihudailynews.utils.DBManager;
 
 import rx.Subscription;
@@ -26,22 +27,25 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
     private ZhihuNewsDetailContract.View mView;
     private RetrofitHelper mRetrofitHelper;
     private DBManager mDBManager;
+    private CacheManager mCacheManager;
 
     private SubscriptionList mSubscriptions = new SubscriptionList();
     private int mDetailId;
 
     private ZhihuNewsContent mContent;
 
-    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper, DBManager dbManager) {
+    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper, DBManager dbManager, CacheManager cacheManager) {
         mView = view;
         mRetrofitHelper = retrofitHelper;
         mDBManager = dbManager;
+        mCacheManager = cacheManager;
         mView.setPresenter(this);
     }
 
     @Override
     public void init(int id) {
         mDetailId = id;
+        loadCache(String.valueOf(mDetailId));
         fetchNewsContent(id);
         checkStar();
     }
@@ -59,40 +63,39 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                 .subscribe(new Action1<ZhihuNewsContent>() {
                     @Override
                     public void call(ZhihuNewsContent content) {
-                        mContent = content;
-                        if (!UserSettingConstants.NO_IMAGE_MODE)
-                            mView.setBlockImageDisplay(false);
-                        else
-                            mView.setBlockImageDisplay(true);
-
-                        if (content.getType() == 0) {
-                            mView.showBody(convertResult(content.getBody()));
-                            mView.showAppBarImage(content.getImage());
-                            mView.setImageSource(content.getImageSource());
-                            mView.setTitle(content.getTitle());
-                        } else if (content.getType() == 1) {
-                            mView.showEmptyBody(content.getShareUrl());
-                        } else {
-                            mView.showBody(convertResult(content.getBody()));
-                            if (content.getImages().size() > 0)
-                                mView.showAppBarImage(content.getImages().get(0));
-                        }
+                        showDataInView(content);
+                        saveData(String.valueOf(mDetailId), content);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
-                        mView.showLoadError();
+                        if (mContent == null)
+                            mView.showLoadError();
                     }
                 });
         mSubscriptions.add(sb);
     }
 
-    private void checkStar() {
-        if (mDBManager.queryFavorite(mDetailId) == null)
-            mView.setStarStatus(false);
+    private void showDataInView(ZhihuNewsContent content) {
+        mContent = content;
+        if (!UserSettingConstants.NO_IMAGE_MODE)
+            mView.setBlockImageDisplay(false);
         else
-            mView.setStarStatus(true);
+            mView.setBlockImageDisplay(true);
+
+        if (content.getType() == 0) {
+            mView.showBody(convertResult(content.getBody()));
+            mView.showAppBarImage(content.getImage());
+            mView.setImageSource(content.getImageSource());
+            mView.setTitle(content.getTitle());
+        } else if (content.getType() == 1) {
+            mView.showEmptyBody(content.getShareUrl());
+        } else {
+            mView.showBody(convertResult(content.getBody()));
+            if (content.getImages().size() > 0)
+                mView.showAppBarImage(content.getImages().get(0));
+        }
     }
 
     @Override
@@ -123,6 +126,26 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         shareIntent.putExtra(Intent.EXTRA_TEXT, mContent.getShareUrl());
         shareIntent.setType("text/plain");
         mView.startShareChooser(shareIntent);
+    }
+
+    private void loadCache(String fileName) {
+        String data = mCacheManager.getData(CacheManager.SUB_DIR_NEWS, fileName);
+        if (data == null)
+            return;
+
+        mContent = new Gson().fromJson(data, ZhihuNewsContent.class);
+        showDataInView(mContent);
+    }
+
+    private void saveData(String fileName, ZhihuNewsContent content) {
+        mCacheManager.saveData(CacheManager.SUB_DIR_NEWS, fileName, new Gson().toJson(content));
+    }
+
+    private void checkStar() {
+        if (mDBManager.queryFavorite(mDetailId) == null)
+            mView.setStarStatus(false);
+        else
+            mView.setStarStatus(true);
     }
 
     private String convertResult(String body) {

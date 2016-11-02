@@ -45,11 +45,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, int position) {
         ZhihuNewsContent content = new Gson().fromJson(mFavorites.get(position).getContent(), ZhihuNewsContent.class);
         holder.mTitle.setText(content.getTitle());
-        if (content.getImage() == null) {
+        if (content.getImage() == null && content.getImages() == null) {
             holder.mPic.setVisibility(View.GONE);
         } else {
             holder.mPic.setVisibility(View.VISIBLE);
-            ImageLoader.load(mContext, holder.mPic, content.getImage());
+            String image = content.getImage();
+            List<String> images = content.getImages();
+            if (image != null && !image.isEmpty()) {
+                ImageLoader.load(mContext, holder.mPic, image);
+            } else if (images != null && images.size() > 0) {
+                ImageLoader.load(mContext, holder.mPic, images.get(0));
+            }
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
