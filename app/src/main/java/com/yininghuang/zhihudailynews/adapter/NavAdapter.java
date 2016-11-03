@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int TYPE_HEADER = -1;
     private static final int TYPE_HOME = 0;
     private static final int TYPE_THEME = 1;
 
@@ -44,7 +45,10 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HOME) {
+        if (viewType == TYPE_HEADER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nav_header, parent, false);
+            return new HeaderHolder(view);
+        } else if (viewType == TYPE_HOME) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_home, parent, false);
             return new HomeHolder(view);
         } else if (viewType == TYPE_THEME) {
@@ -71,18 +75,18 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((HomeHolder) holder).mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorTranslucent));
         } else if (holder instanceof ThemeHolder) {
             ThemeHolder themeHolder = (ThemeHolder) holder;
-            themeHolder.mTitle.setText(mThemes.get(position - 1).getName());
+            themeHolder.mTitle.setText(mThemes.get(position - 2).getName());
 
             themeHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mOnNavItemClickListener != null)
-                        mOnNavItemClickListener.onThemeClick(mThemes.get(holder.getAdapterPosition() - 1).getId(),
-                                mThemes.get(holder.getAdapterPosition() - 1).getName());
+                        mOnNavItemClickListener.onThemeClick(mThemes.get(holder.getAdapterPosition() - 2).getId(),
+                                mThemes.get(holder.getAdapterPosition() - 2).getName());
                 }
             });
 
-            if (mSelectThemeId == mThemes.get(position - 1).getId())
+            if (mSelectThemeId == mThemes.get(position - 2).getId())
                 themeHolder.mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorBlackTranslucent95));
             else
                 themeHolder.mBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorTranslucent));
@@ -97,13 +101,15 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         if (mThemes == null)
-            return 1;
-        return mThemes.size() + 1;
+            return 2;
+        return mThemes.size() + 2;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0)
+            return TYPE_HEADER;
+        else if (position == 1)
             return TYPE_HOME;
         return TYPE_THEME;
     }
@@ -117,6 +123,13 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onHomeClick();
 
         void onThemeClick(int id, String name);
+    }
+
+    public static class HeaderHolder extends RecyclerView.ViewHolder {
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     public static class HomeHolder extends RecyclerView.ViewHolder {

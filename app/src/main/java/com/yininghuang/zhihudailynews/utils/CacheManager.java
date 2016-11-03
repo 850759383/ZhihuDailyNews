@@ -15,6 +15,7 @@ import java.io.IOException;
 public class CacheManager {
 
     public static final String SUB_DIR_NEWS = "news";
+    public static final String SUB_DIR_THEMES = "themes";
 
     private static CacheManager INSTANCE;
 

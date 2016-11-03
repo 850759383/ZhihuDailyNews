@@ -1,7 +1,6 @@
 package com.yininghuang.zhihudailynews.home;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,6 +19,7 @@ import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
+import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 import com.yininghuang.zhihudailynews.utils.ItemDecoration;
 import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 

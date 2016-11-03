@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.NavAdapter;
@@ -23,7 +25,9 @@ import com.yininghuang.zhihudailynews.net.ZhihuThemeService;
 import com.yininghuang.zhihudailynews.settings.SettingsActivity;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,8 +40,8 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemClickListener {
 
-    private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar;
-    private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar;
+    private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar_TranslucentStatusBar;
+    private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar_TranslucentStatusBar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -68,15 +72,18 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         mNavAdapter.setOnNavItemClickListener(this);
 
         fetchThemes();
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (null == fragment) {
-            startFragment(FragmentType.TYPE_HOME, null);
+        if (null != fragment) {
+            if (fragment instanceof ZhihuDailyFragment)
+                new ZhihuDailyPresenter((ZhihuDailyContract.View) fragment,
+                        RetrofitHelper.getInstance(),
+                        CacheManager.getInstance(this));
+            else if (fragment instanceof ZhihuThemeFragment)
+                new ZhihuThemePresenter((ZhihuThemeContract.View) fragment,
+                        RetrofitHelper.getInstance());
         } else {
-            if (fragment instanceof ZhihuDailyFragment) {
-                new ZhihuDailyPresenter((ZhihuDailyContract.View) fragment, RetrofitHelper.getInstance());
-            } else if (fragment instanceof ZhihuThemeFragment) {
-                new ZhihuThemePresenter((ZhihuThemeContract.View) fragment, RetrofitHelper.getInstance());
-            }
+            startFragment(ZhihuDailyFragment.class, null);
         }
 
         if (savedInstanceState == null) {
@@ -89,7 +96,36 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         getSupportActionBar().setTitle(mTitle);
     }
 
-    private void fetchThemes() {
+    private void startFragment(Class<? extends Fragment> clazz, @Nullable Integer id) {
+        String name = clazz.getName();
+        if (name.equals(ZhihuDailyFragment.class.getName())) {
+            ZhihuDailyFragment fragment = ZhihuDailyFragment.newInstance();
+            ActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    fragment,
+                    R.id.contentFrame,
+                    name);
+            new ZhihuDailyPresenter(fragment, RetrofitHelper.getInstance(), CacheManager.getInstance(this));
+        } else if (name.equals(ZhihuThemeFragment.class.getName())) {
+            ZhihuThemeFragment fragment = ZhihuThemeFragment.newInstance(id);
+            ActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    fragment,
+                    R.id.contentFrame,
+                    name);
+            new ZhihuThemePresenter(fragment, RetrofitHelper.getInstance());
+        }
+    }
+
+    public void fetchThemes() {
+        String data = CacheManager.getInstance(this).getData(CacheManager.SUB_DIR_THEMES, "theme");
+        if (data != null) {
+            Type type = new TypeToken<List<ZhihuThemes.OthersBean>>() {
+            }.getType();
+            List<ZhihuThemes.OthersBean> cacheThemes = new Gson().fromJson(data, type);
+            setThemeData(cacheThemes);
+        }
+
         mSubscription = RetrofitHelper.getInstance()
                 .createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL)
                 .getThemes()
@@ -104,8 +140,8 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                 .subscribe(new Action1<List<ZhihuThemes.OthersBean>>() {
                     @Override
                     public void call(List<ZhihuThemes.OthersBean> othersBeen) {
-                        mNavAdapter.setThemes(othersBeen);
-                        mNavAdapter.notifyDataSetChanged();
+                        setThemeData(othersBeen);
+                        CacheManager.getInstance(MainActivity.this).saveData(CacheManager.SUB_DIR_THEMES, "theme", new Gson().toJson(othersBeen));
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -113,26 +149,6 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                         throwable.printStackTrace();
                     }
                 });
-    }
-
-    private void startFragment(FragmentType type, @Nullable Integer id) {
-        if (type == FragmentType.TYPE_HOME) {
-            ZhihuDailyFragment fragment = ZhihuDailyFragment.newInstance();
-            ActivityUtils.replaceFragment(
-                    getSupportFragmentManager(),
-                    fragment,
-                    R.id.contentFrame,
-                    "ZhihuDailyFragment");
-            new ZhihuDailyPresenter(fragment, RetrofitHelper.getInstance());
-        } else if (type == FragmentType.TYPE_THEME) {
-            ZhihuThemeFragment fragment = ZhihuThemeFragment.newInstance(id);
-            ActivityUtils.replaceFragment(
-                    getSupportFragmentManager(),
-                    fragment,
-                    R.id.contentFrame,
-                    "ZhihuThemeFragment");
-            new ZhihuThemePresenter(fragment, RetrofitHelper.getInstance());
-        }
     }
 
     @Override
@@ -146,6 +162,11 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setThemeData(List<ZhihuThemes.OthersBean> themes) {
+        mNavAdapter.setThemes(themes);
+        mNavAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -193,7 +214,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     public void onHomeClick() {
         if (mSelectThemeId != -1) {
             mSelectThemeId = -1;
-            startFragment(FragmentType.TYPE_HOME, null);
+            startFragment(ZhihuDailyFragment.class, null);
             mTitle = getString(R.string.main_page);
             getSupportActionBar().setTitle(mTitle);
             mNavAdapter.setSelectThemeId(-1);
@@ -205,7 +226,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     public void onThemeClick(int id, String name) {
         if (id != mSelectThemeId) {
             mSelectThemeId = id;
-            startFragment(FragmentType.TYPE_THEME, id);
+            startFragment(ZhihuThemeFragment.class, id);
             mTitle = name;
             getSupportActionBar().setTitle(name);
             mNavAdapter.setSelectThemeId(id);
@@ -215,12 +236,8 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (mSubscription != null)
             mSubscription.unsubscribe();
-        super.onDestroy();
-    }
-
-    public enum FragmentType {
-        TYPE_HOME, TYPE_THEME
     }
 }

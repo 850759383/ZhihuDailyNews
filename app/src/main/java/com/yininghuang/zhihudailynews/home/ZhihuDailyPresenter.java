@@ -1,9 +1,13 @@
 package com.yininghuang.zhihudailynews.home;
 
+import android.support.annotation.Nullable;
+
+import com.google.gson.Gson;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,16 +23,23 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     private SubscriptionList subscriptions = new SubscriptionList();
     private RetrofitHelper mRetrofitHelper;
+    private CacheManager mCacheManager;
     private ZhihuDailyContract.View mView;
 
-    public ZhihuDailyPresenter(ZhihuDailyContract.View view, RetrofitHelper retrofitHelper) {
+    public ZhihuDailyPresenter(ZhihuDailyContract.View view, RetrofitHelper retrofitHelper, CacheManager cacheManager) {
         mView = view;
         mRetrofitHelper = retrofitHelper;
+        mCacheManager = cacheManager;
         view.setPresenter(this);
     }
 
     @Override
     public void init() {
+        String data = getData(CacheManager.SUB_DIR_THEMES, "home");
+        if (data != null) {
+            ZhihuLatestNews news = new Gson().fromJson(data, ZhihuLatestNews.class);
+            mView.showStories(news);
+        }
         fetchStory();
     }
 
@@ -48,6 +59,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     public void call(ZhihuLatestNews zhihuLatestNews) {
                         mView.showStories(zhihuLatestNews);
                         mView.setLoadingStatus(false);
+                        saveData(CacheManager.SUB_DIR_THEMES, "home", new Gson().toJson(zhihuLatestNews));
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -85,6 +97,15 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     }
                 });
         subscriptions.add(sb);
+    }
+
+    private void saveData(String dir, String name, String data) {
+        mCacheManager.saveData(dir, name, data);
+    }
+
+    @Nullable
+    private String getData(String dir, String name) {
+        return mCacheManager.getData(dir, name);
     }
 
     @Override

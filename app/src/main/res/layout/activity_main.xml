@@ -23,8 +23,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:navigationIcon="@drawable/ic_menu_white_24dp"/>
+                android:fitsSystemWindows="true"
+                app:navigationIcon="@drawable/ic_menu_white_24dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
@@ -33,21 +34,18 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="256dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/viewBackground"
-        android:orientation="vertical">
-
-        <include layout="@layout/nav_header"/>
+        android:background="?attr/viewBackground">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/navRec"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+    </FrameLayout>
 
 </android.support.v4.widget.DrawerLayout>
 
