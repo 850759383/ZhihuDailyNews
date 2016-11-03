@@ -21,10 +21,19 @@ android {
             debuggable false
         }
         debug {
-            manifestPlaceholders = [appName: "知阅 Debug"]
             minifyEnabled false;
+            manifestPlaceholders = [appName: "知阅 Debug"]
+            applicationIdSuffix '.debug'
+            versionNameSuffix 'debug'
             debuggable true
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
     }
 }
 
