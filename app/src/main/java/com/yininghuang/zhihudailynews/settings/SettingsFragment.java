@@ -8,17 +8,11 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.utils.ActivityUtils;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
 
-import java.io.File;
-
-import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.internal.util.SubscriptionList;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Yining Huang on 2016/10/21.
@@ -86,25 +80,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Subscription sb = Observable.create(new Observable.OnSubscribe<Boolean>() {
-                    @Override
-                    public void call(Subscriber<? super Boolean> subscriber) {
-                        subscriber.onNext(deleteDir(getActivity().getCacheDir()));
-                    }
-                }).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                Subscription sb = CacheManager.getInstance(getActivity())
+                        .clearCache()
                         .subscribe(new Action1<Boolean>() {
                             @Override
                             public void call(Boolean aBoolean) {
                                 if (getView() != null)
-                                    Snackbar.make(getView(), R.string.clear_success, Snackbar.LENGTH_SHORT)
-                                            .show();
-                                clearCache.setSummary("0kb");
+                                    Snackbar.make(getView(), R.string.clear_success, Snackbar.LENGTH_SHORT).show();
+                                clearCache.setSummary("0B");
                             }
                         }, new Action1<Throwable>() {
                             @Override
-                            public void call(Throwable throwable) {
-                                throwable.printStackTrace();
+                            public void call(Throwable throwable) {throwable.printStackTrace();
                             }
                         });
                 mSubscriptions.add(sb);
@@ -112,23 +99,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
-        Subscription sb = Observable.just(folderSize(getActivity().getCacheDir()))
-                .map(new Func1<Long, Float>() {
-                    @Override
-                    public Float call(Long bt) {
-                        return bt / 1024f;
-                    }
-                })
-                .map(new Func1<Float, String>() {
-                    @Override
-                    public String call(Float kb) {
-                        if (kb < 1024) {
-                            return Math.round(kb * 100) / 100.0 + "KB";
-                        }
-                        return Math.round(kb / 1024 * 100) / 100.0 + "MB";
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
+        Subscription sb = CacheManager.getInstance(getActivity())
+                .calcCacheSize().subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
                         clearCache.setSummary(s);
@@ -140,35 +112,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                 });
         mSubscriptions.add(sb);
-    }
-
-    private long folderSize(File directory) {
-        long length = 0;
-        if (!directory.exists())
-            return length;
-        for (File file : directory.listFiles()) {
-            if (file.isFile())
-                length += file.length();
-            else
-                length += folderSize(file);
-        }
-        return length;
-    }
-
-    private boolean deleteDir(File dir) {
-        if (!dir.exists())
-            return true;
-
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-        return dir.delete();
     }
 
     @Override
