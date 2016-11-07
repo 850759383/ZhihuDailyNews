@@ -9,6 +9,10 @@ import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.utils.CacheManager;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -35,6 +39,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void init() {
+        queryReadId();
         String data = getData(CacheManager.SUB_DIR_THEMES, "home");
         if (data != null) {
             ZhihuLatestNews news = new Gson().fromJson(data, ZhihuLatestNews.class);
@@ -45,6 +50,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void reload() {
+        queryReadId();
         fetchStory();
     }
 
@@ -70,6 +76,19 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                     }
                 });
         subscriptions.add(sb);
+    }
+
+    @Override
+    public void queryReadId() {
+        File file = new File(mCacheManager.getSubCacheDir(CacheManager.SUB_DIR_NEWS));
+        if (!file.exists())
+            return;
+
+        List<String> list = new ArrayList<>();
+        for (File f : file.listFiles()) {
+            list.add(f.getName());
+        }
+        mView.setReadIdList(list);
     }
 
     @Override

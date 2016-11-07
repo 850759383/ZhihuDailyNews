@@ -3,7 +3,6 @@ package com.yininghuang.zhihudailynews.home;
 import com.yininghuang.zhihudailynews.BasePresenter;
 import com.yininghuang.zhihudailynews.BaseView;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
-import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 
 import java.util.List;
 
@@ -20,6 +19,8 @@ public class ZhihuDailyContract {
         void reload();
 
         void queryHistoryStory(String date);
+
+        void queryReadId();
     }
 
     public interface View extends BaseView<Presenter> {
@@ -35,5 +36,7 @@ public class ZhihuDailyContract {
         void showStories(ZhihuLatestNews stories);
 
         void addHistoryStories(ZhihuLatestNews stories);
+
+        void setReadIdList(List<String> list);
     }
 }

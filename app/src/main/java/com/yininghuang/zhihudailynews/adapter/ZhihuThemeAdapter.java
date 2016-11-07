@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.R;
-import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
+import com.yininghuang.zhihudailynews.model.ZhihuTheme;
+import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private List<ZhihuTheme> mZhihuThemes = new ArrayList<>();
     private List<ZhihuTheme.StoriesBean> mStories = new ArrayList<>();
+    private List<String> mReadIdList = new ArrayList<>();
     private Context mContext;
 
     public ZhihuThemeAdapter(Context context) {
@@ -60,24 +62,37 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ImageLoader.load(mContext, posterHolder.mPoster, mZhihuThemes.get(0).getImage());
             posterHolder.mTitle.setText(mZhihuThemes.get(0).getDescription());
         } else if (holder instanceof ZhihuLatestAdapter.NewsHolder) {
-            ZhihuTheme.StoriesBean data = mStories.get(position - 1);
+            ZhihuTheme.StoriesBean itemData = mStories.get(position - 1);
             ZhihuLatestAdapter.NewsHolder newsHolder = (ZhihuLatestAdapter.NewsHolder) holder;
-            newsHolder.title.setText(data.getTitle());
+
+            newsHolder.title.setText(itemData.getTitle());
+            if (UserSettingConstants.DARK_MODE) {
+                if (mReadIdList.contains(String.valueOf(itemData.getId())))
+                    newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorSecondTextDark));
+                else
+                    newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryTextDark));
+            } else {
+                if (mReadIdList.contains(String.valueOf(itemData.getId())))
+                    newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorSecondText));
+                else
+                    newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
+            }
 
             newsHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mReadIdList.add(String.valueOf(mStories.get(holder.getAdapterPosition() - 1).getId()));
                     Intent intent = new Intent(mContext, ZhihuNewsDetailActivity.class);
                     intent.putExtra("id", mStories.get(holder.getAdapterPosition() - 1).getId());
                     mContext.startActivity(intent);
                 }
             });
 
-            if (data.getImages() == null || data.getImages().size() == 0) {
+            if (itemData.getImages() == null || itemData.getImages().size() == 0) {
                 newsHolder.imageView.setVisibility(View.GONE);
             } else {
                 newsHolder.imageView.setVisibility(View.VISIBLE);
-                ImageLoader.load(mContext, newsHolder.imageView, data.getImages().get(0));
+                ImageLoader.load(mContext, newsHolder.imageView, itemData.getImages().get(0));
             }
         }
     }
@@ -99,6 +114,10 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         for (ZhihuTheme theme : themes) {
             addTheme(theme);
         }
+    }
+
+    public List<String> getReadIdList() {
+        return mReadIdList;
     }
 
     @Override

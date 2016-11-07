@@ -154,6 +154,19 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
     }
 
     @Override
+    public void setReadIdList(List<String> list) {
+        List<String> data = mAdapter.getReadIdList();
+        data.clear();
+        data.addAll(list);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void setPresenter(ZhihuThemeContract.Presenter presenter) {
         mPresenter = presenter;
     }

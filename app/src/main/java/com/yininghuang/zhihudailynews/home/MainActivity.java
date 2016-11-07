@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                         CacheManager.getInstance(this));
             else if (fragment instanceof ZhihuThemeFragment)
                 new ZhihuThemePresenter((ZhihuThemeContract.View) fragment,
-                        RetrofitHelper.getInstance());
+                        RetrofitHelper.getInstance(), CacheManager.getInstance(this));
         } else {
             startFragment(ZhihuDailyFragment.class, null);
         }
@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                     fragment,
                     R.id.contentFrame,
                     name);
-            new ZhihuThemePresenter(fragment, RetrofitHelper.getInstance());
+            new ZhihuThemePresenter(fragment, RetrofitHelper.getInstance(), CacheManager.getInstance(this));
         }
     }
 

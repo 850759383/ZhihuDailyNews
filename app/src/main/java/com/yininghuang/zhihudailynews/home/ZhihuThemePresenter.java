@@ -4,6 +4,11 @@ import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuThemeService;
+import com.yininghuang.zhihudailynews.utils.CacheManager;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,12 +24,14 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
 
     private RetrofitHelper mRetrofitHelper;
     private ZhihuThemeContract.View mView;
+    private CacheManager mCacheManager;
     private SubscriptionList mSubscriptions = new SubscriptionList();
     private int mThemeId = -1;
 
-    public ZhihuThemePresenter(ZhihuThemeContract.View view, RetrofitHelper retrofitHelper) {
+    public ZhihuThemePresenter(ZhihuThemeContract.View view, RetrofitHelper retrofitHelper, CacheManager cacheManager) {
         mRetrofitHelper = retrofitHelper;
         mView = view;
+        mCacheManager = cacheManager;
         mView.setPresenter(this);
     }
 
@@ -35,11 +42,13 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
 
     @Override
     public void init() {
+        queryReadIdList();
         fetchTheme();
     }
 
     @Override
     public void reload() {
+        queryReadIdList();
         fetchTheme();
     }
 
@@ -64,6 +73,19 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
                     }
                 });
         mSubscriptions.add(sb);
+    }
+
+    @Override
+    public void queryReadIdList() {
+        File file = new File(mCacheManager.getSubCacheDir(CacheManager.SUB_DIR_NEWS));
+        if (!file.exists())
+            return;
+
+        List<String> list = new ArrayList<>();
+        for (File f : file.listFiles()) {
+            list.add(f.getName());
+        }
+        mView.setReadIdList(list);
     }
 
     @Override

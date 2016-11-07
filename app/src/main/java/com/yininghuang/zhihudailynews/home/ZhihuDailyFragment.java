@@ -19,7 +19,6 @@ import com.yininghuang.zhihudailynews.R;
 import com.yininghuang.zhihudailynews.adapter.ZhihuLatestAdapter;
 import com.yininghuang.zhihudailynews.detail.ZhihuNewsDetailActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
-import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 import com.yininghuang.zhihudailynews.utils.ItemDecoration;
 import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
@@ -71,6 +70,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
         mContentRec.addItemDecoration(itemDecoration);
 
         if (savedInstanceState != null) {
+            mPresenter.queryReadId();
             Type type = new TypeToken<List<ZhihuLatestNews>>() {
             }.getType();
             List<ZhihuLatestNews> data = new Gson().fromJson(savedInstanceState.getString("data"), type);
@@ -120,6 +120,13 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     }
 
     @Override
+    public void setReadIdList(List<String> list) {
+        List<String> data = mAdapter.getReadIdList();
+        data.clear();
+        data.addAll(list);
+    }
+
+    @Override
     public void setHistoryLoadingStatus(boolean status) {
         mContentRec.setRefresh(status);
     }
@@ -153,6 +160,12 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mPresenter.onStop();
@@ -176,6 +189,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     public void onNewsClick(ZhihuLatestNews.ZhihuStory story) {
+        mAdapter.getReadIdList().add(String.valueOf(story.getId()));
         Intent intent = new Intent(getActivity(), ZhihuNewsDetailActivity.class);
         intent.putExtra("id", story.getId());
         startActivity(intent);

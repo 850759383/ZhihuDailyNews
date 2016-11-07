@@ -5,6 +5,8 @@ import com.yininghuang.zhihudailynews.BaseView;
 import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 
+import java.util.List;
+
 /**
  * Created by Yining Huang on 2016/10/31.
  */
@@ -23,6 +25,7 @@ public class ZhihuThemeContract {
 
         void showLoadError();
 
+        void setReadIdList(List<String> list);
     }
 
     interface Presenter extends BasePresenter {
@@ -32,6 +35,8 @@ public class ZhihuThemeContract {
         void reload();
 
         void queryHistoryStory(int id);
+
+        void queryReadIdList();
 
         void setThemeId(int id);
     }
