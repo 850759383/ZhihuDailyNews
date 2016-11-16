@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.yininghuang.zhihudailynews.home.MainActivity;
@@ -85,15 +86,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void loadSplashImage(String url) {
-        ImageLoader.load(SplashActivity.this, mStartupImage, url, new RequestListener() {
+        ImageLoader.load(SplashActivity.this, mStartupImage, url, new RequestListener<String, GlideDrawable>() {
             @Override
-            public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 toMainActivity(0);
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(Object resource, Object model, Target target, boolean isFromMemoryCache, boolean isFirstResource) {
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 toMainActivity(2);
                 return false;
             }

@@ -9,6 +9,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
@@ -55,7 +56,7 @@ public class ImageLoader {
                 .into(view);
     }
 
-    public static void load(Context context, ImageView view, String url, RequestListener listener) {
+    public static void load(Context context, ImageView view, String url, RequestListener<? super String, GlideDrawable> listener) {
         getDrawableTypeRequest(context, url).crossFade()
                 .centerCrop()
                 .listener(listener)
