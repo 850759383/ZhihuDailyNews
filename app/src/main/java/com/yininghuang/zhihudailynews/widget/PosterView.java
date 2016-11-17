@@ -58,11 +58,9 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
 
     private Subscription startTimer() {
         return Observable.interval(AUTO_SELECT_INTERVAL, TimeUnit.MILLISECONDS)
-                .filter(aLong -> !isTouching)
+                .filter(aLong -> !isTouching && mData != null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
-                    if (mData == null)
-                        return;
                     if (mSelectIndex < mData.size() - 1)
                         mSelectIndex++;
                     else
