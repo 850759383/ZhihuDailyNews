@@ -14,7 +14,6 @@ import com.yininghuang.zhihudailynews.utils.DBManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.internal.util.SubscriptionList;
 import rx.schedulers.Schedulers;
 
@@ -60,19 +59,13 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                 .getNewsContent(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuNewsContent>() {
-                    @Override
-                    public void call(ZhihuNewsContent content) {
-                        showDataInView(content);
-                        saveData(String.valueOf(mDetailId), content);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        if (mContent == null)
-                            mView.showLoadError();
-                    }
+                .subscribe(content -> {
+                    showDataInView(content);
+                    saveData(String.valueOf(mDetailId), content);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    if (mContent == null)
+                        mView.showLoadError();
                 });
         mSubscriptions.add(sb);
     }

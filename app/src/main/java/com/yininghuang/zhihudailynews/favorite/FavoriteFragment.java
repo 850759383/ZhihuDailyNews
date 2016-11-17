@@ -1,6 +1,5 @@
 package com.yininghuang.zhihudailynews.favorite;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,20 +23,14 @@ import com.yininghuang.zhihudailynews.utils.MyItemTouchHelper;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/11/1.
  */
 
 public class FavoriteFragment extends BaseFragment implements FavoriteContract.View, MyItemTouchHelper.OnItemSwipeListener {
 
-    @BindView(R.id.contentRec)
-    RecyclerView mContentRec;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    private RecyclerView mContentRec;
+    private Toolbar mToolbar;
 
     private FavoriteContract.Presenter mPresenter;
     private FavoriteAdapter mAdapter;
@@ -46,9 +39,9 @@ public class FavoriteFragment extends BaseFragment implements FavoriteContract.V
         return new FavoriteFragment();
     }
 
-    @Override
-    public void initViews(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+    private void initViews(View rootView) {
+        mContentRec = (RecyclerView) rootView.findViewById(R.id.contentRec);
+        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         ((FavoriteActivity) getActivity()).setSupportActionBar(mToolbar);
         ((FavoriteActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_star);
         ((FavoriteActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,14 +50,16 @@ public class FavoriteFragment extends BaseFragment implements FavoriteContract.V
         mContentRec.setAdapter(mAdapter);
         new ItemTouchHelper(new MyItemTouchHelper(this))
                 .attachToRecyclerView(mContentRec);
-        mPresenter.init();
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
-        ButterKnife.bind(this, rootView);
+        setHasOptionsMenu(true);
+        initViews(rootView);
+        mPresenter.init();
         return rootView;
     }
 
@@ -98,13 +93,10 @@ public class FavoriteFragment extends BaseFragment implements FavoriteContract.V
                 new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.notice)
                         .setMessage(R.string.delete_all_confirm)
-                        .setPositiveButton(R.string.delete_all, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mAdapter.getFavorites().clear();
-                                mAdapter.notifyDataSetChanged();
-                                mPresenter.clearAll();
-                            }
+                        .setPositiveButton(R.string.delete_all, (dialog, which) -> {
+                            mAdapter.getFavorites().clear();
+                            mAdapter.notifyDataSetChanged();
+                            mPresenter.clearAll();
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .create()
@@ -125,13 +117,10 @@ public class FavoriteFragment extends BaseFragment implements FavoriteContract.V
 
         if (getView() != null)
             Snackbar.make(getView(), R.string.restore, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.confirm, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mAdapter.addFavorite(favorite, position);
-                            mPresenter.add(favorite);
-                            mAdapter.notifyItemInserted(position);
-                        }
+                    .setAction(R.string.confirm, v -> {
+                        mAdapter.addFavorite(favorite, position);
+                        mPresenter.add(favorite);
+                        mAdapter.notifyItemInserted(position);
                     }).show();
 
     }

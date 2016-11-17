@@ -30,12 +30,8 @@ import com.yininghuang.zhihudailynews.utils.CacheManager;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemClickListener {
@@ -43,12 +39,9 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar_TranslucentStatusBar;
     private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar_TranslucentStatusBar;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.navRec)
-    RecyclerView mNavRec;
-    @BindView(R.id.drawerLayout)
-    DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
+    private RecyclerView mNavRec;
+    private DrawerLayout mDrawerLayout;
 
     private int mSelectThemeId = -1;
     private String mTitle;
@@ -63,7 +56,9 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mNavRec = (RecyclerView) findViewById(R.id.navRec);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
 
         mNavRec.setLayoutManager(new LinearLayoutManager(this));
@@ -72,7 +67,6 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         mNavAdapter.setOnNavItemClickListener(this);
 
         fetchThemes();
-
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (null != fragment) {
             if (fragment instanceof ZhihuDailyFragment)
@@ -129,26 +123,14 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         mSubscription = RetrofitHelper.getInstance()
                 .createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL)
                 .getThemes()
-                .map(new Func1<ZhihuThemes, List<ZhihuThemes.OthersBean>>() {
-                    @Override
-                    public List<ZhihuThemes.OthersBean> call(ZhihuThemes zhihuThemes) {
-                        return zhihuThemes.getOthers();
-                    }
-                })
+                .map(ZhihuThemes::getOthers)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<ZhihuThemes.OthersBean>>() {
-                    @Override
-                    public void call(List<ZhihuThemes.OthersBean> othersBeen) {
-                        setThemeData(othersBeen);
-                        CacheManager.getInstance(MainActivity.this).saveData(CacheManager.SUB_DIR_THEMES, "theme", new Gson().toJson(othersBeen));
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                });
+                .subscribe(othersBeen -> {
+                    setThemeData(othersBeen);
+                    CacheManager.getInstance(MainActivity.this)
+                            .saveData(CacheManager.SUB_DIR_THEMES, "theme", new Gson().toJson(othersBeen));
+                }, Throwable::printStackTrace);
     }
 
     @Override

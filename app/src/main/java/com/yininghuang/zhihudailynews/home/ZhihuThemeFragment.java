@@ -23,20 +23,14 @@ import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/31.
  */
 
 public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContract.View {
 
-    @BindView(R.id.contentRec)
-    AutoLoadRecyclerView mContentRec;
-
-    @BindView(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeLayout;
+    private AutoLoadRecyclerView mContentRec;
+    private SwipeRefreshLayout mSwipeLayout;
 
     private ZhihuThemeAdapter mAdapter;
     private ZhihuThemeContract.Presenter mPresenter;
@@ -51,8 +45,9 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
         return fragment;
     }
 
-    @Override
-    public void initViews(@Nullable Bundle savedInstanceState) {
+    private void initViews(View rootView) {
+        mContentRec = (AutoLoadRecyclerView) rootView.findViewById(R.id.contentRec);
+        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeLayout);
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuThemeAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);
@@ -61,26 +56,11 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
             itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
         else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
         mContentRec.addItemDecoration(itemDecoration);
-        mPresenter.setThemeId(getArguments().getInt("themeId"));
-        if (savedInstanceState != null) {
-            Type type = new TypeToken<List<ZhihuTheme>>() {
-            }.getType();
-            List<ZhihuTheme> data = new Gson().fromJson(savedInstanceState.getString("data"), type);
-            mAdapter.addThemes(data);
-            mAdapter.notifyDataSetChanged();
-            mCurrentDy = savedInstanceState.getInt("dy");
-            mContentRec.scrollTo(0, mCurrentDy);
-        } else {
-            mPresenter.init();
-        }
 
-        mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
-            @Override
-            public void onLoad() {
-                if (mAdapter.getStories().size() == 0)
-                    return;
-                mPresenter.queryHistoryStory(mAdapter.getStories().get(mAdapter.getStories().size() - 1).getId());
-            }
+        mContentRec.setOnLoadingListener(() -> {
+            if (mAdapter.getStories().size() == 0)
+                return;
+            mPresenter.queryHistoryStory(mAdapter.getStories().get(mAdapter.getStories().size() - 1).getId());
         });
 
         mContentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -91,12 +71,7 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
             }
         });
 
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.reload();
-            }
-        });
+        mSwipeLayout.setOnRefreshListener(() -> mPresenter.reload());
 
     }
 
@@ -113,7 +88,19 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_zhihu_theme, container, false);
-        ButterKnife.bind(this, rootView);
+        initViews(rootView);
+        mPresenter.setThemeId(getArguments().getInt("themeId"));
+        if (savedInstanceState != null) {
+            Type type = new TypeToken<List<ZhihuTheme>>() {
+            }.getType();
+            List<ZhihuTheme> data = new Gson().fromJson(savedInstanceState.getString("data"), type);
+            mAdapter.addThemes(data);
+            mAdapter.notifyDataSetChanged();
+            mCurrentDy = savedInstanceState.getInt("dy");
+            mContentRec.scrollTo(0, mCurrentDy);
+        } else {
+            mPresenter.init();
+        }
         return rootView;
     }
 
@@ -145,12 +132,7 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
     public void showLoadError() {
         if (getView() != null)
             Snackbar.make(getView(), R.string.load_error, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.refresh, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mPresenter.reload();
-                        }
-                    }).show();
+                    .setAction(R.string.refresh, view -> mPresenter.reload()).show();
     }
 
     @Override

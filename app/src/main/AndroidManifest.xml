@@ -44,7 +44,8 @@
             android:name=".browser.WebViewActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".favorite.FavoriteActivity"
+        <activity
+            android:name=".favorite.FavoriteActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

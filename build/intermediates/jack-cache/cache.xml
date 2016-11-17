@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-a904efef0ff09d6cf8179cf59284c1163f2b96f8.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-03a18d9a285dcbb576f4b6a2b3a950ba9a8b9b7d.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        revision="24.0.3"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\internal_impl-24.2.1-a4449563a5b27beb6a488e288d0c8a25a4d899bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.2.0\42bfaf64c94f3848ebf5cf1c2ea4ec9d1b3ac6c8\rxjava-1.2.0.jar"
+        revision="24.0.3"
+        sha1="42bfaf64c94f3848ebf5cf1c2ea4ec9d1b3ac6c8">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\rxjava-1.2.0-ab9943789df06af5b71de3bcab3a5be5b384ecf2.jar" />
+    </item>
+    <item
+        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        revision="24.0.3"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\support-annotations-24.2.1-a45405e82f9eb237681c9cf66b4eb54d7b88c9f6.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        revision="24.0.3"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\internal_impl-24.2.1-e171d4724ec21fb5e6b3acabe68360a5e9a3219b.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-b8c109b0e2a3a7d5ee7dd4545419fac14aef6b38.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\preference-v14\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="febc85793ed271b9dc4955240fea69688a77edbd">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-50f2192864572035ea5f99c68a3a3517cddddc97.jar" />
+    </item>
+    <item
+        jar="D:\Android\sdk\platforms\android-24\android.jar"
+        revision="24.0.3"
+        sha1="d49cc0972df7adf495d3ad3d0cf71c0ec517ace4">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\android-f78bee4d4fedeeebffd9087020d03e29e2a43358.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-3e232448659d73369dae385f31a6097789b6e2cc.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\preference-v7\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="eb5d8b5c47b4e5c0184a7986a26bc12cfc51cde3">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-e850e684cb57d39840c629b15fd6c7b8b35af0ec.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        revision="24.0.3"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\internal_impl-24.2.1-c905e408def7cd5d73b31908f21b1092f1e6ac97.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-0027a610f3a44e1087a325b70e052aa181d84a00.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.7\751f548c85fa49f330cecbb1875893f971b33c4e\gson-2.7.jar"
+        revision="24.0.3"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\gson-2.7-09ef8485756c5ccda84e3a18e7fb8c06d454fc6b.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-9b35ea5d4714b008fbfdd5c99c6fd6b84ada1ff2.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="c5e6490573cd2cc8018417f60ddd251138b6ed61">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-b75e91952b040d6170e073250fb507c4151b7fc2.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        revision="24.0.3"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\internal_impl-24.2.1-8a6ec1259371540d598f6a08b4d00b0671b576bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        revision="24.0.3"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\glide-3.7.0-7d2cfe5515c3f231c2288248c2a3eb3d435658b0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.9.0\f824591a0016efbaeddb8300bee54832a1398cfa\okio-1.9.0.jar"
+        revision="24.0.3"
+        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okio-1.9.0-0653cf0343fb7a2998bc09b3036312ea5e80833f.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-b8a38f800d9ce3eba77948511ad2d16ccc4a5b46.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.1.0\aa557d71ead91cbf26e0c316a0f593d168303309\converter-gson-2.1.0.jar"
+        revision="24.0.3"
+        sha1="aa557d71ead91cbf26e0c316a0f593d168303309">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\converter-gson-2.1.0-a997f86c41c5e2f298d1217be628488eea0f3028.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\design\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-ad08aea9d292d91dcc2b2cccac0b33f642e6190e.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        revision="24.0.3"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\internal_impl-24.2.1-5043650117b40a483fa00e143317cf461bdc1484.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-0add763e9f58542fb97f7cc63b6cf9ecdd399eb6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.1.0\693eddc23e87ab13f9cf5001707ce8e7e1d1ff01\adapter-rxjava-2.1.0.jar"
+        revision="24.0.3"
+        sha1="693eddc23e87ab13f9cf5001707ce8e7e1d1ff01">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\adapter-rxjava-2.1.0-45c8ba728ba9bb046445b6ad05ad14e054c76e4f.jar" />
+    </item>
+    <item
+        jar="D:\Android\sdk\platforms\android-24\optional\org.apache.http.legacy.jar"
+        revision="24.0.3"
+        sha1="fb7023e781abb70ed1b0442eb611fbed295cae84">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\org.apache.http.legacy-3c5a3bacd0812139d593e0e1bc1b81c0f5a2b829.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.4.1\c7c4f9e35c2fd5900da24f9872e3971801f08ce0\okhttp-3.4.1.jar"
+        revision="24.0.3"
+        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okhttp-3.4.1-bb450d28a90d7564a74beed35b4971a905727f64.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yining Huang\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.1.0\2de7cd8b95b7021b1d597f049bcb422055119f2c\retrofit-2.1.0.jar"
+        revision="24.0.3"
+        sha1="2de7cd8b95b7021b1d597f049bcb422055119f2c">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\retrofit-2.1.0-94a8eca4d9eb9edb40d76cc2fb613b304d186a86.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-121302e6781e29142406fa6ff34713c8f9e264cd.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-6c2d7a454abdc935d8725c7a83138cff8b95fd68.jar" />
+    </item>
+    <item
+        jar="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        revision="24.0.3"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="D:\Android\Git\ZhihuDailyNews\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-370a4972528683873f0d530237d883dbee5350ec.jar" />
+    </item>
+
+</items>

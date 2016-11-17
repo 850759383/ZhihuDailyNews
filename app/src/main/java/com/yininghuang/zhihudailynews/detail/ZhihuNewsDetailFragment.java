@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -29,27 +28,17 @@ import com.yininghuang.zhihudailynews.comment.ZhihuCommentActivity;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/18.
  */
 
 public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDetailContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.appbarImage)
-    ImageView mAppbarImage;
-    @BindView(R.id.webView)
-    WebView mWebView;
-    @BindView(R.id.title)
-    TextView mTitle;
-    @BindView(R.id.imageSource)
-    TextView mImageSource;
-    @BindView(R.id.appbar)
-    AppBarLayout mAppBarLayout;
+    private Toolbar mToolbar;
+    private ImageView mAppbarImage;
+    private WebView mWebView;
+    private TextView mTitle;
+    private TextView mImageSource;
 
     private int mDetailId = -1;
     private ZhihuNewsDetailContract.Presenter mPresenter;
@@ -75,13 +64,18 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_zhihu_news_detail, container, false);
-        ButterKnife.bind(this, mRootView);
+        initViews(mRootView);
+        mPresenter.init(mDetailId);
         return mRootView;
     }
 
-    @Override
     @SuppressLint("SetJavaScriptEnabled")
-    public void initViews(@Nullable Bundle savedInstanceState) {
+    private void initViews(View rootView) {
+        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        mAppbarImage = (ImageView) rootView.findViewById(R.id.appbarImage);
+        mWebView = (WebView) rootView.findViewById(R.id.webView);
+        mTitle = (TextView) rootView.findViewById(R.id.title);
+        mImageSource = (TextView) rootView.findViewById(R.id.imageSource);
         setHasOptionsMenu(true);
         ((ZhihuNewsDetailActivity) getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionBar = ((ZhihuNewsDetailActivity) getActivity()).getSupportActionBar();
@@ -115,7 +109,6 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
                 return true;
             }
         });
-        mPresenter.init(mDetailId);
     }
 
     @Override
@@ -206,12 +199,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     @Override
     public void showLoadError() {
         Snackbar.make(mRootView, R.string.load_error, Snackbar.LENGTH_LONG)
-                .setAction(R.string.refresh, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mPresenter.reload();
-                    }
-                }).show();
+                .setAction(R.string.refresh, view -> mPresenter.reload()).show();
     }
 
     @Override

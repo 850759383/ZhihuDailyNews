@@ -25,20 +25,14 @@ import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/17.
  */
 
 public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContract.View, ZhihuLatestAdapter.OnItemClickListener {
 
-    @BindView(R.id.contentRec)
-    AutoLoadRecyclerView mContentRec;
-
-    @BindView(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    private AutoLoadRecyclerView mContentRec;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ZhihuDailyContract.Presenter mPresenter;
     private ZhihuLatestAdapter mAdapter;
@@ -53,22 +47,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_zhihudaily, container, false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void initViews(@Nullable Bundle savedInstanceState) {
-        mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ZhihuLatestAdapter(getActivity());
-        mAdapter.setOnItemClickListener(this);
-        mContentRec.setAdapter(mAdapter);
-        RecyclerView.ItemDecoration itemDecoration;
-        if (((BaseActivity) getActivity()).getThemeId() == BaseActivity.DARK_THEME)
-            itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
-        else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
-        mContentRec.addItemDecoration(itemDecoration);
-
+        initViews(rootView);
         if (savedInstanceState != null) {
             mPresenter.queryReadId();
             Type type = new TypeToken<List<ZhihuLatestNews>>() {
@@ -82,6 +61,22 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
             mPresenter.init();
         }
 
+        return rootView;
+    }
+
+    private void initViews(View rootView) {
+        mContentRec = (AutoLoadRecyclerView) rootView.findViewById(R.id.contentRec);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeLayout);
+        mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new ZhihuLatestAdapter(getActivity());
+        mAdapter.setOnItemClickListener(this);
+        mContentRec.setAdapter(mAdapter);
+        RecyclerView.ItemDecoration itemDecoration;
+        if (((BaseActivity) getActivity()).getThemeId() == BaseActivity.DARK_THEME)
+            itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
+        else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
+        mContentRec.addItemDecoration(itemDecoration);
+
         mContentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -90,19 +85,11 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
             }
         });
 
-        mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
-            @Override
-            public void onLoad() {
-                if (!mContentRec.isRefreshing())
-                    mPresenter.queryHistoryStory(mAdapter.getOldestNewsDate());
-            }
+        mContentRec.setOnLoadingListener(() -> {
+            if (!mContentRec.isRefreshing())
+                mPresenter.queryHistoryStory(mAdapter.getOldestNewsDate());
         });
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.reload();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.reload());
     }
 
     @Override
@@ -146,12 +133,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
     public void showLoadError() {
         if (getView() != null)
             Snackbar.make(getView(), R.string.load_error, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.refresh, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mPresenter.reload();
-                        }
-                    }).show();
+                    .setAction(R.string.refresh, view -> mPresenter.reload()).show();
     }
 
     @Override

@@ -15,11 +15,11 @@ public class RetrofitHelper {
 
     private static RetrofitHelper INSTANCE;
 
-    private RetrofitHelper(){
+    private RetrofitHelper() {
 
     }
 
-    public static RetrofitHelper getInstance(){
+    public static RetrofitHelper getInstance() {
         if (INSTANCE == null)
             INSTANCE = new RetrofitHelper();
         return INSTANCE;

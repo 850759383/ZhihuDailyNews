@@ -20,30 +20,24 @@ import android.widget.ProgressBar;
 
 import com.yininghuang.zhihudailynews.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/23.
  */
 
 public class WebViewActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.webView)
-    WebView mWebView;
-
-    @BindView(R.id.progressbar)
-    ProgressBar mProgressBar;
+    private Toolbar mToolbar;
+    private WebView mWebView;
+    private ProgressBar mProgressBar;
 
     @Override
     @SuppressLint("SetJavaScriptEnabled")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-        ButterKnife.bind(this);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mWebView = (WebView) findViewById(R.id.webView);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,17 +71,14 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
-        mWebView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-                        mWebView.goBack();
-                        return true;
-                    }
+        mWebView.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+                    mWebView.goBack();
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
         mWebView.loadUrl(url);
     }

@@ -1,6 +1,5 @@
 package com.yininghuang.zhihudailynews.comment;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -21,19 +20,14 @@ import com.yininghuang.zhihudailynews.widget.AutoLoadRecyclerView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/20.
  */
 
 public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentContract.View {
 
-    @BindView(R.id.contentRec)
-    AutoLoadRecyclerView mContentRec;
-    @BindView(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    private AutoLoadRecyclerView mContentRec;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private View mRootView;
     private ZhihuCommentContract.Presenter mPresenter;
     private ZhihuCommentAdapter mAdapter;
@@ -50,12 +44,14 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_zhihu_comment, container, false);
-        ButterKnife.bind(this, mRootView);
+        initViews(mRootView);
+        mPresenter.init(getArguments().getInt("id"));
         return mRootView;
     }
 
-    @Override
-    public void initViews(@Nullable Bundle savedInstanceState) {
+    private void initViews(View rootView) {
+        mContentRec = (AutoLoadRecyclerView) rootView.findViewById(R.id.contentRec);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeLayout);
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuCommentAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);
@@ -64,24 +60,16 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
             itemDecoration = new ItemDecoration(getActivity(), R.color.colorDividerDark);
         else itemDecoration = new ItemDecoration(getActivity(), R.color.colorDivider);
         mContentRec.addItemDecoration(itemDecoration);
-        mPresenter.init(getArguments().getInt("id"));
 
-        mContentRec.setOnLoadingListener(new AutoLoadRecyclerView.OnLoadingListener() {
-            @Override
-            public void onLoad() {
-                if (mContentRec.isRefreshing())
-                    return;
-                List<ZhihuComments.ZhihuComment> comments = mAdapter.getComments();
-                if (!comments.isEmpty())
-                    mPresenter.queryHistoryComments(comments.get(comments.size() - 1).getId());
-            }
+        mContentRec.setOnLoadingListener(() -> {
+            if (mContentRec.isRefreshing())
+                return;
+            List<ZhihuComments.ZhihuComment> comments = mAdapter.getComments();
+            if (!comments.isEmpty())
+                mPresenter.queryHistoryComments(comments.get(comments.size() - 1).getId());
         });
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.reload();
-            }
-        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.reload());
     }
 
     @Override
@@ -115,12 +103,8 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     @Override
     public void showLoadError() {
         Snackbar.make(mRootView, R.string.load_error, Snackbar.LENGTH_LONG)
-                .setAction(R.string.refresh, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mPresenter.reload();
-                    }
-                }).show();
+                .setAction(R.string.refresh, view -> mPresenter.reload())
+                .show();
     }
 
     @Override

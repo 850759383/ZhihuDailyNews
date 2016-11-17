@@ -15,7 +15,6 @@ import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.internal.util.SubscriptionList;
 import rx.schedulers.Schedulers;
 
@@ -60,20 +59,14 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                 .getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuLatestNews>() {
-                    @Override
-                    public void call(ZhihuLatestNews zhihuLatestNews) {
-                        mView.showStories(zhihuLatestNews);
-                        mView.setLoadingStatus(false);
-                        saveData(CacheManager.SUB_DIR_THEMES, "home", new Gson().toJson(zhihuLatestNews));
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        mView.setLoadingStatus(false);
-                        mView.showLoadError();
-                    }
+                .subscribe(zhihuLatestNews -> {
+                    mView.showStories(zhihuLatestNews);
+                    mView.setLoadingStatus(false);
+                    saveData(CacheManager.SUB_DIR_THEMES, "home", new Gson().toJson(zhihuLatestNews));
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mView.setLoadingStatus(false);
+                    mView.showLoadError();
                 });
         subscriptions.add(sb);
     }
@@ -100,20 +93,14 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                 .getHistoryNews(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuLatestNews>() {
-                    @Override
-                    public void call(ZhihuLatestNews zhihuLatestNews) {
-                        mView.addHistoryStories(zhihuLatestNews);
-                        mView.setHistoryLoadingStatus(false);
-                        if (zhihuLatestNews.getStories().size() == 0)
-                            mView.setLoadingComplete();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        mView.setHistoryLoadingStatus(false);
-                    }
+                .subscribe(zhihuLatestNews -> {
+                    mView.addHistoryStories(zhihuLatestNews);
+                    mView.setHistoryLoadingStatus(false);
+                    if (zhihuLatestNews.getStories().size() == 0)
+                        mView.setLoadingComplete();
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mView.setHistoryLoadingStatus(false);
                 });
         subscriptions.add(sb);
     }

@@ -19,9 +19,6 @@ import com.yininghuang.zhihudailynews.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/11/1.
  */
@@ -57,13 +54,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                 ImageLoader.load(mContext, holder.mPic, images.get(0));
             }
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ZhihuNewsDetailActivity.class);
-                intent.putExtra("id", mFavorites.get(holder.getAdapterPosition()).getId());
-                mContext.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ZhihuNewsDetailActivity.class);
+            intent.putExtra("id", mFavorites.get(holder.getAdapterPosition()).getId());
+            mContext.startActivity(intent);
         });
     }
 
@@ -86,16 +80,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title)
         TextView mTitle;
-
-        @BindView(R.id.pic)
         ImageView mPic;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mTitle = (TextView) itemView.findViewById(R.id.title);
+            mPic = (ImageView) itemView.findViewById(R.id.pic);
         }
     }
 }

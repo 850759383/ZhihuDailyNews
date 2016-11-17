@@ -1,6 +1,5 @@
 package com.yininghuang.zhihudailynews.home;
 
-import com.yininghuang.zhihudailynews.model.ZhihuTheme;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuThemeService;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.internal.util.SubscriptionList;
 import rx.schedulers.Schedulers;
 
@@ -58,19 +56,13 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
                 .getTheme(mThemeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuTheme>() {
-                    @Override
-                    public void call(ZhihuTheme theme) {
-                        mView.showStories(theme);
-                        mView.setLoadingStatus(false);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        mView.setLoadingStatus(false);
-                        mView.showLoadError();
-                    }
+                .subscribe(theme -> {
+                    mView.showStories(theme);
+                    mView.setLoadingStatus(false);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mView.setLoadingStatus(false);
+                    mView.showLoadError();
                 });
         mSubscriptions.add(sb);
     }
@@ -95,18 +87,12 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
                 .getHistoryThemeStory(mThemeId, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ZhihuTheme>() {
-                    @Override
-                    public void call(ZhihuTheme theme) {
-                        mView.addHistoryStories(theme);
-                        mView.setHistoryLoadingStatus(false);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                        mView.setHistoryLoadingStatus(false);
-                    }
+                .subscribe(theme -> {
+                    mView.addHistoryStories(theme);
+                    mView.setHistoryLoadingStatus(false);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mView.setHistoryLoadingStatus(false);
                 });
         mSubscriptions.add(sb);
     }

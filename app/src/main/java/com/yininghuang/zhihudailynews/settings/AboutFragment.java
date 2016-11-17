@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.yininghuang.zhihudailynews.R;
@@ -33,59 +32,47 @@ public class AboutFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.fragment_about);
 
-        findPreference("license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                ActivityUtils.addFragment(
-                        getActivity().getSupportFragmentManager(),
-                        LicenseFragment.newInstance(),
-                        R.id.mainFrameLayout,
-                        "LicenseFragment");
-                return true;
-            }
+        findPreference("license").setOnPreferenceClickListener(preference -> {
+            ActivityUtils.addFragment(
+                    getActivity().getSupportFragmentManager(),
+                    LicenseFragment.newInstance(),
+                    R.id.mainFrameLayout,
+                    "LicenseFragment");
+            return true;
         });
 
-        findPreference("repo_url").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Uri uri = Uri.parse(GIT_HUB_REPO_URL);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    e.printStackTrace();
-                }
-                return true;
+        findPreference("repo_url").setOnPreferenceClickListener(preference -> {
+            Uri uri = Uri.parse(GIT_HUB_REPO_URL);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
             }
+            return true;
         });
 
-        findPreference("zhihu_url").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Uri uri = Uri.parse(ZHIHU_USER_HOME_URL);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    e.printStackTrace();
-                }
-                return true;
+        findPreference("zhihu_url").setOnPreferenceClickListener(preference -> {
+            Uri uri = Uri.parse(ZHIHU_USER_HOME_URL);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
             }
+            return true;
         });
 
-        findPreference("mail").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{E_MAIL});
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    e.printStackTrace();
-                }
-                return false;
+        findPreference("mail").setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("plain/text");
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{E_MAIL});
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
             }
+            return false;
         });
 
         try {
@@ -96,17 +83,14 @@ public class AboutFragment extends PreferenceFragmentCompat {
             e.printStackTrace();
         }
 
-        findPreference("disclaimer").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.disclaimer)
-                        .setMessage(R.string.disclaimer_content)
-                        .setPositiveButton(R.string.confirm, null)
-                        .create()
-                        .show();
-                return false;
-            }
+        findPreference("disclaimer").setOnPreferenceClickListener(preference -> {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.disclaimer)
+                    .setMessage(R.string.disclaimer_content)
+                    .setPositiveButton(R.string.confirm, null)
+                    .create()
+                    .show();
+            return false;
         });
     }
 

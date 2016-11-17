@@ -15,9 +15,6 @@ import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/31.
  */
@@ -61,12 +58,9 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HomeHolder) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnNavItemClickListener != null)
-                        mOnNavItemClickListener.onHomeClick();
-                }
+            holder.itemView.setOnClickListener(v -> {
+                if (mOnNavItemClickListener != null)
+                    mOnNavItemClickListener.onHomeClick();
             });
 
             if (mSelectThemeId == -1)
@@ -77,13 +71,10 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ThemeHolder themeHolder = (ThemeHolder) holder;
             themeHolder.mTitle.setText(mThemes.get(position - 2).getName());
 
-            themeHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnNavItemClickListener != null)
-                        mOnNavItemClickListener.onThemeClick(mThemes.get(holder.getAdapterPosition() - 2).getId(),
-                                mThemes.get(holder.getAdapterPosition() - 2).getName());
-                }
+            themeHolder.itemView.setOnClickListener(v -> {
+                if (mOnNavItemClickListener != null)
+                    mOnNavItemClickListener.onThemeClick(mThemes.get(holder.getAdapterPosition() - 2).getId(),
+                            mThemes.get(holder.getAdapterPosition() - 2).getName());
             });
 
             if (mSelectThemeId == mThemes.get(position - 2).getId())
@@ -133,30 +124,24 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class HomeHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.background)
         RelativeLayout mBackground;
 
         public HomeHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mBackground = (RelativeLayout) itemView.findViewById(R.id.background);
         }
     }
 
     public static class ThemeHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title)
         TextView mTitle;
-
-        @BindView(R.id.subscribe)
         ImageView mSubscribe;
-
-        @BindView(R.id.background)
         RelativeLayout mBackground;
 
         public ThemeHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mTitle = (TextView) itemView.findViewById(R.id.title);
+            mSubscribe = (ImageView) itemView.findViewById(R.id.subscribe);
+            mBackground = (RelativeLayout) itemView.findViewById(R.id.background);
         }
     }
 }

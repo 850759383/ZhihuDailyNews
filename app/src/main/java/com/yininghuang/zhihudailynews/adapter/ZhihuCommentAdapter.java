@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/20.
  */
@@ -99,28 +96,21 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.userImage)
         ImageView userImage;
-
-        @BindView(R.id.userName)
         TextView userName;
-
-        @BindView(R.id.content)
         TextView content;
-
-        @BindView(R.id.replyTo)
         TextView replyTo;
-
-        @BindView(R.id.postTime)
         TextView postTime;
-
-        @BindView(R.id.agreeCount)
         TextView agreeCount;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            userImage = (ImageView) itemView.findViewById(R.id.userImage);
+            userName = (TextView) itemView.findViewById(R.id.userName);
+            content = (TextView) itemView.findViewById(R.id.content);
+            replyTo = (TextView) itemView.findViewById(R.id.replyTo);
+            postTime = (TextView) itemView.findViewById(R.id.postTime);
+            agreeCount = (TextView) itemView.findViewById(R.id.agreeCount);
         }
     }
 }

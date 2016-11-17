@@ -18,9 +18,6 @@ import com.yininghuang.zhihudailynews.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/31.
  */
@@ -78,14 +75,11 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
             }
 
-            newsHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mReadIdList.add(String.valueOf(mStories.get(holder.getAdapterPosition() - 1).getId()));
-                    Intent intent = new Intent(mContext, ZhihuNewsDetailActivity.class);
-                    intent.putExtra("id", mStories.get(holder.getAdapterPosition() - 1).getId());
-                    mContext.startActivity(intent);
-                }
+            newsHolder.itemView.setOnClickListener(v -> {
+                mReadIdList.add(String.valueOf(mStories.get(holder.getAdapterPosition() - 1).getId()));
+                Intent intent = new Intent(mContext, ZhihuNewsDetailActivity.class);
+                intent.putExtra("id", mStories.get(holder.getAdapterPosition() - 1).getId());
+                mContext.startActivity(intent);
             });
 
             if (itemData.getImages() == null || itemData.getImages().size() == 0) {
@@ -137,16 +131,13 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public static class PosterHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.posterImage)
         ImageView mPoster;
-
-        @BindView(R.id.title)
         TextView mTitle;
 
         public PosterHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mPoster = (ImageView) itemView.findViewById(R.id.posterImage);
+            mTitle = (TextView) itemView.findViewById(R.id.title);
         }
     }
 }

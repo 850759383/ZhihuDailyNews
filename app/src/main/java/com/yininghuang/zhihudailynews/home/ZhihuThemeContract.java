@@ -3,7 +3,6 @@ package com.yininghuang.zhihudailynews.home;
 import com.yininghuang.zhihudailynews.BasePresenter;
 import com.yininghuang.zhihudailynews.BaseView;
 import com.yininghuang.zhihudailynews.model.ZhihuTheme;
-import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 
 import java.util.List;
 

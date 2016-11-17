@@ -11,7 +11,6 @@ import java.io.IOException;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -89,16 +88,13 @@ public class CacheManager {
 
     public Observable<String> calcCacheSize() {
         return Observable.just(folderSize(mContext.getCacheDir()))
-                .map(new Func1<Long, String>() {
-                    @Override
-                    public String call(Long b) {
-                        if (b < 1024) {
-                            return Math.round(b * 100f) / 100.0 + "B";
-                        } else if (b < 1024 * 1024) {
-                            return Math.round(b / 1024f * 100) / 100.0 + "KB";
-                        }
-                        return Math.round(b / 1024f / 1024f * 100) / 100.0 + "KB";
+                .map(b -> {
+                    if (b < 1024) {
+                        return Math.round(b * 100f) / 100.0 + "B";
+                    } else if (b < 1024 * 1024) {
+                        return Math.round(b / 1024f * 100) / 100.0 + "KB";
                     }
+                    return Math.round(b / 1024f / 1024f * 100) / 100.0 + "KB";
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

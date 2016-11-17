@@ -21,12 +21,9 @@ import com.yininghuang.zhihudailynews.utils.ImageLoader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by Yining Huang on 2016/10/17.
@@ -34,18 +31,15 @@ import rx.functions.Action1;
 
 public class PosterView extends FrameLayout implements ViewPager.OnPageChangeListener {
 
+    private static final long AUTO_SELECT_INTERVAL = 4000;
+    private LinearLayout mIndicatorLayout;
+    private ViewPager viewPager;
     private int mSelectIndex = 0;
     private List<ZhihuLatestNews.ZhihuTopStory> mData;
     private PosterAdapter mPosterAdapter;
     private Subscription mTimer;
 
-    private static final long AUTO_SELECT_INTERVAL = 4000;
-
-    @BindView(R.id.indicatorLayout)
-    LinearLayout mIndicatorLayout;
-
-    @BindView(R.id.posterPager)
-    ViewPager viewPager;
+    private boolean isTouching = false;
 
     public PosterView(Context context) {
         this(context, null);
@@ -58,23 +52,22 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     public PosterView(Context context, AttributeSet attr, int defStyleAttr) {
         super(context, attr, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.poster_layout, this, true);
-        ButterKnife.bind(this);
+        mIndicatorLayout = (LinearLayout) findViewById(R.id.indicatorLayout);
+        viewPager = (ViewPager) findViewById(R.id.posterPager);
     }
 
     private Subscription startTimer() {
         return Observable.interval(AUTO_SELECT_INTERVAL, TimeUnit.MILLISECONDS)
+                .filter(aLong -> !isTouching)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        if (mData == null)
-                            return;
-                        if (mSelectIndex < mData.size() - 1)
-                            mSelectIndex++;
-                        else
-                            mSelectIndex = 0;
-                        viewPager.setCurrentItem(mSelectIndex, true);
-                    }
+                .subscribe(aLong -> {
+                    if (mData == null)
+                        return;
+                    if (mSelectIndex < mData.size() - 1)
+                        mSelectIndex++;
+                    else
+                        mSelectIndex = 0;
+                    viewPager.setCurrentItem(mSelectIndex, true);
                 });
     }
 
@@ -82,13 +75,12 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                if (mTimer != null)
-                    mTimer.unsubscribe();
+                isTouching = true;
                 break;
             }
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
-                mTimer = startTimer();
+                isTouching = false;
                 break;
             }
         }
@@ -181,18 +173,15 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
         public Object instantiateItem(ViewGroup container, int position) {
             final ZhihuLatestNews.ZhihuTopStory story = mData.get(position);
             View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_view_pager_poster_content, null);
-            ImageView poster = ButterKnife.findById(view, R.id.pagerImage);
-            FrameLayout posterLayout = ButterKnife.findById(view, R.id.imageLayout);
-            TextView title = ButterKnife.findById(view, R.id.title);
+            ImageView poster = (ImageView) view.findViewById(R.id.pagerImage);
+            FrameLayout posterLayout = (FrameLayout) view.findViewById(R.id.imageLayout);
+            TextView title = (TextView) view.findViewById(R.id.title);
             title.setText(story.getTitle());
             container.addView(view);
             ImageLoader.load(container.getContext(), poster, story.getImage());
-            posterLayout.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null)
-                        mListener.onPosterClick(story);
-                }
+            posterLayout.setOnClickListener(v -> {
+                if (mListener != null)
+                    mListener.onPosterClick(story);
             });
             return view;
         }

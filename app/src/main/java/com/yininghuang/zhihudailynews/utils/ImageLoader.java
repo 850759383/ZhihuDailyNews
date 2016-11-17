@@ -22,30 +22,25 @@ import java.io.InputStream;
 
 public class ImageLoader {
 
-    private static final StreamModelLoader<String> cacheOnlyStreamLoader = new StreamModelLoader<String>() {
+    private static final StreamModelLoader<String> cacheOnlyStreamLoader = (model, i, i1) -> new DataFetcher<InputStream>() {
         @Override
-        public DataFetcher<InputStream> getResourceFetcher(final String model, int i, int i1) {
-            return new DataFetcher<InputStream>() {
-                @Override
-                public InputStream loadData(Priority priority) throws Exception {
-                    throw new IOException();
-                }
+        public InputStream loadData(Priority priority) throws Exception {
+            throw new IOException();
+        }
 
-                @Override
-                public void cleanup() {
+        @Override
+        public void cleanup() {
 
-                }
+        }
 
-                @Override
-                public String getId() {
-                    return model;
-                }
+        @Override
+        public String getId() {
+            return model;
+        }
 
-                @Override
-                public void cancel() {
+        @Override
+        public void cancel() {
 
-                }
-            };
         }
     };
 

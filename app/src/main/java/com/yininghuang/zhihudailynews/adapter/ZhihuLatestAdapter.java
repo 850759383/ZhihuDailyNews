@@ -17,9 +17,6 @@ import com.yininghuang.zhihudailynews.widget.PosterView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Yining Huang on 2016/10/18.
  */
@@ -62,12 +59,9 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             PosterView posterView = ((PosterHolder) holder).posterView;
             if (mLatestNewsList.size() > 0) {
                 posterView.initPosters(mLatestNewsList.get(0).getTopStories());
-                posterView.setOnPosterClickListener(new PosterView.OnPosterClickListener() {
-                    @Override
-                    public void onPosterClick(ZhihuLatestNews.ZhihuTopStory story) {
-                        if (mOnItemClickListener != null)
-                            mOnItemClickListener.onPosterClick(story);
-                    }
+                posterView.setOnPosterClickListener(story -> {
+                    if (mOnItemClickListener != null)
+                        mOnItemClickListener.onPosterClick(story);
                 });
                 posterView.getAdapter().notifyDataSetChanged();
             }
@@ -75,12 +69,9 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ZhihuLatestNews.ZhihuStory itemData = mZhihuStoryList.get(position - 1);
             NewsHolder newsHolder = (NewsHolder) holder;
             newsHolder.title.setText(itemData.getTitle());
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mOnItemClickListener != null)
-                        mOnItemClickListener.onNewsClick(mZhihuStoryList.get(holder.getAdapterPosition() - 1));
-                }
+            holder.itemView.setOnClickListener(view -> {
+                if (mOnItemClickListener != null)
+                    mOnItemClickListener.onNewsClick(mZhihuStoryList.get(holder.getAdapterPosition() - 1));
             });
 
             if (UserSettingConstants.DARK_MODE) {
@@ -164,27 +155,22 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static class PosterHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.posterView)
         PosterView posterView;
 
         public PosterHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            posterView = (PosterView) itemView.findViewById(R.id.posterView);
         }
     }
 
     public static class NewsHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title)
         TextView title;
-
-        @BindView(R.id.pic)
         ImageView imageView;
 
         public NewsHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            imageView = (ImageView) itemView.findViewById(R.id.pic);
         }
     }
 
