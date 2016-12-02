@@ -3,10 +3,13 @@ package com.yininghuang.zhihudailynews.detail;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -39,12 +42,11 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     private WebView mWebView;
     private TextView mTitle;
     private TextView mImageSource;
+    private FloatingActionButton mStarFab;
 
     private int mDetailId = -1;
     private ZhihuNewsDetailContract.Presenter mPresenter;
     private View mRootView;
-
-    private boolean isStared = false;
 
     public static ZhihuNewsDetailFragment newInstance(int id) {
         Bundle args = new Bundle();
@@ -76,6 +78,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         mWebView = (WebView) rootView.findViewById(R.id.webView);
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mImageSource = (TextView) rootView.findViewById(R.id.imageSource);
+        mStarFab = (FloatingActionButton) rootView.findViewById(R.id.starFab);
         setHasOptionsMenu(true);
         ((ZhihuNewsDetailActivity) getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionBar = ((ZhihuNewsDetailActivity) getActivity()).getSupportActionBar();
@@ -83,6 +86,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
+        mStarFab.setOnClickListener(v -> mPresenter.star());
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setScrollbarFadingEnabled(true);
         mWebView.getSettings().setBuiltInZoomControls(false);
@@ -112,16 +116,6 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.star);
-        if (isStared)
-            item.setIcon(R.drawable.ic_star_red_300_24dp);
-        else
-            item.setIcon(R.drawable.ic_star_white_24dp);
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_zhihu_daily_content, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -132,10 +126,6 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         switch (item.getItemId()) {
             case android.R.id.home: {
                 getActivity().onBackPressed();
-                return true;
-            }
-            case R.id.star: {
-                mPresenter.star();
                 return true;
             }
             case R.id.share: {
@@ -159,8 +149,17 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
 
     @Override
     public void setStarStatus(boolean status) {
-        isStared = status;
-        getActivity().invalidateOptionsMenu();
+        if (status)
+            mStarFab.getDrawable()
+                    .setColorFilter(
+                            ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                            PorterDuff.Mode.MULTIPLY);
+        else
+            mStarFab.getDrawable()
+                    .setColorFilter(
+                            ContextCompat.getColor(getActivity(), R.color.colorSecondText),
+                            PorterDuff.Mode.MULTIPLY);
+
     }
 
     @Override

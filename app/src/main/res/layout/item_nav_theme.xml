@@ -21,5 +21,6 @@
         android:layout_height="24dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_keyboard_arrow_right_grey_600_24dp"/>
+        android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+        android:tint="?attr/textSecondaryColor"/>
 </RelativeLayout>

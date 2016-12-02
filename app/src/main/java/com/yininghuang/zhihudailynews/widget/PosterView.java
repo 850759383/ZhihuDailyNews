@@ -87,6 +87,7 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
 
     @Override
     protected void onAttachedToWindow() {
+        
         super.onAttachedToWindow();
         mTimer = startTimer();
     }

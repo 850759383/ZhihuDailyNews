@@ -3,9 +3,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/star"
-        android:icon="@drawable/ic_star_white_24dp"
-        android:title="@string/star"
+        android:id="@+id/comment"
+        android:icon="@drawable/ic_comment_white_24dp"
+        android:title="@string/watchComments"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -13,9 +13,4 @@
         android:icon="@drawable/ic_share_white_24dp"
         android:title="@string/share"
         app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/comment"
-        android:title="@string/watchComments"
-        app:showAsAction="never"/>
 </menu>
