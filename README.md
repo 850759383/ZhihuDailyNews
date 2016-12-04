@@ -19,7 +19,6 @@
     Retrofit2 2.1.0
     Rxjava 1.2.0
     RxAndroid 1.2.1
-    ButterKnife 8.4.0
     Glide 3.7.0
     Gson 2.7.0
 
