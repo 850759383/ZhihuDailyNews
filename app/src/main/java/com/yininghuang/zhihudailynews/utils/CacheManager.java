@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -77,12 +76,10 @@ public class CacheManager {
 
 
     public Observable<Boolean> clearCache() {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
-            @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                subscriber.onNext(deleteDir(mContext.getCacheDir()));
-            }
-        }).subscribeOn(Schedulers.io())
+        return Observable.create(
+                (Observable.OnSubscribe<Boolean>) subscriber ->
+                        subscriber.onNext(deleteDir(mContext.getCacheDir())))
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -94,7 +91,7 @@ public class CacheManager {
                     } else if (b < 1024 * 1024) {
                         return Math.round(b / 1024f * 100) / 100.0 + "KB";
                     }
-                    return Math.round(b / 1024f / 1024f * 100) / 100.0 + "KB";
+                    return Math.round(b / 1024f / 1024f * 100) / 100.0 + "MB";
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

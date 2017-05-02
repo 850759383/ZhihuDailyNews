@@ -54,7 +54,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/userName"
+            android:layout_alignStart="@id/content"
             android:layout_below="@+id/replyTo"
             android:layout_marginTop="16dp"
             android:textColor="?attr/textSecondaryColor"/>

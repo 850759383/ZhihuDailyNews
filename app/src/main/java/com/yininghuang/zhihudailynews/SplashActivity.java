@@ -10,12 +10,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.yininghuang.zhihudailynews.home.MainActivity;
+import com.yininghuang.zhihudailynews.model.ZhihuStartup;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
-import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
+import com.yininghuang.zhihudailynews.net.ZhihuStartupService;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 import com.yininghuang.zhihudailynews.utils.ImageLoader;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -45,13 +47,16 @@ public class SplashActivity extends AppCompatActivity {
         mImageDescribe = (TextView) findViewById(R.id.describe);
 
         Subscription sb = RetrofitHelper.getInstance()
-                .createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
-                .getStartupImage()
+                .createRetrofit(ZhihuStartupService.class, Api.ZHIHU_START_UP)
+                .getStartup()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(zhihuImage -> {
-                    loadSplashImage(zhihuImage.getImg());
-                    mImageDescribe.setText(zhihuImage.getText());
+                .subscribe(zhihuStartup -> {
+                    List<ZhihuStartup.CreativesBean> creatives = zhihuStartup.getCreatives();
+                    if (!creatives.isEmpty())
+                        loadSplashImage(creatives.get(0).getUrl());
+                    else
+                        toMainActivity(0);
                 }, throwable -> {
                     throwable.printStackTrace();
                     toMainActivity(0);
