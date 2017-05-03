@@ -17,4 +17,4 @@
 }
 -keep class com.yininghuang.zhihudailynews.model.** { *; }
 
--dontobfuscate
+#-dontobfuscate

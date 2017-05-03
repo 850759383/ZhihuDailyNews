@@ -10,16 +10,13 @@ android {
         versionCode 4
         versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
-            enabled true
-        }
     }
     buildTypes {
         release {
             minifyEnabled true
             manifestPlaceholders = [appName: "知阅"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFiles file('/proguard').listFiles()
+            proguardFiles file('proguard').listFiles()
             debuggable false
         }
         debug {
