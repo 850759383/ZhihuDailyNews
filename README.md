@@ -1,5 +1,5 @@
 # ZhihuDailyNews
-
+[![Build Status](https://travis-ci.org/850759383/ZhihuDailyNews.svg?branch=master)](https://travis-ci.org/850759383/ZhihuDailyNews)
 ## 说明
     知乎日报，使用Retrofit + Rxjava + MVP实现。
 
