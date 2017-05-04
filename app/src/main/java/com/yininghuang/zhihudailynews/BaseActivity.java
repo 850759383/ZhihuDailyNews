@@ -17,7 +17,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if ((getThemeId() == DARK_THEME && !UserSettingConstants.DARK_MODE) || (getThemeId() == LIGHT_THEME && UserSettingConstants.DARK_MODE)) {
+        if ((getThemeId() == DARK_THEME && !UserSettingConstants.DARK_THEME) || (getThemeId() == LIGHT_THEME && UserSettingConstants.DARK_THEME)) {
             onThemeChange();
         }
     }

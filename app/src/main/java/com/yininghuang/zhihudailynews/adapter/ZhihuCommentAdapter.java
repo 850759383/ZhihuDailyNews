@@ -27,7 +27,7 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
     private static final int TYPE_LOADING = -1;
     private static final int TYPE_ITEM = 0;
-    List<ZhihuComments.ZhihuComment> mComments = new ArrayList<>();
+    private List<ZhihuComments.ZhihuComment> mComments = new ArrayList<>();
     private Context mContext;
     private Boolean isLoadComplete = false;
 

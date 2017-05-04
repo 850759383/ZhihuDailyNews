@@ -22,6 +22,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yininghuang.zhihudailynews.BaseFragment;
@@ -43,6 +44,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     private TextView mTitle;
     private TextView mImageSource;
     private FloatingActionButton mStarFab;
+    private ProgressBar mProgressBar;
 
     private int mDetailId = -1;
     private ZhihuNewsDetailContract.Presenter mPresenter;
@@ -79,6 +81,7 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mImageSource = (TextView) rootView.findViewById(R.id.imageSource);
         mStarFab = (FloatingActionButton) rootView.findViewById(R.id.starFab);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading);
         setHasOptionsMenu(true);
         ((ZhihuNewsDetailActivity) getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionBar = ((ZhihuNewsDetailActivity) getActivity()).getSupportActionBar();
@@ -178,6 +181,14 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
     @Override
     public void showAppBarImage(String url) {
         ImageLoader.load(getActivity(), mAppbarImage, url);
+    }
+
+    @Override
+    public void setLoadingStatus(boolean status) {
+        if (status)
+            mProgressBar.setVisibility(View.VISIBLE);
+        else
+            mProgressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -7,4 +7,5 @@ local.properties
 build/
 /captures
 .externalNativeBuild
+*.apk
 

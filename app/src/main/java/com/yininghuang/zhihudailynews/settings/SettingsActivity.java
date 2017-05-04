@@ -21,7 +21,7 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (UserSettingConstants.DARK_MODE)
+        if (UserSettingConstants.DARK_THEME)
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_settings);
@@ -58,7 +58,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public void onThemeChange() {
-        if (UserSettingConstants.DARK_MODE) {
+        if (UserSettingConstants.DARK_THEME) {
             setTheme(DARK_THEME);
         } else {
             setTheme(LIGHT_THEME);

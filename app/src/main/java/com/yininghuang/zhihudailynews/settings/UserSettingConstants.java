@@ -12,7 +12,7 @@ public class UserSettingConstants {
 
     public static boolean USE_WEBVIEW = true;
 
-    public static boolean DARK_MODE = false;
+    public static boolean DARK_THEME = false;
 
     public static boolean SKIP_SPLASH = false;
 }

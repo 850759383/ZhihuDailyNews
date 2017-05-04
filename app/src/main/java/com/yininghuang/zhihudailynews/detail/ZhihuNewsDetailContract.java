@@ -19,6 +19,8 @@ public class ZhihuNewsDetailContract {
 
         void showAppBarImage(String url);
 
+        void setLoadingStatus(boolean status);
+
         void showLoadError();
 
         void setBlockImageDisplay(Boolean status);

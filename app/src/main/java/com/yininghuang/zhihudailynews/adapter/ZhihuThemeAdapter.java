@@ -24,9 +24,9 @@ import java.util.List;
 
 public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int TYPE_LOADING = -1;
-    private int TYPE_POSTER = 0;
-    private int TYPE_STORY = 1;
+    private static final int TYPE_LOADING = -1;
+    private static final int TYPE_POSTER = 0;
+    private static final int TYPE_STORY = 1;
 
     private List<ZhihuTheme> mZhihuThemes = new ArrayList<>();
     private List<ZhihuTheme.StoriesBean> mStories = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ZhihuLatestAdapter.NewsHolder newsHolder = (ZhihuLatestAdapter.NewsHolder) holder;
 
             newsHolder.title.setText(itemData.getTitle());
-            if (UserSettingConstants.DARK_MODE) {
+            if (UserSettingConstants.DARK_THEME) {
                 if (mReadIdList.contains(String.valueOf(itemData.getId())))
                     newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorSecondTextDark));
                 else

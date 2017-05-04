@@ -43,6 +43,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
 
     @Override
     public void init(int id) {
+        mView.setLoadingStatus(true);
         mDetailId = id;
         loadCache(String.valueOf(mDetailId));
         fetchNewsContent(id);
@@ -66,6 +67,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
                     throwable.printStackTrace();
                     if (mContent == null)
                         mView.showLoadError();
+                    mView.setLoadingStatus(false);
                 });
         mSubscriptions.add(sb);
     }
@@ -89,6 +91,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
             if (content.getImages().size() > 0)
                 mView.showAppBarImage(content.getImages().get(0));
         }
+        mView.setLoadingStatus(false);
     }
 
     @Override
@@ -127,7 +130,10 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
             return;
 
         mContent = new Gson().fromJson(data, ZhihuNewsContent.class);
-        showDataInView(mContent);
+        if (mContent.getType() != 1) {
+            showDataInView(mContent);
+            mView.setLoadingStatus(false);
+        }
     }
 
     private void saveData(String fileName, ZhihuNewsContent content) {
@@ -145,7 +151,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
         body = body.replace("<div class=\"img-place-holder\">", "");
         String css = "<link rel=\"stylesheet\" href=\"zhihu_daily.css\" type=\"text/css\">";
         String theme = "<body className=\"\" onload=\"onLoaded()\">";
-        if (UserSettingConstants.DARK_MODE)
+        if (UserSettingConstants.DARK_THEME)
             theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +

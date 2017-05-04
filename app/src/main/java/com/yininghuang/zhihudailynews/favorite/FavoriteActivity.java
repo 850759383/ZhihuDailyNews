@@ -21,7 +21,7 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (UserSettingConstants.DARK_MODE)
+        if (UserSettingConstants.DARK_THEME)
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_favorite);

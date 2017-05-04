@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (UserSettingConstants.DARK_MODE)
+        if (UserSettingConstants.DARK_THEME)
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_main);
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
 
     @Override
     public void onThemeChange() {
-        if (UserSettingConstants.DARK_MODE) {
+        if (UserSettingConstants.DARK_THEME) {
             setTheme(DARK_THEME);
         } else {
             setTheme(LIGHT_THEME);

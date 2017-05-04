@@ -40,7 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
 
         findPreference("dark_mode").setOnPreferenceChangeListener((preference, newValue) -> {
-            UserSettingConstants.DARK_MODE = (boolean) newValue;
+            UserSettingConstants.DARK_THEME = (boolean) newValue;
             ((BaseActivity) getActivity()).onThemeChange();
             return true;
         });

@@ -29,9 +29,9 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<String> mReadIdList = new ArrayList<>();
     private boolean isLoadingComplete = false;
 
-    private int TYPE_LOADING = -1;
-    private int TYPE_POSTER = 0;
-    private int TYPE_ITEM = 1;
+    private static final int TYPE_LOADING = -1;
+    private static final int TYPE_POSTER = 0;
+    private static final int TYPE_ITEM = 1;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -74,7 +74,7 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     mOnItemClickListener.onNewsClick(mZhihuStoryList.get(holder.getAdapterPosition() - 1));
             });
 
-            if (UserSettingConstants.DARK_MODE) {
+            if (UserSettingConstants.DARK_THEME) {
                 if (mReadIdList.contains(String.valueOf(itemData.getId())))
                     newsHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorSecondTextDark));
                 else

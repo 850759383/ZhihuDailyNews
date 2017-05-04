@@ -6,9 +6,7 @@ package com.yininghuang.zhihudailynews.net;
 
 public class Api {
 
-    private static final int ZHIHU_API_VERSION = 4;
-
-    public static final String ZHIHU_BASE_URL = "http://news-at.zhihu.com/api/" + ZHIHU_API_VERSION + "/";
+    public static final String ZHIHU_BASE_URL = "http://news-at.zhihu.com/api/4/";
 
     public static final String ZHIHU_START_UP = "http://news-at.zhihu.com/api/7/";
 }
