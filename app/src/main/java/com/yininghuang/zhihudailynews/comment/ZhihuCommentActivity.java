@@ -7,7 +7,9 @@ import android.view.MenuItem;
 
 import com.yininghuang.zhihudailynews.BaseActivity;
 import com.yininghuang.zhihudailynews.R;
+import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
+import com.yininghuang.zhihudailynews.net.ZhihuCommentService;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
 
 /**
@@ -45,7 +47,7 @@ public class ZhihuCommentActivity extends BaseActivity {
                     .commit();
         }
 
-        new ZhihuCommentPresenter(fragment, RetrofitHelper.getInstance());
+        new ZhihuCommentPresenter(fragment, RetrofitHelper.getInstance().createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL));
 
     }
 

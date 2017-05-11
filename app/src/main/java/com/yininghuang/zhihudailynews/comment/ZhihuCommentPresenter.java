@@ -16,14 +16,14 @@ import rx.schedulers.Schedulers;
 public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
 
     private ZhihuCommentContract.View mView;
-    private RetrofitHelper mRetrofitHelper;
+    private ZhihuCommentService mService;
     private SubscriptionList mSubscriptionList = new SubscriptionList();
 
     private int newsId = 0;
 
-    public ZhihuCommentPresenter(ZhihuCommentContract.View view, RetrofitHelper retrofitHelper) {
-        mView = view;
-        mRetrofitHelper = retrofitHelper;
+    public ZhihuCommentPresenter(ZhihuCommentContract.View view, ZhihuCommentService service) {
+        this.mView = view;
+        this.mService = service;
         mView.setPresenter(this);
     }
 
@@ -40,8 +40,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
 
     private void fetchComments() {
         mView.setLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL)
-                .getComments(newsId)
+        Subscription sb = mService.getComments(newsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(zhihuComments -> {
@@ -61,8 +60,7 @@ public class ZhihuCommentPresenter implements ZhihuCommentContract.Presenter {
     @Override
     public void queryHistoryComments(int userId) {
         mView.setHistoryLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuCommentService.class, Api.ZHIHU_BASE_URL)
-                .getHistoryComments(newsId, userId)
+        Subscription sb = mService.getHistoryComments(newsId, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(zhihuComments -> {

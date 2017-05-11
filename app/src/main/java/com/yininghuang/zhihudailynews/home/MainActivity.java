@@ -21,6 +21,7 @@ import com.yininghuang.zhihudailynews.favorite.FavoriteActivity;
 import com.yininghuang.zhihudailynews.model.ZhihuThemes;
 import com.yininghuang.zhihudailynews.net.Api;
 import com.yininghuang.zhihudailynews.net.RetrofitHelper;
+import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.net.ZhihuThemeService;
 import com.yininghuang.zhihudailynews.settings.SettingsActivity;
 import com.yininghuang.zhihudailynews.settings.UserSettingConstants;
@@ -71,11 +72,13 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
         if (null != fragment) {
             if (fragment instanceof ZhihuDailyFragment)
                 new ZhihuDailyPresenter((ZhihuDailyContract.View) fragment,
-                        RetrofitHelper.getInstance(),
+                        RetrofitHelper.getInstance().createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL),
                         CacheManager.getInstance(this));
             else if (fragment instanceof ZhihuThemeFragment)
-                new ZhihuThemePresenter((ZhihuThemeContract.View) fragment,
-                        RetrofitHelper.getInstance(), CacheManager.getInstance(this));
+                new ZhihuThemePresenter(
+                        (ZhihuThemeContract.View) fragment,
+                        RetrofitHelper.getInstance().createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL),
+                        CacheManager.getInstance(this));
         } else {
             startFragment(ZhihuDailyFragment.class, null);
         }
@@ -99,7 +102,9 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                     fragment,
                     R.id.contentFrame,
                     name);
-            new ZhihuDailyPresenter(fragment, RetrofitHelper.getInstance(), CacheManager.getInstance(this));
+            new ZhihuDailyPresenter(fragment,
+                    RetrofitHelper.getInstance().createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL),
+                    CacheManager.getInstance(this));
         } else if (name.equals(ZhihuThemeFragment.class.getName())) {
             ZhihuThemeFragment fragment = ZhihuThemeFragment.newInstance(id);
             ActivityUtils.replaceFragment(
@@ -107,7 +112,10 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
                     fragment,
                     R.id.contentFrame,
                     name);
-            new ZhihuThemePresenter(fragment, RetrofitHelper.getInstance(), CacheManager.getInstance(this));
+            new ZhihuThemePresenter(
+                    fragment,
+                    RetrofitHelper.getInstance().createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL),
+                    CacheManager.getInstance(this));
         }
     }
 
@@ -165,7 +173,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                mDrawerLayout.openDrawer(Gravity.LEFT);
+                mDrawerLayout.openDrawer(Gravity.START);
                 return true;
             }
             case R.id.star: {
@@ -184,7 +192,7 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT))
+        if (mDrawerLayout.isDrawerOpen(Gravity.START))
             mDrawerLayout.closeDrawers();
         else if (mSelectThemeId != -1)
             onHomeClick();

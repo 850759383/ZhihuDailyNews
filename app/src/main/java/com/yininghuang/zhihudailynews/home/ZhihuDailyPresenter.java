@@ -4,8 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.yininghuang.zhihudailynews.model.ZhihuLatestNews;
-import com.yininghuang.zhihudailynews.net.Api;
-import com.yininghuang.zhihudailynews.net.RetrofitHelper;
 import com.yininghuang.zhihudailynews.net.ZhihuDailyService;
 import com.yininghuang.zhihudailynews.utils.CacheManager;
 
@@ -25,14 +23,14 @@ import rx.schedulers.Schedulers;
 public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     private SubscriptionList subscriptions = new SubscriptionList();
-    private RetrofitHelper mRetrofitHelper;
+    private ZhihuDailyService mService;
     private CacheManager mCacheManager;
     private ZhihuDailyContract.View mView;
 
-    public ZhihuDailyPresenter(ZhihuDailyContract.View view, RetrofitHelper retrofitHelper, CacheManager cacheManager) {
-        mView = view;
-        mRetrofitHelper = retrofitHelper;
-        mCacheManager = cacheManager;
+    public ZhihuDailyPresenter(ZhihuDailyContract.View view, ZhihuDailyService service, CacheManager cacheManager) {
+        this.mView = view;
+        this.mService = service;
+        this.mCacheManager = cacheManager;
         view.setPresenter(this);
     }
 
@@ -53,10 +51,9 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         fetchStory();
     }
 
-    private void fetchStory() {
+    public void fetchStory() {
         mView.setLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
-                .getLatestNews()
+        Subscription sb = mService.getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(zhihuLatestNews -> {
@@ -89,8 +86,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         mView.setHistoryLoadingStatus(true);
         if (date == null)
             return;
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
-                .getHistoryNews(date)
+        Subscription sb = mService.getHistoryNews(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(zhihuLatestNews -> {

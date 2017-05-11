@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
 public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Presenter {
 
     private ZhihuNewsDetailContract.View mView;
-    private RetrofitHelper mRetrofitHelper;
+    private ZhihuDailyService mService;
     private DBManager mDBManager;
     private CacheManager mCacheManager;
 
@@ -33,11 +33,11 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
 
     private ZhihuNewsContent mContent;
 
-    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, RetrofitHelper retrofitHelper, DBManager dbManager, CacheManager cacheManager) {
-        mView = view;
-        mRetrofitHelper = retrofitHelper;
-        mDBManager = dbManager;
-        mCacheManager = cacheManager;
+    public ZhihuNewsDetailPresenter(ZhihuNewsDetailContract.View view, ZhihuDailyService service, DBManager dbManager, CacheManager cacheManager) {
+        this.mView = view;
+        this.mService = service;
+        this.mDBManager = dbManager;
+        this.mCacheManager = cacheManager;
         mView.setPresenter(this);
     }
 
@@ -56,8 +56,7 @@ public class ZhihuNewsDetailPresenter implements ZhihuNewsDetailContract.Present
     }
 
     private void fetchNewsContent(int id) {
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuDailyService.class, Api.ZHIHU_BASE_URL)
-                .getNewsContent(id)
+        Subscription sb = mService.getNewsContent(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(content -> {

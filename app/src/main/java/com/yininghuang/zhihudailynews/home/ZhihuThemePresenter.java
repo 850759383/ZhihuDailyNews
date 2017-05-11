@@ -20,16 +20,16 @@ import rx.schedulers.Schedulers;
 
 public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
 
-    private RetrofitHelper mRetrofitHelper;
+    private ZhihuThemeService mService;
     private ZhihuThemeContract.View mView;
     private CacheManager mCacheManager;
     private SubscriptionList mSubscriptions = new SubscriptionList();
     private int mThemeId = -1;
 
-    public ZhihuThemePresenter(ZhihuThemeContract.View view, RetrofitHelper retrofitHelper, CacheManager cacheManager) {
-        mRetrofitHelper = retrofitHelper;
-        mView = view;
-        mCacheManager = cacheManager;
+    public ZhihuThemePresenter(ZhihuThemeContract.View view, ZhihuThemeService service, CacheManager cacheManager) {
+        this.mService = service;
+        this.mView = view;
+        this.mCacheManager = cacheManager;
         mView.setPresenter(this);
     }
 
@@ -52,8 +52,7 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
 
     private void fetchTheme() {
         mView.setLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL)
-                .getTheme(mThemeId)
+        Subscription sb = mService.getTheme(mThemeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(theme -> {
@@ -83,8 +82,7 @@ public class ZhihuThemePresenter implements ZhihuThemeContract.Presenter {
     @Override
     public void queryHistoryStory(int id) {
         mView.setHistoryLoadingStatus(true);
-        Subscription sb = mRetrofitHelper.createRetrofit(ZhihuThemeService.class, Api.ZHIHU_BASE_URL)
-                .getHistoryThemeStory(mThemeId, id)
+        Subscription sb = mService.getHistoryThemeStory(mThemeId, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(theme -> {
