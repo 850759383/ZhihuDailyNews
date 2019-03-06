@@ -21,8 +21,6 @@ public class ZhihuCommentActivity extends BaseActivity {
     private static final int LIGHT_THEME = R.style.AppTheme_NoActionBar;
     private static final int DARK_THEME = R.style.AppThemeDark_NoActionBar;
 
-    private Toolbar mToolbar;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +28,7 @@ public class ZhihuCommentActivity extends BaseActivity {
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_zhihu_comment);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.comment);

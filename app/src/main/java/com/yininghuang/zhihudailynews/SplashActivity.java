@@ -43,8 +43,8 @@ public class SplashActivity extends AppCompatActivity {
         if (UserSettingConstants.SKIP_SPLASH)
             toMainActivity(0);
         setContentView(R.layout.activity_splash);
-        mStartupImage = (ImageView) findViewById(R.id.startupImage);
-        mImageDescribe = (TextView) findViewById(R.id.describe);
+        mStartupImage = findViewById(R.id.startupImage);
+        mImageDescribe = findViewById(R.id.describe);
 
         Subscription sb = RetrofitHelper.getInstance()
                 .createRetrofit(ZhihuStartupService.class, Api.ZHIHU_START_UP)

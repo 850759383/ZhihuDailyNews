@@ -57,9 +57,9 @@ public class MainActivity extends BaseActivity implements NavAdapter.OnNavItemCl
             setTheme(DARK_THEME);
         else setTheme(LIGHT_THEME);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mNavRec = (RecyclerView) findViewById(R.id.navRec);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toolbar = findViewById(R.id.toolbar);
+        mNavRec = findViewById(R.id.navRec);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
 
         mNavRec.setLayoutManager(new LinearLayoutManager(this));

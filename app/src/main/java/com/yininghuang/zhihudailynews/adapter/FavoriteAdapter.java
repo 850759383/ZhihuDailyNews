@@ -25,7 +25,7 @@ import java.util.List;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
-    List<Favorite> mFavorites = new ArrayList<>();
+    private List<Favorite> mFavorites = new ArrayList<>();
     private Context mContext;
 
     public FavoriteAdapter(Context context) {
@@ -85,8 +85,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTitle = (TextView) itemView.findViewById(R.id.title);
-            mPic = (ImageView) itemView.findViewById(R.id.pic);
+            mTitle = itemView.findViewById(R.id.title);
+            mPic = itemView.findViewById(R.id.pic);
         }
     }
 }

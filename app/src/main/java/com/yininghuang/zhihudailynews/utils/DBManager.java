@@ -17,11 +17,10 @@ import java.util.List;
 
 public class DBManager {
 
-    private DBHelper mDBHelper;
     private SQLiteDatabase db;
 
     public DBManager(Context context) {
-        mDBHelper = new DBHelper(context);
+        DBHelper mDBHelper = new DBHelper(context);
         db = mDBHelper.getWritableDatabase();
     }
 

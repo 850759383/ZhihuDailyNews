@@ -169,8 +169,8 @@ public class ZhihuLatestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public NewsHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            imageView = (ImageView) itemView.findViewById(R.id.pic);
+            title = itemView.findViewById(R.id.title);
+            imageView = itemView.findViewById(R.id.pic);
         }
     }
 

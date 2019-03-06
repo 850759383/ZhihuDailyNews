@@ -1,6 +1,7 @@
 package com.yininghuang.zhihudailynews.settings;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,9 @@ public class LicenseFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_license, container, false);
-        mWebView = (WebView) rootView.findViewById(R.id.webView);
+        mWebView = rootView.findViewById(R.id.webView);
         mWebView.loadUrl(LICENSE_URL);
         return rootView;
     }

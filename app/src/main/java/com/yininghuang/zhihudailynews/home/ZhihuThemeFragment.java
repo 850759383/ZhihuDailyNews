@@ -1,6 +1,7 @@
 package com.yininghuang.zhihudailynews.home;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -46,8 +47,8 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
     }
 
     private void initViews(View rootView) {
-        mContentRec = (AutoLoadRecyclerView) rootView.findViewById(R.id.contentRec);
-        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeLayout);
+        mContentRec = rootView.findViewById(R.id.contentRec);
+        mSwipeLayout = rootView.findViewById(R.id.swipeLayout);
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuThemeAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);
@@ -65,7 +66,7 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
 
         mContentRec.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mCurrentDy = +dy;
             }
@@ -76,7 +77,7 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mAdapter.getZhihuThemes().size() != 0) {
             outState.putString("data", new Gson().toJson(mAdapter.getZhihuThemes()));
@@ -86,7 +87,7 @@ public class ZhihuThemeFragment extends BaseFragment implements ZhihuThemeContra
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_zhihu_theme, container, false);
         initViews(rootView);
         mPresenter.setThemeId(getArguments().getInt("themeId"));

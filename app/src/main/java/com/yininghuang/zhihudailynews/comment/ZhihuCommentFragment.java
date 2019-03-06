@@ -50,8 +50,8 @@ public class ZhihuCommentFragment extends BaseFragment implements ZhihuCommentCo
     }
 
     private void initViews(View rootView) {
-        mContentRec = (AutoLoadRecyclerView) rootView.findViewById(R.id.contentRec);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeLayout);
+        mContentRec = rootView.findViewById(R.id.contentRec);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.swipeLayout);
         mContentRec.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ZhihuCommentAdapter(getActivity());
         mContentRec.setAdapter(mAdapter);

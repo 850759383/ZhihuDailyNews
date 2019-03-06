@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -26,7 +27,6 @@ import com.yininghuang.zhihudailynews.R;
 
 public class WebViewActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -35,9 +35,9 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mWebView = (WebView) findViewById(R.id.webView);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+        mWebView = findViewById(R.id.webView);
+        mProgressBar = findViewById(R.id.progressbar);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +67,9 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
+                ActionBar actionBar =getSupportActionBar();
+                if (actionBar == null)
+                    return;
                 getSupportActionBar().setTitle(title);
             }
         });

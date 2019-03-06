@@ -136,8 +136,8 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public PosterHolder(View itemView) {
             super(itemView);
-            mPoster = (ImageView) itemView.findViewById(R.id.posterImage);
-            mTitle = (TextView) itemView.findViewById(R.id.title);
+            mPoster = itemView.findViewById(R.id.posterImage);
+            mTitle = itemView.findViewById(R.id.title);
         }
     }
 }

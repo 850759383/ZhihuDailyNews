@@ -128,7 +128,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public HomeHolder(View itemView) {
             super(itemView);
-            mBackground = (RelativeLayout) itemView.findViewById(R.id.background);
+            mBackground = itemView.findViewById(R.id.background);
         }
     }
 
@@ -139,9 +139,9 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ThemeHolder(View itemView) {
             super(itemView);
-            mTitle = (TextView) itemView.findViewById(R.id.title);
-            mSubscribe = (ImageView) itemView.findViewById(R.id.subscribe);
-            mBackground = (RelativeLayout) itemView.findViewById(R.id.background);
+            mTitle = itemView.findViewById(R.id.title);
+            mSubscribe = itemView.findViewById(R.id.subscribe);
+            mBackground = itemView.findViewById(R.id.background);
         }
     }
 }

@@ -52,8 +52,8 @@ public class PosterView extends FrameLayout implements ViewPager.OnPageChangeLis
     public PosterView(Context context, AttributeSet attr, int defStyleAttr) {
         super(context, attr, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.poster_layout, this, true);
-        mIndicatorLayout = (LinearLayout) findViewById(R.id.indicatorLayout);
-        viewPager = (ViewPager) findViewById(R.id.posterPager);
+        mIndicatorLayout = findViewById(R.id.indicatorLayout);
+        viewPager = findViewById(R.id.posterPager);
     }
 
     private Subscription startTimer() {

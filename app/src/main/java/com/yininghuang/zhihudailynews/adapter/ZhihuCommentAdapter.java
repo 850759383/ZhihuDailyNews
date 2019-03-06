@@ -105,12 +105,12 @@ public class ZhihuCommentAdapter extends RecyclerView.Adapter {
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            userImage = (ImageView) itemView.findViewById(R.id.userImage);
-            userName = (TextView) itemView.findViewById(R.id.userName);
-            content = (TextView) itemView.findViewById(R.id.content);
-            replyTo = (TextView) itemView.findViewById(R.id.replyTo);
-            postTime = (TextView) itemView.findViewById(R.id.postTime);
-            agreeCount = (TextView) itemView.findViewById(R.id.agreeCount);
+            userImage = itemView.findViewById(R.id.userImage);
+            userName = itemView.findViewById(R.id.userName);
+            content = itemView.findViewById(R.id.content);
+            replyTo = itemView.findViewById(R.id.replyTo);
+            postTime = itemView.findViewById(R.id.postTime);
+            agreeCount = itemView.findViewById(R.id.agreeCount);
         }
     }
 }

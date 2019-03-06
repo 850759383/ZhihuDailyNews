@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 
 public class NetworkChecker {
 
-    public static boolean isWifiConnected(Context context) {
+    static boolean isWifiConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return mWifi.isConnected();

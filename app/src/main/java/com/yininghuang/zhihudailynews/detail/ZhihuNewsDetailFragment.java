@@ -75,13 +75,13 @@ public class ZhihuNewsDetailFragment extends BaseFragment implements ZhihuNewsDe
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initViews(View rootView) {
-        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        mAppbarImage = (ImageView) rootView.findViewById(R.id.appbarImage);
-        mWebView = (WebView) rootView.findViewById(R.id.webView);
-        mTitle = (TextView) rootView.findViewById(R.id.title);
-        mImageSource = (TextView) rootView.findViewById(R.id.imageSource);
-        mStarFab = (FloatingActionButton) rootView.findViewById(R.id.starFab);
-        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mAppbarImage = rootView.findViewById(R.id.appbarImage);
+        mWebView = rootView.findViewById(R.id.webView);
+        mTitle = rootView.findViewById(R.id.title);
+        mImageSource = rootView.findViewById(R.id.imageSource);
+        mStarFab = rootView.findViewById(R.id.starFab);
+        mProgressBar = rootView.findViewById(R.id.loading);
         setHasOptionsMenu(true);
         ((ZhihuNewsDetailActivity) getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionBar = ((ZhihuNewsDetailActivity) getActivity()).getSupportActionBar();
